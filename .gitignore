@@ -35,8 +35,7 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
-
+Icon
 # Thumbnails
 ._*
 
@@ -71,18 +70,12 @@ $RECYCLE.BIN/
 *.msp
 
 #CCS
-*.ccsproject
-*.cdtbuild
-*.cdtproject
-*.cproject
-*.project
-*.cmd
-*.asm
-*.ccxml
-*.mk
+
+/flyflash/
+/debug/
+/flyram/
 *.opt
 *.map
-*.xml
 *.launch
 *.prefs
 *.pp

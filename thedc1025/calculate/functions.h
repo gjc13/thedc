@@ -67,6 +67,9 @@ void pid();
 void setMotor();
 
 
+void l298n_GPIO_init(void);
+void setEngine(int16 leftDrection,float32 leftPower,int16 rightDrection,float32 rightPower);
+
 
 /**************************************************
  * AHRS¿ªÊ¼
@@ -90,7 +93,6 @@ float32 invSqrt(float32 x);
 int16 iirLPFilterSingle(volatile int32 in,volatile int32 attenuation, volatile int32* filt);
 
 Uint16 ShouldDecodeData();
-
 void DecodePlayerData();
 
 #endif

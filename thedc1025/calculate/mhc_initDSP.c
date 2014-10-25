@@ -23,30 +23,13 @@ void initDSP()
 	   InitEPwm3Gpio();
 	   InitEPwm4Gpio();
 	   InitEPwm5Gpio();
+	   l298n_GPIO_init();
 
 	   EALLOW;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO12= 0; //配置GPIO34为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO12 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO12 = 1;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO13 = 0; //配置GPIO34为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO13= 1;
-	   GpioDataRegs.GPADAT.bit.GPIO13= 1;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO14 = 0; //配置GPIO34为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO14 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO14 = 1;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO15= 0; //配置GPIO34为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO15= 1;
 	   GpioCtrlRegs.GPBMUX1.bit.GPIO33= 0; //配置GPIO34为GPout
 	   GpioCtrlRegs.GPBDIR.bit.GPIO33 = 1;
 	   GpioDataRegs.GPBDAT.bit.GPIO33= 1;
 	   EDIS;
-
-
-
-//	   EALLOW;
-//	   GpioCtrlRegs.GPAMUX2.bit.GPIO18 = 3;//系统时钟输出
-//	    EDIS;
 
 
 	// Step 3. Clear all interrupts and initialize PIE vector table:

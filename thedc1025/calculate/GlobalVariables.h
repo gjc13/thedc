@@ -140,14 +140,14 @@ extern _3Axisf_t	gAccel;
 extern volatile float32 eCapData[3];
 
 
-//上位机提供的比赛信息
 
-extern PlayerData playerData;
+
 extern Uint16 playerData_headx;
-extern Uint16 playerData_headx;
+extern Uint16 playerData_heady;
 extern Uint16 playerData_rearx;
 extern Uint16 playerData_reary;
 extern Uint16 nowScore;
 
-
+//上位机发送的比赛信息
+extern  PlayerData playerData;
 #endif

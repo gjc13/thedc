@@ -1,6 +1,5 @@
-#include "GlobalVariables.h"
-#include "functions.h"
 #include "mhc.h"
+#include "GlobalVariables.h"
 
 Uint16 ShouldDecodeData()
 {

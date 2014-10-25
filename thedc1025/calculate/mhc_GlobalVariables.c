@@ -155,7 +155,11 @@ _3Axisf_t	gAccel;
 ************************************************* */
 
 
+
 volatile float32 eCapData[3]={0,0,0};
+
+
+
 Uint16 playerData_headx;
 Uint16 playerData_heady;
 Uint16 playerData_rearx;

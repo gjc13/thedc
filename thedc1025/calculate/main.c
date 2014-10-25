@@ -48,28 +48,20 @@ void main(void)
 //		   doUltra=0;
 //	   }
 
-	   GpioDataRegs.GPADAT.bit.GPIO12 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO13 = 0;
-	   GpioDataRegs.GPADAT.bit.GPIO14 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO15 = 0;
-
 	   if(eCapData[0]<40)
-	   {
-		   setPwm(1,0.7);
-		   setPwm(2,0.7);
-	   }
+		   setEngine(1,0.25,1,0.245);
 	   else
-	   {
-		   setPwm(1,0);
-		   setPwm(2,0);
-	   }
+		   setEngine(0,0,0,0);
 
 
 
-	   GpioDataRegs.GPBDAT.bit.GPIO33 = 1;
-	   for(delay=0;delay<40;delay++);
-	   GpioDataRegs.GPBDAT.bit.GPIO33 = 0;
-	   for(delay=0;delay<70000;delay++);
+//	   GpioDataRegs.GPBDAT.bit.GPIO33 = 1;
+//	   for(delay=0;delay<40;delay++);
+//	   GpioDataRegs.GPBDAT.bit.GPIO33 = 0;
+//	   for(delay=0;delay<70000;delay++);
+
+
+
 
    }
 
