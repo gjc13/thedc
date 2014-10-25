@@ -71,9 +71,9 @@ $RECYCLE.BIN/
 
 #CCS
 
-/flyflash/
-/debug/
-/flyram/
+\flyflash\
+\debug\
+\flyram\
 *.opt
 *.map
 *.launch

@@ -258,4 +258,8 @@ typedef struct
 
 #define PLAYERDATALENGTH 26
 
+#define ENGINEBACK 2
+#define ENGINEFRONT 1
+#define ENGINESTOP 0
+
 #endif
