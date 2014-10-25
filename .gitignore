@@ -70,7 +70,6 @@ $RECYCLE.BIN/
 *.msp
 
 #CCS
-
 /flyflash/
 /debug/
 /flyram/
