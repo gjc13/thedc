@@ -29,6 +29,7 @@ float32 GetDiffAngle(float32 fromAngle,float32 toAngle)
 	float32 diffAngle=fromAngle-toAngle;
 	diffAngle=diffAngle<0?-diffAngle:0;
 	diffAngle=(360-diffAngle < diffAngle)?360-diffAngle:diffAngle;
+	return diffAngle;//这行是马浩程10.27.16:46加的
 }
 
 int16 IsCounterClockWise(float32 fromAngle,float32 toAngle)
@@ -94,16 +95,15 @@ void DecodePlayerData()
 
 void SetEngineOutPut()
 {
-	float32 distanceMinBound=10;
+	float32 distanceMinBound=10,angleTolerance=PI/30,targetAngle,diffAngle;
 	float32 nowDistance=GetDistance(nowX,nowY,targetX,targetY);
 	if(nowDistance<distanceMinBound)
 	{
 		return;
 	}
-	float32 angleTolerance=PI/30;
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
-	float32 targetAngle=GetAngle(nowX,nowY,targetX,targetY);
-	float32 diffAngle=GetDiffAngle(nowAngle,targetAngle);
+	targetAngle=GetAngle(nowX,nowY,targetX,targetY);
+	diffAngle=GetDiffAngle(nowAngle,targetAngle);
 	if(GetDiffAngle(nowAngle,targetAngle)>PI/9)
 	{
 		TurnEngine(targetAngle);
