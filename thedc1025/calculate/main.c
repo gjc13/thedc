@@ -3,12 +3,12 @@
 
 void main(void)
 {
-//	Uint16 i;
-	initDSP();
+//	Uint16 	initDSP();
 //	init_I2C_devices();
 
 //	while( iicStartRead() != I2C_SUCCESS );
 
+   int t=0;
    uint16strcpy(sciASendBuffer,(Uint16*)"*****´®¿ÚAÕý³£*****");
    sciASendBufferPointer=0;
    SciaRegs.SCIFFTX.bit.TXFFIENA=1;
@@ -20,6 +20,7 @@ void main(void)
 
    for(;;)
    {
+	   t++;
 //	   fly_enable=0;
 //	   if(doCalulate)
 //	   {
