@@ -59,6 +59,3 @@ void setEngine(int16 leftDrection,float32 leftPower,int16 rightDrection,float32 
 		   break;
 	}
 }
-
-
-

@@ -66,9 +66,6 @@ void DecodePlayerData()
 			playerData_heady=*(iterBuffer+1);
 			playerData_rearx=*(iterBuffer+2);
 			playerData_reary=*(iterBuffer+3);
-			nowAngle=GetAngle(playerData_headx,playerData_rearx,playerData_heady,playerData_reary);
-			nowX=(playerData_headx+playerData_rearx)/2;
-			nowY=(playerData_heady+playerData_reary)/2;
 			nowScore=*(iterBuffer+4);
 		}
 		for(j=0; j<5; j++)
@@ -91,7 +88,6 @@ void DecodePlayerData()
 		iterBuffer++;
 	}
 }
-
 void SetEngineOutPut()
 {
 	float32 distanceMinBound=10;
@@ -142,4 +138,3 @@ void RunToTarget()
 	outPower+=minPower;
 	setEngine(ENGINEFRONT,outPower,ENGINEFRONT,outPower);
 }
-
