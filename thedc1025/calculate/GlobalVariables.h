@@ -141,13 +141,23 @@ extern volatile float32 eCapData[3];
 
 
 
-
-extern Uint16 playerData_headx;
-extern Uint16 playerData_heady;
-extern Uint16 playerData_rearx;
-extern Uint16 playerData_reary;
+//坐标信息
+extern volatile Uint16 playerData_headx;
+extern volatile Uint16 playerData_heady;
+extern volatile Uint16 playerData_rearx;
+extern volatile Uint16 playerData_reary;
 extern Uint16 nowScore;
+extern volatile Uint16 headX;
+extern volatile Uint16 headY;
+extern volatile Uint16 rearX;
+extern volatile Uint16 rearY;
+extern volatile Uint16 nowX;
+extern volatile Uint16 nowY;
+extern volatile float32 nowAngle;
+extern volatile Uint16 targetX;
+extern volatile Uint16 targetY;
 
 //上位机发送的比赛信息
-extern  PlayerData playerData;
+extern PlayerData playerData;
+extern volatile Uint16 canMove;
 #endif

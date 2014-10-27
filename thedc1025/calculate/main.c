@@ -16,7 +16,9 @@ void main(void)
 //   sensor_calibrate();
 
 //   fly_enable=2;
-
+   targetX=80;
+   targetY=80;
+   canMove=0;
 
    for(;;)
    {
@@ -48,10 +50,19 @@ void main(void)
 //		   doUltra=0;
 //	   }
 
-	   if(eCapData[0]<40)
-		   setEngine(1,0.25,1,0.245);
-	   else
-		   setEngine(0,0,0,0);
+//	   if(eCapData[0]<40)
+//		   setEngine(1,0.25,1,0.245);
+//	   else
+//		   setEngine(0,0,0,0);
+
+	   if(UpdatePosture() && canMove)
+	   {
+		   SetEngineOutput();
+	   }
+	   else if(!canMove)
+	   {
+		   DisableEngineOutput();
+	   }
 
 
 

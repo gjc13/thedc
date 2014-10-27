@@ -160,11 +160,21 @@ volatile float32 eCapData[3]={0,0,0};
 
 
 
-Uint16 playerData_headx;
-Uint16 playerData_heady;
-Uint16 playerData_rearx;
-Uint16 playerData_reary;
-Uint16 nowScore;
+volatile Uint16 playerData_headx;
+volatile Uint16 playerData_heady;
+volatile Uint16 playerData_rearx;
+volatile Uint16 playerData_reary;
+volatile Uint16 nowScore;
+volatile Uint16 nowX;
+volatile Uint16 nowY;
+volatile Uint16 headX;
+volatile Uint16 headY;
+volatile Uint16 rearX;
+volatile Uint16 rearY;
+volatile float32 nowAngle;
+volatile Uint16 targetX;
+volatile Uint16 targetY;
 
 //上位机发送的比赛信息
 PlayerData playerData;
+volatile Uint16 canMove;

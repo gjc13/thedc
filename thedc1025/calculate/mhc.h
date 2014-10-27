@@ -85,7 +85,7 @@
 #define RECEIVE_SEPARATE   ','
 
 
-
+#define DOUBLEERROR 0.000001
 #define PI       3.14159265358979
 #define g        9.806				//重力加速度
 #define DEG_TO_RAD 0.017453292519943
@@ -253,9 +253,13 @@ typedef struct
 	volatile Uint16 time;
 
 	//比赛结束信号，1表示开始，0结束
-	volatile Uint16 is_over;
+	volatile Uint16 is_running;
 } PlayerData;
 
 #define PLAYERDATALENGTH 26
+
+#define ENGINEBACK 2
+#define ENGINEFRONT 1
+#define ENGINESTOP 0
 
 #endif

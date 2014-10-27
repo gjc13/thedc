@@ -4,41 +4,41 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := D:/ti/ccs6/ccsv6/tools/compiler/c2000_6.2.7
+CG_TOOL_ROOT := D:/ti/ccsv6/tools/compiler/c2000_6.2.7
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
 -l"rts2800_fpu32_fast_supplement.lib" \
 -l"rts2800_fpu32.lib" \
-"./TiLibrary/F2806x_usDelay.obj" \
-"./TiLibrary/F2806x_SysCtrl.obj" \
-"./TiLibrary/F2806x_Sci.obj" \
-"./TiLibrary/F2806x_PieVect.obj" \
-"./TiLibrary/F2806x_PieCtrl.obj" \
-"./TiLibrary/F2806x_I2C.obj" \
-"./TiLibrary/F2806x_HRCap.obj" \
-"./TiLibrary/F2806x_Gpio.obj" \
-"./TiLibrary/F2806x_GlobalVariableDefs.obj" \
-"./TiLibrary/F2806x_EPwm.obj" \
-"./TiLibrary/F2806x_ECap.obj" \
-"./TiLibrary/F2806x_DefaultIsr.obj" \
-"./TiLibrary/F2806x_CpuTimers.obj" \
-"./TiLibrary/F2806x_CodeStartBranch.obj" \
-"./calculate/num2string.obj" \
-"./calculate/mhc_initDSP.obj" \
-"./calculate/mhc_ePWM.obj" \
-"./calculate/mhc_eCap.obj" \
-"./calculate/mhc_doData.obj" \
-"./calculate/mhc_cpuTimer.obj" \
-"./calculate/mhc_control.obj" \
-"./calculate/mhc_SCIB_S_BUS.obj" \
-"./calculate/mhc_SCIA.obj" \
-"./calculate/mhc_I2C.obj" \
-"./calculate/mhc_GlobalVariables.obj" \
-"./calculate/main.obj" \
-"./calculate/gjc_engineDrive.obj" \
-"./calculate/car_control.obj" \
 "./calculate/AHRS.obj" \
+"./calculate/car_control.obj" \
+"./calculate/gjc_engineDrive.obj" \
+"./calculate/main.obj" \
+"./calculate/mhc_GlobalVariables.obj" \
+"./calculate/mhc_I2C.obj" \
+"./calculate/mhc_SCIA.obj" \
+"./calculate/mhc_SCIB_S_BUS.obj" \
+"./calculate/mhc_control.obj" \
+"./calculate/mhc_cpuTimer.obj" \
+"./calculate/mhc_doData.obj" \
+"./calculate/mhc_eCap.obj" \
+"./calculate/mhc_ePWM.obj" \
+"./calculate/mhc_initDSP.obj" \
+"./calculate/num2string.obj" \
+"./TiLibrary/F2806x_CodeStartBranch.obj" \
+"./TiLibrary/F2806x_CpuTimers.obj" \
+"./TiLibrary/F2806x_DefaultIsr.obj" \
+"./TiLibrary/F2806x_ECap.obj" \
+"./TiLibrary/F2806x_EPwm.obj" \
+"./TiLibrary/F2806x_GlobalVariableDefs.obj" \
+"./TiLibrary/F2806x_Gpio.obj" \
+"./TiLibrary/F2806x_HRCap.obj" \
+"./TiLibrary/F2806x_I2C.obj" \
+"./TiLibrary/F2806x_PieCtrl.obj" \
+"./TiLibrary/F2806x_PieVect.obj" \
+"./TiLibrary/F2806x_Sci.obj" \
+"./TiLibrary/F2806x_SysCtrl.obj" \
+"./TiLibrary/F2806x_usDelay.obj" \
 "../F28069.cmd" \
 "../F2806x_Headers_nonBIOS.cmd" \
 -l"IQmath_fpu32.lib" \
@@ -161,14 +161,14 @@ all: flyProgram.out
 # Tool invocations
 flyProgram.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
-	@echo '正在调用： C2000 Linker'
-	"D:/ti/ccs6/ccsv6/tools/compiler/c2000_6.2.7/bin/cl2000" -v28 -ml -mt --cla_support=cla0 --float_support=fpu32 --vcu_support=vcu0 -Ooff --fp_reassoc=off -g --define="_DEBUG" --define="LARGE_MODEL" --quiet --verbose_diagnostics --diag_warning=225 --issue_remarks --output_all_syms --cdebug_asm_data -z -m"Example_2806xEPwmDeadBand.map" --stack_size=0x200 --warn_sections -i"D:/ti/ccs6/ccsv6/tools/compiler/c2000_6.2.7/lib" -i"D:/ti/ccs6/ccsv6/tools/compiler/c2000_6.2.7/include" -i"D:/ti/controlSUITE/device_support/f2806x/v136/F2806x_common/lib" -i"D:/ti/controlSUITE/libs/math/IQmath/v160/lib" -i"D:/ti/controlSUITE/libs/math/FPUfastRTS/V100/lib" --reread_libs --priority --verbose_diagnostics --issue_remarks --xml_link_info="Example_2806xEPwmDeadBand_linkInfo.xml" --entry_point=code_start --rom_model -o "flyProgram.out" $(ORDERED_OBJS)
+	@echo 'Invoking: C2000 Linker'
+	"D:/ti/ccsv6/tools/compiler/c2000_6.2.7/bin/cl2000" -v28 -ml -mt --cla_support=cla0 --float_support=fpu32 --vcu_support=vcu0 -Ooff --fp_reassoc=off -g --define="_DEBUG" --define="LARGE_MODEL" --quiet --verbose_diagnostics --diag_warning=225 --issue_remarks --output_all_syms --cdebug_asm_data -z -m"Example_2806xEPwmDeadBand.map" --stack_size=0x200 --warn_sections -i"D:/ti/ccsv6/tools/compiler/c2000_6.2.7/lib" -i"D:/ti/ccsv6/tools/compiler/c2000_6.2.7/include" -i"D:/ti/controlSUITE/device_support/f2806x/v136/F2806x_common/lib" -i"D:/ti/controlSUITE/libs/math/IQmath/v160/lib" -i"D:/ti/controlSUITE/libs/math/FPUfastRTS/V100/lib" --reread_libs --priority --verbose_diagnostics --issue_remarks --xml_link_info="Example_2806xEPwmDeadBand_linkInfo.xml" --entry_point=code_start --rom_model -o "flyProgram.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 flyProgram.hex: $(EXE_OUTPUTS)
-	@echo '正在调用： C2000 Hex Utility'
-	"D:/ti/ccs6/ccsv6/tools/compiler/c2000_6.2.7/bin/hex2000"  -o "flyProgram.hex" $(EXE_OUTPUTS__QUOTED)
+	@echo 'Invoking: C2000 Hex Utility'
+	"D:/ti/ccsv6/tools/compiler/c2000_6.2.7/bin/hex2000"  -o "flyProgram.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 

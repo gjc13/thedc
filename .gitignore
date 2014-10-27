@@ -71,14 +71,20 @@ $RECYCLE.BIN/
 
 #CCS
 
-/flyflash/
-/Debug/
-/flyram/
+/thedc1025/FlyFlash/
+/thedc1025/Debug/
+/thedc1025/FlyRam/
 *.opt
 *.map
 *.launch
 *.prefs
 *.pp
 *.obj
-thedc1025/Debug/Example_2806xEPwmDeadBand_linkInfo.xml
-thedc1025/Debug/Example_2806xEPwmDeadBand_linkInfo.xml
+*.xml
+*.mk
+*.mk
+thedc1025/FlyFlash/Example_2806xEPwmDeadBand_linkInfo.xml
+thedc1025/FlyFlash/calculate/subdir_rules.mk
+thedc1025/FlyFlash/sources.mk
+thedc1025/FlyFlash/calculate/subdir_vars.mk
+*.mk
