@@ -29,7 +29,6 @@ float32 GetDiffAngle(float32 fromAngle,float32 toAngle)
 	float32 diffAngle=fromAngle-toAngle;
 	diffAngle=diffAngle<0?-diffAngle:0;
 	diffAngle=(360-diffAngle < diffAngle)?360-diffAngle:diffAngle;
-	return diffAngle;
 }
 
 int16 IsCounterClockWise(float32 fromAngle,float32 toAngle)
@@ -38,7 +37,7 @@ int16 IsCounterClockWise(float32 fromAngle,float32 toAngle)
 	float32 fromY=sin(fromAngle);
 	float32 toX=cos(toAngle);
 	float32 toY=cos(toAngle);
-	return (toY*fromX-toX*fromY>0);
+	return toY*fromX-toX*fromY>0;
 }
 
 Uint16 ShouldDecodeData()
@@ -97,15 +96,15 @@ void SetEngineOutPut()
 {
 	float32 distanceMinBound=10;
 	float32 nowDistance=GetDistance(nowX,nowY,targetX,targetY);
-	float32 targetAngle=GetAngle(nowX,nowY,targetX,targetY);
-	float32 diffAngle=GetDiffAngle(nowAngle,targetAngle);
-	float32 angleTolerance=PI/30;
 	if(nowDistance<distanceMinBound)
 	{
 		return;
 	}
+	float32 angleTolerance=PI/30;
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
-	if(diffAngle>PI/9)
+	float32 targetAngle=GetAngle(nowX,nowY,targetX,targetY);
+	float32 diffAngle=GetDiffAngle(nowAngle,targetAngle);
+	if(GetDiffAngle(nowAngle,targetAngle)>PI/9)
 	{
 		TurnEngine(targetAngle);
 	}
