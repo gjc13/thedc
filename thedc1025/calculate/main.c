@@ -49,11 +49,10 @@ void main(void)
 //		   doUltra=0;
 //	   }
 
-//	   if(eCapData[0]<40)
-//		   setEngine(1,0.25,1,0.245);
-//	   else
-//		   setEngine(0,0,0,0);
-	   SetEngineOutPut();
+	   if(eCapData[0]<40)
+		   setEngine(1,0.25,1,0.245);
+	   else
+		   setEngine(0,0,0,0);
 
 
 

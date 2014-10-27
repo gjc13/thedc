@@ -142,17 +142,11 @@ extern volatile float32 eCapData[3];
 
 
 
-extern volatile Uint16 playerData_headx;
-extern volatile Uint16 playerData_heady;
-extern volatile Uint16 playerData_rearx;
-extern volatile Uint16 playerData_reary;
+extern Uint16 playerData_headx;
+extern Uint16 playerData_heady;
+extern Uint16 playerData_rearx;
+extern Uint16 playerData_reary;
 extern Uint16 nowScore;
-
-extern volatile Uint16 nowX;
-extern volatile Uint16 nowY;
-extern volatile float32 nowAngle;
-extern volatile Uint16 targetX;
-extern volatile Uint16 targetY;
 
 //上位机发送的比赛信息
 extern  PlayerData playerData;
