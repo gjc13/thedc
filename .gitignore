@@ -72,7 +72,7 @@ $RECYCLE.BIN/
 #CCS
 
 /flyflash/
-/debug/
+/Debug/
 /flyram/
 *.opt
 *.map
