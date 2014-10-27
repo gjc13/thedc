@@ -105,7 +105,7 @@ void SetEngineOutPut()
 		return;
 	}
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
-	if(GetDiffAngle(nowAngle,targetAngle)>PI/9)
+	if(diffAngle>PI/9)
 	{
 		TurnEngine(targetAngle);
 	}
