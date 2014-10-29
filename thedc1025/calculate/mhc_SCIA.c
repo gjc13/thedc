@@ -76,7 +76,7 @@ void sciASendData()
 		sciASendBuffer[i]=0;
 
 		   double_to_string(nowAngle*180/PI , (char*)sciASendBuffer);
-//		   double_to_string(roll_Av*180/PI, (char*)sciASendBuffer);
+		   double_to_string(gGyro.z*100, (char*)sciASendBuffer);
 //		   double_to_string(pitch_Gy*180/PI , (char*)sciASendBuffer);
 //		   double_to_string(roll_Gx*180/PI , (char*)sciASendBuffer);
 //

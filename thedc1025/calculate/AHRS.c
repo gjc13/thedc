@@ -27,18 +27,18 @@ void AHRS_AccelIIRLPFilter(void)
 
 void AHRS_Normalize(void)
 {
-	gGyroTmp.x = (gMPU6050RawGyro.x/* - gMPU6050BiasGyro.x*/) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
-	gGyroTmp.y = (gMPU6050RawGyro.y /*- gMPU6050BiasGyro.y*/) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
-	gGyro.z = (gMPU6050RawGyro.z /*- gMPU6050BiasGyro.z*/) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
+//	gGyroTmp.x = (gMPU6050RawGyro.x - gMPU6050BiasGyro.x) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
+//	gGyroTmp.y = (gMPU6050RawGyro.y - gMPU6050BiasGyro.y) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
+	gGyro.z = (gMPU6050RawGyro.z - gyroZDrift) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
 	gAccelTmp.x = (gMPU6050LPFAccel.x /*- gMPU6050BiasAccel.x*/) * MPU6050_G_PER_LSB_8 * 1.0f;
 	gAccelTmp.y = (gMPU6050LPFAccel.y/* - gMPU6050BiasAccel.y*/) * MPU6050_G_PER_LSB_8 * 1.0f;
 	gAccel.z = (gMPU6050LPFAccel.z/* - gMPU6050BiasAccel.z*/) * MPU6050_G_PER_LSB_8 * 1.0f;
 
-	gGyro.x =-gGyroTmp.y -0.014033417;
-	gGyro.y = gGyroTmp.x +0.025224293;
-	gGyro.z = gGyro.z - 0.008488423;
-	gAccel.x =-gAccelTmp.y ;
-	gAccel.y =gAccelTmp.x ;
+//	gGyro.x =-gGyroTmp.y -0.014033417;
+//	gGyro.y = gGyroTmp.x +0.025224293;
+//	gGyro.z = gGyro.z - 0.008488423;
+//	gAccel.x =-gAccelTmp.y ;
+//	gAccel.y =gAccelTmp.x ;
 }
 
 void AHRS_GetEulerRPY(void)

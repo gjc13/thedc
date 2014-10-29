@@ -44,9 +44,9 @@ void Posture_calculate(void)
 {
 	AHRS_AccelIIRLPFilter();//加速度低通滤波
 	AHRS_Normalize();//数据归一化
-	MadgwickAHRSupdateIMU(gGyro.x,gGyro.y,gGyro.z,gAccel.x,gAccel.y,gAccel.z);//更新四元数
-	AHRS_GetEulerRPY();//转换为欧拉角
-	vz_calculate();//计算高度融合数据
+//	MadgwickAHRSupdateIMU(gGyro.x,gGyro.y,gGyro.z,gAccel.x,gAccel.y,gAccel.z);//更新四元数
+//	AHRS_GetEulerRPY();//转换为欧拉角
+//	vz_calculate();//计算高度融合数据
 }
 
 ///***************************************************************************************

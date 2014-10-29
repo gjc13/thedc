@@ -139,7 +139,7 @@ volatile Uint32 gAHRSCounter = 0;
 _3Axis16i_t gMPU6050RawGyro;
 _3Axis32i_t gMPU6050RawGyroStoredFilterValues;
 //_3Axis16i_t gMPU6050LPFGyro;
-_3Axis16i_t gMPU6050BiasGyro;
+//_3Axis16i_t gMPU6050BiasGyro;
 _3Axisf_t	gGyro;
 _3Axisf_t	gGyroTmp;
 _3Axisf_t	gAccelTmp;

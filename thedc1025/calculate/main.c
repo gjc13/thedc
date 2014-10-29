@@ -5,9 +5,9 @@ void main(void)
 {
 //	Uint16 i;
 	initDSP();
-//	init_I2C_devices();
+	init_I2C_devices();
 
-//	while( iicStartRead() != I2C_SUCCESS );
+	while( iicStartRead() != I2C_SUCCESS );
 
    uint16strcpy(sciASendBuffer,(Uint16*)"*****´®¿ÚAÕý³£*****");
    sciASendBufferPointer=0;
@@ -22,14 +22,14 @@ void main(void)
    for(;;)
    {
 //	   fly_enable=0;
-//	   if(doCalulate)
-//	   {
-//		 dataConverse();
-//		 Posture_calculate();
+	   if(doCalulate)
+	   {
+		 dataConverse();
+		 Posture_calculate();
 //		 pid();
 //		 setMotor();
 //		 doCalulate=0;
-//	   }
+	   }
 //
 	   if( doSCI && SciaRegs.SCIFFTX.bit.TXFFIENA==0)
 	   {

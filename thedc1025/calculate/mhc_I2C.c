@@ -11,25 +11,26 @@ void init_I2C_devices()
 	       while( 	iicWriteByte(MPU6050ADDR	,ACCEL_CONFIG, 	16) 	!= 	I2C_SUCCESS);
 
 		// 初始化HMC5883
-	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_CONFA , 	0x78) 	!= 	I2C_SUCCESS);
-	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_CONFB , 	0x00) 	!= 	I2C_SUCCESS);
-	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_MODE , 	0x00) 	!= 	I2C_SUCCESS);
+//	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_CONFA , 	0x78) 	!= 	I2C_SUCCESS);
+//	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_CONFB , 	0x00) 	!= 	I2C_SUCCESS);
+//	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_MODE , 	0x00) 	!= 	I2C_SUCCESS);
 
 }
 
 void init_I2C_devices_flying()//重新初始化I2C 飞行时I2C出错则调用 初始化不成功则调用iiC_broken
 {
-	   // 暂时没改,要改
-    while( iicWriteByte(MPU6050ADDR,PWR_MGMT_1	, 0x01) != I2C_SUCCESS);
-    while(i2c_Send_Complete==0);
-    while( iicWriteByte(MPU6050ADDR,SMPLRT_DIV	, 0x00) != I2C_SUCCESS);
-    while(i2c_Send_Complete==0);
-    while( iicWriteByte(MPU6050ADDR,CONFIG 			, 0x00) != I2C_SUCCESS);
-    while(i2c_Send_Complete==0);
-    while( iicWriteByte(MPU6050ADDR,GYRO_CONFIG, 0x18) != I2C_SUCCESS);
-    while(i2c_Send_Complete==0);
-    while( iicWriteByte(MPU6050ADDR,ACCEL_CONFIG, 0x01) != I2C_SUCCESS);
-    while(i2c_Send_Complete==0);
+	init_I2C_devices();
+//	   // 暂时没改,要改
+//    while( iicWriteByte(MPU6050ADDR,PWR_MGMT_1	, 0x01) != I2C_SUCCESS);
+//    while(i2c_Send_Complete==0);
+//    while( iicWriteByte(MPU6050ADDR,SMPLRT_DIV	, 0x00) != I2C_SUCCESS);
+//    while(i2c_Send_Complete==0);
+//    while( iicWriteByte(MPU6050ADDR,CONFIG 			, 0x00) != I2C_SUCCESS);
+//    while(i2c_Send_Complete==0);
+//    while( iicWriteByte(MPU6050ADDR,GYRO_CONFIG, 0x18) != I2C_SUCCESS);
+//    while(i2c_Send_Complete==0);
+//    while( iicWriteByte(MPU6050ADDR,ACCEL_CONFIG, 0x01) != I2C_SUCCESS);
+//    while(i2c_Send_Complete==0);
 }
 
 void iiC_broken()//I2C配置失败
@@ -74,7 +75,7 @@ __interrupt void i2c_int1a_isr(void)     // I2C-A
 		   // condition is received (here), set the message status to try again.
 		   // User may want to limit the number of retries before generating an error.
 //ESTOP0;
-		   init_I2C_devices_flying();//可能要改
+		   init_I2C_devices_flying();//可能要改，确实要改
 		   break;
 
 

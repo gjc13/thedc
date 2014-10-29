@@ -26,9 +26,9 @@ void initDSP()
 	   l298n_GPIO_init();
 
 	   EALLOW;
-	   GpioCtrlRegs.GPBMUX1.bit.GPIO33= 0; //配置GPIO34为GPout
-	   GpioCtrlRegs.GPBDIR.bit.GPIO33 = 1;
-	   GpioDataRegs.GPBDAT.bit.GPIO33= 1;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //配置GPIO34为GPout
+	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 1;
+	   GpioDataRegs.GPADAT.bit.GPIO30= 1;
 	   EDIS;
 
 
@@ -198,14 +198,14 @@ void initGlobalVariables()
 
 
 	acceXDrift = 285;//加速度零点偏移
-//	acceYDrift = (16300-16620)/2;
-//	acceZDrift = (16580-17200)/2-295;
+	acceYDrift = 0;
+	acceZDrift = 0;
 	AcceXK = ((float32)200.0)/(16050l+16090l)/1.02/100;//加速度系数
 	AcceYK = ((float32)200.0)/(16300l+16620l)/100;
 	AcceZK = ((float32)200.0)/(16580l+17200l)*1.018/100;
 	gyroXDrift=-24.6623;//陀螺仪零点偏移
 	gyroYDrift=-13.71428571;
-	gyroZDrift=5.25974026;
+	gyroZDrift=0;
 	Gkx=930.0;//陀螺仪系数
 	Gky=930.0;
 	Gkz=930.0;
