@@ -6,7 +6,6 @@
 C_SRCS += \
 ../calculate/AHRS.c \
 ../calculate/car_control.c \
-../calculate/gjc_engineDrive.c \
 ../calculate/main.c \
 ../calculate/mhc_GlobalVariables.c \
 ../calculate/mhc_I2C.c \
@@ -23,7 +22,6 @@ C_SRCS += \
 OBJS += \
 ./calculate/AHRS.obj \
 ./calculate/car_control.obj \
-./calculate/gjc_engineDrive.obj \
 ./calculate/main.obj \
 ./calculate/mhc_GlobalVariables.obj \
 ./calculate/mhc_I2C.obj \
@@ -40,7 +38,6 @@ OBJS += \
 C_DEPS += \
 ./calculate/AHRS.pp \
 ./calculate/car_control.pp \
-./calculate/gjc_engineDrive.pp \
 ./calculate/main.pp \
 ./calculate/mhc_GlobalVariables.pp \
 ./calculate/mhc_I2C.pp \
@@ -57,7 +54,6 @@ C_DEPS += \
 C_DEPS__QUOTED += \
 "calculate\AHRS.pp" \
 "calculate\car_control.pp" \
-"calculate\gjc_engineDrive.pp" \
 "calculate\main.pp" \
 "calculate\mhc_GlobalVariables.pp" \
 "calculate\mhc_I2C.pp" \
@@ -74,7 +70,6 @@ C_DEPS__QUOTED += \
 OBJS__QUOTED += \
 "calculate\AHRS.obj" \
 "calculate\car_control.obj" \
-"calculate\gjc_engineDrive.obj" \
 "calculate\main.obj" \
 "calculate\mhc_GlobalVariables.obj" \
 "calculate\mhc_I2C.obj" \
@@ -91,7 +86,6 @@ OBJS__QUOTED += \
 C_SRCS__QUOTED += \
 "../calculate/AHRS.c" \
 "../calculate/car_control.c" \
-"../calculate/gjc_engineDrive.c" \
 "../calculate/main.c" \
 "../calculate/mhc_GlobalVariables.c" \
 "../calculate/mhc_I2C.c" \
