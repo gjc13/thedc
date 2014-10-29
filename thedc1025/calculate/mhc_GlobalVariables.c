@@ -178,3 +178,4 @@ volatile Uint16 targetY;
 //上位机发送的比赛信息
 PlayerData playerData;
 volatile Uint16 canMove;
+volatile Uint16 gameFirstStart;

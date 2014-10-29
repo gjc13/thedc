@@ -105,5 +105,6 @@ float32 GetDistance(int32 fromx,int32 fromy,int32 tox,int32 toy);
 float32 GetAngle(int32 fromx,int32 fromy,int32 tox,int32 toy);
 float32 GetDiffAngle(float32 fromAngle,float32 toAngle);
 int16 IsCounterClockWise(float32 fromAngle,float32 toAngle);
+void InitializeEngine();
 
 #endif

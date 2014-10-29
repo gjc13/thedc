@@ -160,4 +160,6 @@ extern volatile Uint16 targetY;
 //上位机发送的比赛信息
 extern PlayerData playerData;
 extern volatile Uint16 canMove;
+extern volatile Uint16 gameFirstStart;
+
 #endif

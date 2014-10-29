@@ -2,6 +2,14 @@
 #include "GlobalVariables.h"
 #include "math.h"
 
+void InitializeEngine()
+{
+	targetX=120;
+	targetY=120;
+	gameFirstStart=1;
+	canMove=0;
+}
+
 float32 GetDistance(int32 fromx,int32 fromy,int32 tox,int32 toy)
 {
 	int32 deltaX=fromx-tox;
@@ -11,8 +19,8 @@ float32 GetDistance(int32 fromx,int32 fromy,int32 tox,int32 toy)
 
 float32 GetAngle(int32 fromx,int32 fromy,int32 tox,int32 toy)
 {
-	int32 deltaX=fromx-tox;
-	int32 deltaY=fromy-toy;
+	int32 deltaX=tox-fromx;
+	int32 deltaY=toy-fromy;
 	float32 distance=GetDistance(fromx,fromy,tox,toy);
 	if(deltaY>0)
 	{
@@ -20,7 +28,7 @@ float32 GetAngle(int32 fromx,int32 fromy,int32 tox,int32 toy)
 	}
 	else
 	{
-		return acos(deltaX/distance)+PI;
+		return acos(deltaX/distance)+2*PI;
 	}
 }
 
@@ -52,7 +60,7 @@ Uint16 ShouldDecodeData()
 
 void DecodePlayerData()
 {
-	int i,j;
+	int32 i,j;
 	Uint16 playerID=sciAReadBuffer[0];
 	Uint16 *iter=(void *)(&playerData);
 	Uint16 *iterBuffer=sciAReadBuffer;
@@ -61,8 +69,9 @@ void DecodePlayerData()
 	iterBuffer++;
 	for(i=0; i<4; i++)
 	{
-		if(i==playerID && abs(*iterBuffer-playerData_headx)<10)
+		if(i==playerID && (abs(*iterBuffer-playerData_headx)<10||gameFirstStart))
 		{
+			gameFirstStart=0;
 			playerData_headx=*(iterBuffer);
 			playerData_heady=*(iterBuffer+1);
 			playerData_rearx=*(iterBuffer+2);
@@ -93,6 +102,11 @@ void DecodePlayerData()
 		sciAReadBuffer[i]=0;
 	}
 	canMove=playerData.is_running && playerData.time>5;
+	if(playerData.time<=1)
+	{
+		canMove=0;
+		gameFirstStart=1;
+	}
 }
 
 Uint16 UpdatePosture()

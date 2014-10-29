@@ -16,9 +16,8 @@ void main(void)
 //   sensor_calibrate();
 
 //   fly_enable=2;
-   targetX=80;
-   targetY=80;
-   canMove=0;
+
+   InitializeEngine();
 
    for(;;)
    {
