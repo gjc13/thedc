@@ -75,7 +75,7 @@ void sciASendData()
 	for(i=0;i<128;i++)
 		sciASendBuffer[i]=0;
 
-//		   double_to_string(pitch_Au*180/PI , (char*)sciASendBuffer);
+		   double_to_string(nowAngle*180/PI , (char*)sciASendBuffer);
 //		   double_to_string(roll_Av*180/PI, (char*)sciASendBuffer);
 //		   double_to_string(pitch_Gy*180/PI , (char*)sciASendBuffer);
 //		   double_to_string(roll_Gx*180/PI , (char*)sciASendBuffer);
@@ -93,7 +93,7 @@ void sciASendData()
 //	double_to_string(  throttle_real , (char*)sciASendBuffer);
 //	double_to_string(  throttle_ref , (char*)sciASendBuffer);
 
-	strcat((char*)sciASendBuffer,"SciATest:1234567890abcdefghijk\r\n");
+	strcat((char*)sciASendBuffer,"\r\n");
 
 	sciASendBufferPointer=0;
 	SciaRegs.SCIFFTX.bit.TXFFIENA=1;

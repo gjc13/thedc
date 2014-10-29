@@ -22,13 +22,13 @@ float32 GetAngle(int32 fromx,int32 fromy,int32 tox,int32 toy)
 	int32 deltaX=tox-fromx;
 	int32 deltaY=toy-fromy;
 	float32 distance=GetDistance(fromx,fromy,tox,toy);
-	if(deltaY>0)
+	if(deltaY>=0)
 	{
 		return acos(deltaX/distance);
 	}
 	else
 	{
-		return acos(deltaX/distance)+2*PI;
+		return 2*PI-acos(deltaX/distance);
 	}
 }
 
@@ -157,13 +157,14 @@ void TurnEngine(float32 targetAngle)
 {
 	float32 rateP=0.6;
 	float32 startPAngle=PI/10;
-	float32 minPower=0.1;
+	float32 minPower=0.05;
 	float32 diffAngle=GetDiffAngle(nowAngle,targetAngle);
-	float32 outPower=diffAngle<startPAngle?rateP*diffAngle:0.2;
+	float32 outPower=diffAngle<startPAngle?rateP*diffAngle:0.05;
 	outPower+=minPower;
 	if(IsCounterClockWise(nowAngle,targetAngle))
 	{
 		setEngine(ENGINEBACK,outPower,ENGINEFRONT,outPower);
+
 	}
 	else
 	{
