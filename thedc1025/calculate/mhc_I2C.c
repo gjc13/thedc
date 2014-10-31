@@ -4,11 +4,11 @@
 void init_I2C_devices()
 {
 	   // 初始化MPU6050，等每条数据发完再写下一条，i2c出错重新初始化不能用这个
-	       while( 	iicWriteByte(MPU6050ADDR,	PWR_MGMT_1	, 	0x01) 	!= 	I2C_SUCCESS);
-	       while( 	iicWriteByte(MPU6050ADDR,	SMPLRT_DIV	, 		15) 	!= 	I2C_SUCCESS);
-	       while( 	iicWriteByte(MPU6050ADDR,	CONFIG 			, 	0x00) 	!= 	I2C_SUCCESS);
-	       while( 	iicWriteByte(MPU6050ADDR,	GYRO_CONFIG,		16) 	!= 	I2C_SUCCESS);
-	       while( 	iicWriteByte(MPU6050ADDR	,ACCEL_CONFIG, 	16) 	!= 	I2C_SUCCESS);
+    while( iicWriteByte(MPU6050ADDR,PWR_MGMT_1	, 0x01) != I2C_SUCCESS);
+    while( iicWriteByte(MPU6050ADDR,SMPLRT_DIV	, 0x00) != I2C_SUCCESS);
+    while( iicWriteByte(MPU6050ADDR,CONFIG 			, 0x00) != I2C_SUCCESS);
+    while( iicWriteByte(MPU6050ADDR,GYRO_CONFIG, 0x18) != I2C_SUCCESS);
+    while( iicWriteByte(MPU6050ADDR,ACCEL_CONFIG, 0x01) != I2C_SUCCESS);
 
 		// 初始化HMC5883
 //	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_CONFA , 	0x78) 	!= 	I2C_SUCCESS);
@@ -82,7 +82,7 @@ __interrupt void i2c_int1a_isr(void)     // I2C-A
 	   case 13://收到从设备发来的数据
 //	       	  i2cStatus=0;
 	       	  i2cData[i2cDataPointer]=I2caRegs.I2CDRR;//把数据从寄存器放到i2c数据数组
-	       	  if( (++i2cDataPointer)>17)//如果读完最后一个数，指针回到第一个，加别的设备要改这里和地址，不科学，要改！
+	       	  if( (++i2cDataPointer)>13)//如果读完最后一个数，指针回到第一个，加别的设备要改这里和地址，不科学，要改！
 	       	  {
 	       		  i2cDataPointer=0;
 	       	  }

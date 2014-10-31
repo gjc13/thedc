@@ -24,12 +24,12 @@ volatile Uint16 i2c_Send_Complete=0;
 volatile Uint16 i2cDataPointer=0;
 int16 i2cData[24]={0,0,0,0,0,0,0,0,	0,0,0,0,0,0,0,0,	0,0,0,0,0,0,0,0};
 Uint16 i2cSlaves[24]={0x68,0x68,0x68,0x68,	0x68,0x68,0x68,0x68,	0x68,0x68,0x68,0x68,
-		0x1E,0x1E,0x1E,0x1E, 0x1E,0x1E,0x68,0x68,  0x68,0x68,0x68,0x68};
+		0x68,0x68,0x68,0x68, 0x1E,0x1E,0x68,0x68,  0x68,0x68,0x68,0x68};
 Uint16 i2cRegAddr[24]={ACCEL_XOUT_H , ACCEL_XOUT_L , ACCEL_YOUT_H , ACCEL_YOUT_L ,
 		ACCEL_ZOUT_H , ACCEL_ZOUT_L , GYRO_XOUT_H , GYRO_XOUT_L ,
 		GYRO_YOUT_H , GYRO_YOUT_L ,	GYRO_ZOUT_H , GYRO_ZOUT_L,
-		HMC58X3_R_XM, HMC58X3_R_XL,HMC58X3_R_YM , HMC58X3_R_YL ,
-		HMC58X3_R_ZM , HMC58X3_R_ZL,0,0,		0,0,0,0};
+		0, 0,0 , 0 ,
+		0 , 0,0,0,		0,0,0,0};
 //float32 MPU6050Data[6];
 
 Uint16 i2c_Send_Data=0;
