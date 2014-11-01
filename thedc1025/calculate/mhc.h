@@ -46,6 +46,9 @@
 #define		GYRO_ZOUT_H		0x47
 #define		GYRO_ZOUT_L		0x48
 
+#define GYRO_ZH_INDEX 10
+#define GYRO_ZL_INDEX 11
+
 #define HMC58X3_ADDR	 		0x1E//3C // 7 bit address of the HMC58X3 used with the Wire library
 #define HMC_POS_BIAS 			1
 #define HMC_NEG_BIAS 			2

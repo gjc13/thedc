@@ -1,3 +1,6 @@
+///TODO:处理i2c错误下的isMPUavailable设置
+///By gjc
+
 #include "mhc.h"
 #include "GlobalVariables.h"
 
@@ -84,6 +87,7 @@ __interrupt void i2c_int1a_isr(void)     // I2C-A
 	       	  i2cData[i2cDataPointer]=I2caRegs.I2CDRR;//把数据从寄存器放到i2c数据数组
 	       	  if( (++i2cDataPointer)>13)//如果读完最后一个数，指针回到第一个，加别的设备要改这里和地址，不科学，要改！
 	       	  {
+	       		  DecodeMPUData();
 	       		  i2cDataPointer=0;
 	       	  }
 	          I2caRegs.I2CSAR = i2cSlaves[i2cDataPointer];

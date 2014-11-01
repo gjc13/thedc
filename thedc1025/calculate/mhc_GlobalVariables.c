@@ -28,8 +28,9 @@ Uint16 i2cSlaves[24]={0x68,0x68,0x68,0x68,	0x68,0x68,0x68,0x68,	0x68,0x68,0x68,0
 Uint16 i2cRegAddr[24]={ACCEL_XOUT_H , ACCEL_XOUT_L , ACCEL_YOUT_H , ACCEL_YOUT_L ,
 		ACCEL_ZOUT_H , ACCEL_ZOUT_L , GYRO_XOUT_H , GYRO_XOUT_L ,
 		GYRO_YOUT_H , GYRO_YOUT_L ,	GYRO_ZOUT_H , GYRO_ZOUT_L,
-		0, 0,0 , 0 ,
-		0 , 0,0,0,		0,0,0,0};
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0};
 //float32 MPU6050Data[6];
 
 Uint16 i2c_Send_Data=0;
@@ -160,22 +161,28 @@ volatile float32 eCapData[3]={0,0,0};
 
 
 
-volatile Uint16 playerData_headx;
-volatile Uint16 playerData_heady;
-volatile Uint16 playerData_rearx;
-volatile Uint16 playerData_reary;
-volatile Uint16 nowScore;
-volatile Uint16 nowX;
-volatile Uint16 nowY;
-volatile Uint16 headX;
-volatile Uint16 headY;
-volatile Uint16 rearX;
-volatile Uint16 rearY;
-volatile float32 nowAngle;
-volatile Uint16 targetX;
-volatile Uint16 targetY;
+volatile Uint16 playerData_headx=0;
+volatile Uint16 playerData_heady=0;
+volatile Uint16 playerData_rearx=0;
+volatile Uint16 playerData_reary=0;
+volatile Uint16 nowScore=0;
+volatile Uint16 nowX=0;
+volatile Uint16 nowY=0;
+volatile Uint16 headX=0;
+volatile Uint16 headY=0;
+volatile Uint16 rearX=0;
+volatile Uint16 rearY=0;
+volatile float32 nowAngle=0;
+volatile Uint16 targetX=0;
+volatile Uint16 targetY=0;
 
 //上位机发送的比赛信息
 PlayerData playerData;
-volatile Uint16 canMove;
-volatile Uint16 gameFirstStart;
+volatile Uint16 playerData_lastRecieveCPUTime=0;
+volatile Uint16 canMove=0;
+volatile Uint16 gameFirstStart=0;
+volatile Uint16 isPlayerDataAvailable=0;
+
+//MPU_6050提供的姿态信息
+volatile Uint16 isMPUavailable=0;
+volatile float32 angleRatez=0;

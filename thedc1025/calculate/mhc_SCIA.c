@@ -35,7 +35,7 @@ __interrupt void sciaRxFifoIsr(void)
 		sciAReadBuffer[sciAReadBufferPointer]=SciaRegs.SCIRXBUF.all;
 		sciAReadBufferPointer++;
 	}
-	if(ShouldDecodeData())
+	if(ShouldDecodePlayerData())
 	{
 		DecodePlayerData();
 	}

@@ -12,6 +12,7 @@ $(GEN_CMDS__FLAG) \
 -l"rts2800_fpu32.lib" \
 "./calculate/AHRS.obj" \
 "./calculate/car_control.obj" \
+"./calculate/gjc_decoders.obj" \
 "./calculate/gjc_engineDrive.obj" \
 "./calculate/main.obj" \
 "./calculate/mhc_GlobalVariables.obj" \
@@ -25,6 +26,7 @@ $(GEN_CMDS__FLAG) \
 "./calculate/mhc_ePWM.obj" \
 "./calculate/mhc_initDSP.obj" \
 "./calculate/num2string.obj" \
+"./calculate/utilities.obj" \
 "./TiLibrary/F2806x_CodeStartBranch.obj" \
 "./TiLibrary/F2806x_CpuTimers.obj" \
 "./TiLibrary/F2806x_DefaultIsr.obj" \
@@ -175,8 +177,8 @@ flyProgram.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "calculate\AHRS.pp" "calculate\car_control.pp" "calculate\gjc_engineDrive.pp" "calculate\main.pp" "calculate\mhc_GlobalVariables.pp" "calculate\mhc_I2C.pp" "calculate\mhc_SCIA.pp" "calculate\mhc_SCIB_S_BUS.pp" "calculate\mhc_control.pp" "calculate\mhc_cpuTimer.pp" "calculate\mhc_doData.pp" "calculate\mhc_eCap.pp" "calculate\mhc_ePWM.pp" "calculate\mhc_initDSP.pp" "calculate\num2string.pp" "TiLibrary\F2806x_CpuTimers.pp" "TiLibrary\F2806x_DefaultIsr.pp" "TiLibrary\F2806x_ECap.pp" "TiLibrary\F2806x_EPwm.pp" "TiLibrary\F2806x_GlobalVariableDefs.pp" "TiLibrary\F2806x_Gpio.pp" "TiLibrary\F2806x_HRCap.pp" "TiLibrary\F2806x_I2C.pp" "TiLibrary\F2806x_PieCtrl.pp" "TiLibrary\F2806x_PieVect.pp" "TiLibrary\F2806x_Sci.pp" "TiLibrary\F2806x_SysCtrl.pp" 
-	-$(RM) "calculate\AHRS.obj" "calculate\car_control.obj" "calculate\gjc_engineDrive.obj" "calculate\main.obj" "calculate\mhc_GlobalVariables.obj" "calculate\mhc_I2C.obj" "calculate\mhc_SCIA.obj" "calculate\mhc_SCIB_S_BUS.obj" "calculate\mhc_control.obj" "calculate\mhc_cpuTimer.obj" "calculate\mhc_doData.obj" "calculate\mhc_eCap.obj" "calculate\mhc_ePWM.obj" "calculate\mhc_initDSP.obj" "calculate\num2string.obj" "TiLibrary\F2806x_CodeStartBranch.obj" "TiLibrary\F2806x_CpuTimers.obj" "TiLibrary\F2806x_DefaultIsr.obj" "TiLibrary\F2806x_ECap.obj" "TiLibrary\F2806x_EPwm.obj" "TiLibrary\F2806x_GlobalVariableDefs.obj" "TiLibrary\F2806x_Gpio.obj" "TiLibrary\F2806x_HRCap.obj" "TiLibrary\F2806x_I2C.obj" "TiLibrary\F2806x_PieCtrl.obj" "TiLibrary\F2806x_PieVect.obj" "TiLibrary\F2806x_Sci.obj" "TiLibrary\F2806x_SysCtrl.obj" "TiLibrary\F2806x_usDelay.obj" 
+	-$(RM) "calculate\AHRS.pp" "calculate\car_control.pp" "calculate\gjc_decoders.pp" "calculate\gjc_engineDrive.pp" "calculate\main.pp" "calculate\mhc_GlobalVariables.pp" "calculate\mhc_I2C.pp" "calculate\mhc_SCIA.pp" "calculate\mhc_SCIB_S_BUS.pp" "calculate\mhc_control.pp" "calculate\mhc_cpuTimer.pp" "calculate\mhc_doData.pp" "calculate\mhc_eCap.pp" "calculate\mhc_ePWM.pp" "calculate\mhc_initDSP.pp" "calculate\num2string.pp" "calculate\utilities.pp" "TiLibrary\F2806x_CpuTimers.pp" "TiLibrary\F2806x_DefaultIsr.pp" "TiLibrary\F2806x_ECap.pp" "TiLibrary\F2806x_EPwm.pp" "TiLibrary\F2806x_GlobalVariableDefs.pp" "TiLibrary\F2806x_Gpio.pp" "TiLibrary\F2806x_HRCap.pp" "TiLibrary\F2806x_I2C.pp" "TiLibrary\F2806x_PieCtrl.pp" "TiLibrary\F2806x_PieVect.pp" "TiLibrary\F2806x_Sci.pp" "TiLibrary\F2806x_SysCtrl.pp" 
+	-$(RM) "calculate\AHRS.obj" "calculate\car_control.obj" "calculate\gjc_decoders.obj" "calculate\gjc_engineDrive.obj" "calculate\main.obj" "calculate\mhc_GlobalVariables.obj" "calculate\mhc_I2C.obj" "calculate\mhc_SCIA.obj" "calculate\mhc_SCIB_S_BUS.obj" "calculate\mhc_control.obj" "calculate\mhc_cpuTimer.obj" "calculate\mhc_doData.obj" "calculate\mhc_eCap.obj" "calculate\mhc_ePWM.obj" "calculate\mhc_initDSP.obj" "calculate\num2string.obj" "calculate\utilities.obj" "TiLibrary\F2806x_CodeStartBranch.obj" "TiLibrary\F2806x_CpuTimers.obj" "TiLibrary\F2806x_DefaultIsr.obj" "TiLibrary\F2806x_ECap.obj" "TiLibrary\F2806x_EPwm.obj" "TiLibrary\F2806x_GlobalVariableDefs.obj" "TiLibrary\F2806x_Gpio.obj" "TiLibrary\F2806x_HRCap.obj" "TiLibrary\F2806x_I2C.obj" "TiLibrary\F2806x_PieCtrl.obj" "TiLibrary\F2806x_PieVect.obj" "TiLibrary\F2806x_Sci.obj" "TiLibrary\F2806x_SysCtrl.obj" "TiLibrary\F2806x_usDelay.obj" 
 	-$(RM) "TiLibrary\F2806x_CodeStartBranch.pp" "TiLibrary\F2806x_usDelay.pp" 
 	-@echo 'Finished clean'
 	-@echo ' '

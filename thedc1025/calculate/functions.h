@@ -92,9 +92,12 @@ float32 invSqrt(float32 x);
 
 int16 iirLPFilterSingle(volatile int32 in,volatile int32 attenuation, volatile int32* filt);
 
-Uint16 ShouldDecodeData();
-void DecodePlayerData();
 
+Uint16 ShouldDecodePlayerData();
+void DecodePlayerData();
+void DecodeMPUData();
+
+void InitializeEngine();
 void SetEngineOutput();
 void DisableEngineOutput();
 void TurnEngine(float32 targetAngle);
@@ -103,8 +106,9 @@ Uint16 UpdatePosture();
 
 float32 GetDistance(int32 fromx,int32 fromy,int32 tox,int32 toy);
 float32 GetAngle(int32 fromx,int32 fromy,int32 tox,int32 toy);
+float32 GetDiffAngleAbs(float32 fromAngle,float32 toAngle);
 float32 GetDiffAngle(float32 fromAngle,float32 toAngle);
 int16 IsCounterClockWise(float32 fromAngle,float32 toAngle);
-void InitializeEngine();
+float32 GetSecondTimespan(Uint16 cpuTimeFrom,Uint16 cpuTimeTo);
 
 #endif

@@ -159,7 +159,13 @@ extern volatile Uint16 targetY;
 
 //上位机发送的比赛信息
 extern PlayerData playerData;
+extern volatile Uint16 playerData_lastRecieveCPUTime;
 extern volatile Uint16 canMove;
 extern volatile Uint16 gameFirstStart;
+extern volatile Uint16 isPlayerDataAvailable;
+
+//MPU_6050提供的姿态信息
+extern volatile Uint16 isMPUavailable;
+extern volatile Uint16 angleRatez;
 
 #endif
