@@ -4,8 +4,8 @@
 
 void InitializeEngine()
 {
-	targetX=120;
-	targetY=120;
+	targetX=204;
+	targetY=185;
 	gameFirstStart=1;
 	canMove=0;
 }
@@ -33,7 +33,7 @@ Uint16 UpdatePosture()
 	}
 	nowDataAngle=GetAngle(playerData_rearx,playerData_reary,playerData_headx,playerData_heady);
 	dataDiffAngle=GetDiffAngle(nowAngle,nowDataAngle);
-	mpuDiffAngle=angleRatez*GetSecondTimespan(playerData_lastRecieveCPUTime,cpuTime);
+	mpuDiffAngle=gGyro.z*GetSecondTimespan(playerData_lastRecieveCPUTime,cpuTime);
 
 	//½Ç¶È»¥²¹ÂË²¨
 	if(!isPlayerDataAvailable)
@@ -48,6 +48,9 @@ Uint16 UpdatePosture()
 	{
 		diffAngle=dataAngleWeight*dataDiffAngle+mpuAngleWeight*mpuDiffAngle;
 	}
+	angleDiffIntergration*=0.9;
+	angleDiffIntergration+=diffAngle;
+
 	nowAngle=nowAngle+diffAngle;
 	nowAngle=nowAngle<0?nowAngle+2*PI:nowAngle;
 	nowAngle=nowAngle>2*PI?nowAngle-2*PI:nowAngle;
@@ -58,67 +61,72 @@ Uint16 UpdatePosture()
 
 void SetEngineOutput()
 {
-	float32 distanceMinBound=10;
+	float32 distanceMinBound=5;
 	float32 nowDistance=GetDistance(nowX,nowY,targetX,targetY);
-	float32 targetAngle=0;
 	float32 diffAngle=0;
-	float32 angleTolerance=PI/30;
+	float32 angleTolerance=PI/25;
 	if(nowDistance<distanceMinBound)
 	{
+		DisableEngineOutput();
 		return;
 	}
 	targetAngle=GetAngle(nowX,nowY,targetX,targetY);
 	diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
-	if(diffAngle>PI/9)
+	if(diffAngle>angleTolerance)
 	{
 		TurnEngine(targetAngle);
 	}
 	else
 	{
-		RunToTarget();
+		//RunToTarget();
 	}
 }
 
 void TurnEngine(float32 targetAngle)
 {
 	//Ëæ±ãÐ´µÄ²ÎÊý
-	float32 rateP=0.3;
-	float32 rateD=0.2;
-	float32 startPAngle=PI/10;
+	float32 rateP=angleP;
+	float32 rateD=IsCounterClockWise(nowAngle,targetAngle)?-angleD:angleD;
+	float32 rateI=angleI;
+	float32 startPAngle=PI/3;
 
 	//TODO test the minPower
-	float32 minPower=0.01;
+	float32 minPower=0;
 	float32 diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
-	float32 outPower=0.1;
 	if(diffAngle<startPAngle)
 	{
 		if(isMPUavailable)
 		{
-			outPower=rateP*diffAngle+rateD*angleRatez;
+			Padjust=rateP*diffAngle;
+			Dadjust=rateD*gGyro.z;
 		}
 		else
 		{
 			//Better to be conservative when MPU fails
-			outPower=(rateP*diffAngle)/2;
+			Padjust=(rateP*diffAngle)/2;
 		}
 	}
-	outPower+=minPower;
-	if(IsCounterClockWise(nowAngle,targetAngle))
+	Padjust=Padjust<0.3?Padjust:0.3;
+	Iadjust=rateI*angleDiffIntergration;
+	angleOutPut=Padjust+Iadjust+Dadjust;
+	angleOutPut=angleOutPut>1?1:angleOutPut;
+	angleOutPut=angleOutPut<minPower?minPower:angleOutPut;
+	if(IsCounterClockWise(nowAngle,targetAngle) && diffAngle<PI*0.9)
 	{
-		setEngine(ENGINEBACK,outPower,ENGINEFRONT,outPower);
+		setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
 	}
 	else
 	{
-		setEngine(ENGINEFRONT,outPower,ENGINEBACK,outPower);
+		setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
 	}
 }
 
 void RunToTarget()
 {
-	float32 rateP=0.0125;
-	float32 startPDistance=16;
-	float32 minPower=0.1;
+	float32 rateP=0.005;
+	float32 startPDistance=30;
+	float32 minPower=0.03;
 	float32 distance=GetDistance(nowX,nowY,targetX,targetY);
 	float32 outPower=distance>startPDistance?rateP*distance:0.2;
 	outPower+=minPower;

@@ -22,7 +22,7 @@ void DecodePlayerData()
 	iterBuffer++;
 	for(i=0; i<4; i++)
 	{
-		if(i==playerID && (abs(*iterBuffer-playerData_headx)<10||gameFirstStart))
+		if(i==playerID /*&& (abs(*iterBuffer-playerData_headx)<10||gameFirstStart) */)
 		{
 			gameFirstStart=0;
 			playerData_headx=*(iterBuffer);
@@ -54,7 +54,7 @@ void DecodePlayerData()
 	{
 		sciAReadBuffer[i]=0;
 	}
-	isPlayerDataAvailable=GetDistance(playerData_rearx,playerData_reary,playerData_headx,playerData_heady)<1;
+	isPlayerDataAvailable=!(GetDistance(playerData_rearx,playerData_reary,playerData_headx,playerData_heady)<1);
 	canMove=playerData.is_running && playerData.time>1;
 	if(isPlayerDataAvailable)
 	{
@@ -65,13 +65,4 @@ void DecodePlayerData()
 		canMove=0;
 		gameFirstStart=1;
 	}
-}
-
-void DecodeMPUData()
-{
-	Uint32 gyro_z=i2cData[GYRO_ZH_INDEX];
-	gyro_z=gyro_z<<8;
-	gyro_z+=i2cData[GYRO_ZL_INDEX];
-	angleRatez=gyro_z;
-	isMPUavailable=1;
 }

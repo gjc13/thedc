@@ -95,7 +95,6 @@ int16 iirLPFilterSingle(volatile int32 in,volatile int32 attenuation, volatile i
 
 Uint16 ShouldDecodePlayerData();
 void DecodePlayerData();
-void DecodeMPUData();
 
 void InitializeEngine();
 void SetEngineOutput();

@@ -181,8 +181,22 @@ PlayerData playerData;
 volatile Uint16 playerData_lastRecieveCPUTime=0;
 volatile Uint16 canMove=0;
 volatile Uint16 gameFirstStart=0;
-volatile Uint16 isPlayerDataAvailable=0;
+volatile Uint16 isPlayerDataAvailable=1;
 
 //MPU_6050提供的姿态信息
 volatile Uint16 isMPUavailable=0;
-volatile float32 angleRatez=0;
+
+
+//角度PID
+float32 angleOutPut;
+float32 targetAngle;
+
+float32 angleP;
+float32 angleI;
+float32 angleD;
+float32 Padjust;
+float32 Iadjust;
+float32 Dadjust;
+float32 angleDiffIntergration;
+
+

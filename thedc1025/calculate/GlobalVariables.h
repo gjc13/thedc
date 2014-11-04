@@ -166,6 +166,18 @@ extern volatile Uint16 isPlayerDataAvailable;
 
 //MPU_6050提供的姿态信息
 extern volatile Uint16 isMPUavailable;
-extern volatile Uint16 angleRatez;
+
+
+//角度PID
+extern float32 angleOutPut;
+extern float32 targetAngle;
+
+extern float32 angleP;
+extern float32 angleI;
+extern float32 angleD;
+extern float32 Padjust;
+extern float32 Iadjust;
+extern float32 Dadjust;
+extern float32 angleDiffIntergration;
 
 #endif

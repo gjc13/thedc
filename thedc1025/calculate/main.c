@@ -37,6 +37,15 @@ void main(void)
 		   doSCI =0;
 		   sciASendBufferPointer=0;
 	   }
+
+	   if(UpdatePosture() && canMove)
+	   {
+		   SetEngineOutput();
+	   }
+	   else if(!canMove)
+	   {
+		   DisableEngineOutput();
+	   }
 //
 //	   if(doSBusDecode)
 //	   {
@@ -53,15 +62,6 @@ void main(void)
 //		   setEngine(1,0.25,1,0.245);
 //	   else
 //		   setEngine(0,0,0,0);
-
-	   if(UpdatePosture() && canMove)
-	   {
-		   SetEngineOutput();
-	   }
-	   else if(!canMove)
-	   {
-		   DisableEngineOutput();
-	   }
 
 
 

@@ -242,6 +242,25 @@ void initGlobalVariables()
 	MOTOR3_PULSE=0;
 	MOTOR4_PULSE=0;
 //	pulse_temp;
+
+	playerData_lastRecieveCPUTime=0;
+	canMove=0;
+	gameFirstStart=1;
+	isPlayerDataAvailable=0;
+
+	//MPU_6050提供的姿态信息
+	isMPUavailable=1;
+
+	angleDiffIntergration=0;
+	angleP=0.2;
+	angleI=0.1;
+	angleD=1.5;
+	Padjust=0;
+	Iadjust=0;
+	Dadjust=0;
+
+	targetAngle=0;
+	angleOutPut=0;
 }
 
 void sensor_calibrate(void)
