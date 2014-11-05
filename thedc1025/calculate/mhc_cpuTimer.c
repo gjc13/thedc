@@ -21,6 +21,11 @@ __interrupt void cpu_timer0_isr(void)
 	doCalulate=1;
 
 
+	if(cpuTime%100==0)
+	{
+		UpdatePosture();
+	}
+
 	if(cpuTime%80==0)
 		doSCI=1;
 

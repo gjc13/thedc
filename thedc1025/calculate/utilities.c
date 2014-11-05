@@ -34,7 +34,7 @@ float32 GetDiffAngleAbs(float32 fromAngle,float32 toAngle)
 float32 GetDiffAngle(float32 fromAngle,float32 toAngle)
 {
 	float32 diffAngle=GetDiffAngleAbs(fromAngle,toAngle);
-	return IsCounterClockWise(fromAngle,toAngle)?diffAngle:-diffAngle;
+	return IsCounterClockWise(fromAngle,toAngle)?-diffAngle:diffAngle;
 }
 
 int16 IsCounterClockWise(float32 fromAngle,float32 toAngle)
@@ -51,6 +51,6 @@ float32 GetSecondTimespan(Uint16 cpuTimeFrom,Uint16 cpuTimeTo)
 {
 	int32 timeFrom=cpuTimeFrom;
 	int32 timeTo=cpuTimeTo;
-	int32 cpuSpan=timeFrom<timeTo?timeTo-timeFrom:timeTo+60000-timeFrom;
+	int32 cpuSpan=timeFrom<=timeTo?timeTo-timeFrom:timeTo+60000-timeFrom;
 	return (float32)cpuSpan*2.5/1000;
 }

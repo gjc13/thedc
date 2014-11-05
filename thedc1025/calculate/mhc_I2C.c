@@ -94,6 +94,7 @@ __interrupt void i2c_int1a_isr(void)     // I2C-A
 	          I2caRegs.I2CCNT = 1;
 	          I2caRegs.I2CDXR = i2cRegAddr[i2cDataPointer];
 	          I2caRegs.I2CMDR.all = 0x2620;			// Send data to setup EEPROM address
+	          isMPUavailable=1;
 	       	  break;
 	   }
 

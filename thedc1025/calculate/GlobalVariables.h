@@ -167,6 +167,7 @@ extern volatile Uint16 isPlayerDataAvailable;
 //MPU_6050提供的姿态信息
 extern volatile Uint16 isMPUavailable;
 
+extern Uint16 lastUpdatePostureTime;
 
 //角度PID
 extern float32 angleOutPut;

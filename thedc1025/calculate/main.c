@@ -38,12 +38,14 @@ void main(void)
 		   sciASendBufferPointer=0;
 	   }
 
-	   if(UpdatePosture() && canMove)
+	   if(canMove && (isMPUavailable||isPlayerDataAvailable))
 	   {
 		   SetEngineOutput();
 	   }
-	   else if(!canMove)
+	   else
 	   {
+		   nowAngle=0;
+		   gameFirstStart=1;
 		   DisableEngineOutput();
 	   }
 //

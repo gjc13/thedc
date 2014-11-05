@@ -18,6 +18,12 @@ Uint16 UpdatePosture()
 	float32 dataDiffAngle;
 	float32 mpuDiffAngle;
 	float32 diffAngle;
+	Uint16 lastTime=lastUpdatePostureTime;
+	lastUpdatePostureTime=cpuTime;
+	if(abs(gGyro.z)>3*PI)
+	{
+		isMPUavailable=0;
+	}
 	if(!isPlayerDataAvailable && !isMPUavailable)
 	{
 		return 0;
@@ -32,8 +38,16 @@ Uint16 UpdatePosture()
 		rearY=playerData_reary;
 	}
 	nowDataAngle=GetAngle(playerData_rearx,playerData_reary,playerData_headx,playerData_heady);
-	dataDiffAngle=GetDiffAngle(nowAngle,nowDataAngle);
-	mpuDiffAngle=gGyro.z*GetSecondTimespan(playerData_lastRecieveCPUTime,cpuTime);
+	dataDiffAngle=nowDataAngle-nowAngle;
+	if(nowDataAngle>3*PI/2 && nowAngle<PI/2)
+	{
+		dataDiffAngle=dataDiffAngle-2*PI;
+	}
+	else if(nowDataAngle<PI/2 && nowAngle>3*PI/2)
+	{
+		dataDiffAngle=dataDiffAngle+2*PI;
+	}
+	mpuDiffAngle=gGyro.z*GetSecondTimespan(lastTime,cpuTime);
 
 	//½Ç¶È»¥²¹ÂË²¨
 	if(!isPlayerDataAvailable)
@@ -47,6 +61,10 @@ Uint16 UpdatePosture()
 	else
 	{
 		diffAngle=dataAngleWeight*dataDiffAngle+mpuAngleWeight*mpuDiffAngle;
+	}
+	if(diffAngle>0.5 || diffAngle<-0.5)
+	{
+		angleDiffIntergration-=diffAngle;
 	}
 	angleDiffIntergration*=0.9;
 	angleDiffIntergration+=diffAngle;
@@ -94,18 +112,18 @@ void TurnEngine(float32 targetAngle)
 	//TODO test the minPower
 	float32 minPower=0;
 	float32 diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
-	if(diffAngle<startPAngle)
+	Padjust=0;
+	Iadjust=0;
+	Dadjust=0;
+	if(isMPUavailable)
 	{
-		if(isMPUavailable)
-		{
-			Padjust=rateP*diffAngle;
-			Dadjust=rateD*gGyro.z;
-		}
-		else
-		{
-			//Better to be conservative when MPU fails
-			Padjust=(rateP*diffAngle)/2;
-		}
+		Padjust=rateP*diffAngle;
+		Dadjust=rateD*gGyro.z;
+	}
+	else
+	{
+		//Better to be conservative when MPU fails
+		Padjust=(rateP*diffAngle)/2;
 	}
 	Padjust=Padjust<0.3?Padjust:0.3;
 	Iadjust=rateI*angleDiffIntergration;

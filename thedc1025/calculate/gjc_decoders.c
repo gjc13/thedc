@@ -56,13 +56,8 @@ void DecodePlayerData()
 	}
 	isPlayerDataAvailable=!(GetDistance(playerData_rearx,playerData_reary,playerData_headx,playerData_heady)<1);
 	canMove=playerData.is_running && playerData.time>1;
-	if(isPlayerDataAvailable)
-	{
-		playerData_lastRecieveCPUTime=cpuTime;
-	}
 	if(playerData.time<=1)
 	{
-		canMove=0;
 		gameFirstStart=1;
 	}
 }
