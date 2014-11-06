@@ -132,11 +132,11 @@ void TurnEngine(float32 targetAngle)
 	angleOutPut=angleOutPut<minPower?minPower:angleOutPut;
 	if(IsCounterClockWise(nowAngle,targetAngle) && diffAngle<PI*0.9)
 	{
-		setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
+		setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
 	}
 	else
 	{
-		setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
+		setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
 	}
 }
 

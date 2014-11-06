@@ -1,5 +1,6 @@
 #include "mhc.h"
 #include "GlobalVariables.h"
+#include "functions.h"
 
 void main(void)
 {
@@ -18,7 +19,6 @@ void main(void)
 //   fly_enable=2;
 
    InitializeEngine();
-
    for(;;)
    {
 //	   fly_enable=0;
@@ -48,17 +48,17 @@ void main(void)
 		   gameFirstStart=1;
 		   DisableEngineOutput();
 	   }
-//
-//	   if(doSBusDecode)
-//	   {
-//		   sbusDecode();
-//		   doSBusDecode=0;
-//	   }
-//	   if(doUltra)
-//	   {
-//		   vz_ultrasonic_calculate();
-//		   doUltra=0;
-//	   }
+
+	   if(doSBusDecode)
+	   {
+		   sbusDecode();
+		   doSBusDecode=0;
+	   }
+	   if(doUltra)
+	   {
+		   vz_ultrasonic_calculate();
+		   doUltra=0;
+	   }
 
 //	   if(eCapData[0]<40)
 //		   setEngine(1,0.25,1,0.245);
