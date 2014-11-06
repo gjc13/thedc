@@ -251,9 +251,9 @@ void initGlobalVariables()
 	isMPUavailable=1;
 
 	angleDiffIntergration=0;
-	angleP=0.1;
+	angleP=1.5;
 	angleI=0;
-	angleD=0;
+	angleD=-0.5;
 	Padjust=0;
 	Iadjust=0;
 	Dadjust=0;

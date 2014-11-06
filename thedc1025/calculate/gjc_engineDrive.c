@@ -82,7 +82,7 @@ void SetEngineOutput()
 	float32 distanceMinBound=5;
 	float32 nowDistance=GetDistance(nowX,nowY,targetX,targetY);
 	float32 diffAngle=0;
-	float32 angleTolerance=PI/25;
+	float32 angleTolerance=PI/15;
 	if(nowDistance<distanceMinBound)
 	{
 		DisableEngineOutput();
@@ -97,7 +97,7 @@ void SetEngineOutput()
 	}
 	else
 	{
-		//RunToTarget();
+		RunToTarget();
 	}
 }
 
@@ -107,7 +107,6 @@ void TurnEngine(float32 targetAngle)
 	float32 rateP=angleP;
 	float32 rateD=IsCounterClockWise(nowAngle,targetAngle)?-angleD:angleD;
 	float32 rateI=angleI;
-	float32 startPAngle=PI/3;
 
 	//TODO test the minPower
 	float32 minPower=0;
@@ -115,7 +114,7 @@ void TurnEngine(float32 targetAngle)
 	Padjust=0;
 	Iadjust=0;
 	Dadjust=0;
-	if(isMPUavailable)
+	if(isMPUavailable && (gGyro.z>-10 && gGyro.z<10))
 	{
 		Padjust=rateP*diffAngle;
 		Dadjust=rateD*gGyro.z;
@@ -132,21 +131,21 @@ void TurnEngine(float32 targetAngle)
 	angleOutPut=angleOutPut<minPower?minPower:angleOutPut;
 	if(IsCounterClockWise(nowAngle,targetAngle) && diffAngle<PI*0.9)
 	{
-		setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
+		setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
 	}
 	else
 	{
-		setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
+		setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
 	}
 }
 
 void RunToTarget()
 {
 	float32 rateP=0.005;
-	float32 startPDistance=30;
-	float32 minPower=0.03;
+	float32 minPower=0.02;
 	float32 distance=GetDistance(nowX,nowY,targetX,targetY);
-	float32 outPower=distance>startPDistance?rateP*distance:0.2;
+	float32 outPower=distance*rateP;
+	outPower=outPower>0.15?0.15:outPower;
 	outPower+=minPower;
 	setEngine(ENGINEFRONT,outPower,ENGINEFRONT,outPower);
 }
