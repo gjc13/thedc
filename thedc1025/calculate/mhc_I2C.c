@@ -17,6 +17,7 @@ void init_I2C_devices()
 //	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_CONFA , 	0x78) 	!= 	I2C_SUCCESS);
 //	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_CONFB , 	0x00) 	!= 	I2C_SUCCESS);
 //	       while( 	iicWriteByte(HMC58X3_ADDR , HMC58X3_R_MODE , 	0x00) 	!= 	I2C_SUCCESS);
+    while( iicStartRead() != I2C_SUCCESS );
 
 }
 

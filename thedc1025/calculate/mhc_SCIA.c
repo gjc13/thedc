@@ -77,7 +77,11 @@ void sciASendData()
 
 	strcat((char*)sciASendBuffer,"Angle:");
 	double_to_string(nowAngle*180/PI , (char*)sciASendBuffer);
-	double_to_string(gGyro.z*100, (char*)sciASendBuffer);
+	double_to_string(targetAngle*180/PI,(char*)sciASendBuffer);
+	strcat((char*)sciASendBuffer,"PD:");
+	double_to_string(Padjust,(char*)sciASendBuffer);
+	double_to_string(Dadjust,(char*)sciASendBuffer);
+	double_to_string(gGyro.z*180/PI,(char*)sciASendBuffer);
 //		   double_to_string(pitch_Gy*180/PI , (char*)sciASendBuffer);
 //		   double_to_string(roll_Gx*180/PI , (char*)sciASendBuffer);
 //

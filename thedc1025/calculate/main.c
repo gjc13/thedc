@@ -6,9 +6,13 @@ void main(void)
 {
 //	Uint16 i;
 	initDSP();
+//	while(1)
+//	{
+//		setEngine(1,0.2,1,0.2);
+//	}
 	init_I2C_devices();
 
-	while( iicStartRead() != I2C_SUCCESS );
+
 
    uint16strcpy(sciASendBuffer,(Uint16*)"*****´®¿ÚAÕý³£*****");
    sciASendBufferPointer=0;

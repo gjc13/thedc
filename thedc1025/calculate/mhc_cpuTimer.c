@@ -10,6 +10,7 @@ __interrupt void cpu_timer0_isr(void)
 
 	if(SciaRegs.SCIRXST.bit.RXERROR || SciaRegs.SCIFFRX.bit.RXFFOVF)//如果串口接收出错就重新初始化串口
 	{
+		isPlayerDataAvailable=0;
 		SciaRegs.SCIFFRX.bit.RXFFOVRCLR=1;
 		SciaRegs.SCIFFRX.bit.RXFIFORESET=0;
 		SciaRegs.SCIFFRX.bit.RXFIFORESET=1;

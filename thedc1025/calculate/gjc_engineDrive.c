@@ -4,16 +4,16 @@
 
 void InitializeEngine()
 {
-	targetX=204;
-	targetY=185;
+	targetX=160;
+	targetY=160;
 	gameFirstStart=1;
 	canMove=0;
 }
 
 Uint16 UpdatePosture()
 {
-	float32 dataAngleWeight=0.5;
-	float32 mpuAngleWeight=0.5;
+	float32 dataAngleWeight=0.8;
+	float32 mpuAngleWeight=0.2;
 	float32 nowDataAngle;
 	float32 dataDiffAngle;
 	float32 mpuDiffAngle;
@@ -47,7 +47,7 @@ Uint16 UpdatePosture()
 	{
 		dataDiffAngle=dataDiffAngle+2*PI;
 	}
-	mpuDiffAngle=gGyro.z*GetSecondTimespan(lastTime,cpuTime);
+	mpuDiffAngle=-gGyro.z*GetSecondTimespan(lastTime,cpuTime);
 
 	//½Ç¶È»¥²¹ÂË²¨
 	if(!isPlayerDataAvailable)
@@ -97,7 +97,7 @@ void SetEngineOutput()
 	}
 	else
 	{
-		RunToTarget();
+		//RunToTarget();
 	}
 }
 
@@ -109,8 +109,10 @@ void TurnEngine(float32 targetAngle)
 	float32 rateI=angleI;
 
 	//TODO test the minPower
-	float32 minPower=0;
+	float32 minPower=0.03;
+	float32 maxPower=0.15;
 	float32 diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
+	diffAngle=diffAngle>PI?2*PI-diffAngle:diffAngle;
 	Padjust=0;
 	Iadjust=0;
 	Dadjust=0;
@@ -122,32 +124,51 @@ void TurnEngine(float32 targetAngle)
 	else
 	{
 		//Better to be conservative when MPU fails
-		Padjust=(rateP*diffAngle)/2;
+		return;
+		//Padjust=(rateP*diffAngle)/2;
 	}
 	Padjust=Padjust<0.3?Padjust:0.3;
 	Iadjust=rateI*angleDiffIntergration;
 	angleOutPut=Padjust+Iadjust+Dadjust;
-	angleOutPut=angleOutPut>1?1:angleOutPut;
-	angleOutPut=angleOutPut<minPower?minPower:angleOutPut;
-	if(IsCounterClockWise(nowAngle,targetAngle) && diffAngle<PI*0.9)
+	angleOutPut=(angleOutPut>0 && angleOutPut>maxPower)?maxPower:angleOutPut;
+	angleOutPut=(angleOutPut>0 && angleOutPut<minPower)?minPower:angleOutPut;
+	angleOutPut=(angleOutPut<0 && angleOutPut<-0.02)?-0.02:angleOutPut;
+	if(angleOutPut>0)
 	{
-		setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
+		if(IsCounterClockWise(nowAngle,targetAngle))
+		{
+			setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
+		}
+		else
+		{
+			setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
+		}
 	}
 	else
 	{
-		setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
+		if(IsCounterClockWise(nowAngle,targetAngle))
+		{
+			setEngine(ENGINEBACK,angleOutPut,ENGINEFRONT,angleOutPut);
+		}
+		else
+		{
+			setEngine(ENGINEFRONT,angleOutPut,ENGINEBACK,angleOutPut);
+		}
 	}
 }
 
 void RunToTarget()
 {
-	float32 rateP=0.005;
-	float32 minPower=0.02;
+	float32 rateP=0.1;
+	float32 minPower=0.05;
 	float32 distance=GetDistance(nowX,nowY,targetX,targetY);
 	float32 outPower=distance*rateP;
-	outPower=outPower>0.15?0.15:outPower;
+	float32 rightOut=0;
+	outPower=outPower>0.2?outPower:0.2;
+	rightOut=outPower*0.7;
+	rightOut+=minPower;
 	outPower+=minPower;
-	setEngine(ENGINEFRONT,outPower,ENGINEFRONT,outPower);
+	setEngine(ENGINEFRONT,outPower,ENGINEFRONT,rightOut);
 }
 
 void DisableEngineOutput()
