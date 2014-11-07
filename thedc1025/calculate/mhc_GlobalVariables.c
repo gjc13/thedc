@@ -202,4 +202,13 @@ float32 angleDiffIntergration;
 
 float32 nowDataAngle;
 
+volatile enum MoveDirection direction;
 
+Uint16 allTargetX[4];
+Uint16 allTargetY[4];
+volatile Uint16 targetIterator;
+
+volatile enum MoveStatus moveStatus;
+
+volatile Uint32 waitingTime;
+Uint32 waitTimeLimit;

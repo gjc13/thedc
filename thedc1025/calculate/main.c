@@ -42,6 +42,10 @@ void main(void)
 
 	   if(canMove && (isMPUavailable||isPlayerDataAvailable))
 	   {
+		   if(moveStatus==PEND)
+		   {
+			   SeekNextTarget();
+		   }
 		   SetEngineOutput();
 	   }
 	   else

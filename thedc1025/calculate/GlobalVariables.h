@@ -4,6 +4,7 @@
 #include "F2806x_Device.h"         // F2806x Headerfile
 #include "F2806x_Examples.h"       // F2806x Examples Headerfile
 #include "F2806x_EPwm_defines.h" 	 // useful defines for initialization
+#include "mhc.h"
 
 extern Uint16 sciASendBuffer[32];
 extern volatile  Uint16 sciASendBufferPointer;
@@ -182,5 +183,24 @@ extern float32 Dadjust;
 extern float32 angleDiffIntergration;
 
 extern float32 nowDataAngle;
+
+extern volatile enum MoveDirection direction;
+
+//目标位置+迭代器，
+//TODO 搞到坑的位置在initDsp中初始化目标
+extern Uint16 allTargetX[4];
+extern Uint16 allTargetY[4];
+extern volatile Uint16 targetIterator;
+
+//策略状态机
+extern volatile enum MoveStatus moveStatus;
+
+//开始等待得分后的计时器，CPU时间
+extern volatile Uint32 waitingTime;
+
+//得分需要的CPU时间
+//TODO 标定waitTimeLimit
+extern Uint32 waitTimeLimit;
+
 
 #endif

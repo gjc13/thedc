@@ -155,14 +155,21 @@ void SetEngineOutput()
 	if(nowDistance<distanceMinBound)
 	{
 		DisableEngineOutput();
+		StartWaitPoint();
 		return;
 	}
 	targetAngle=GetAngle(nowX,nowY,targetX,targetY);
 	diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
-	if(diffAngle>angleTolerance)
+	if(diffAngle>angleTolerance && abs(diffAngle-PI)>angleTolerance)
 	{
 		TurnEngine(targetAngle);
+	}
+	else if(HasObstacle())
+	{
+		DisableEngineOutput();
+		moveStatus=PEND;
+		return;
 	}
 	else
 	{
@@ -172,15 +179,17 @@ void SetEngineOutput()
 
 void TurnEngine(float32 targetAngle)
 {
-	//Ëæ±ãÐ´µÄ²ÎÊý
 	float32 rateP=angleP;
 	float32 rateD=IsCounterClockWise(nowAngle,targetAngle)?-angleD:angleD;
 	float32 rateI=angleI;
-
-	//TODO test the minPower
 	float32 minPower=0.03;
 	float32 maxPower=0.18;
 	float32 diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
+	if(moveStatus==PEND)
+	{
+		DisableEngineOutput();
+		return;
+	}
 	diffAngle=diffAngle>PI?2*PI-diffAngle:diffAngle;
 	Padjust=0;
 	Iadjust=0;
@@ -203,6 +212,7 @@ void TurnEngine(float32 targetAngle)
 	angleOutPut=(angleOutPut>0 && angleOutPut<minPower)?minPower:angleOutPut;
 	angleOutPut=(angleOutPut<0 && angleOutPut>-minPower)?-minPower:angleOutPut;
 	angleOutPut=(angleOutPut<0 && angleOutPut<-maxPower)?-maxPower:angleOutPut;
+	direction=TURN;
 	if(angleOutPut>0)
 	{
 		if(IsCounterClockWise(nowAngle,targetAngle))
@@ -239,15 +249,57 @@ void RunToTarget()
 //	rightOut+=minPower;
 //	outPower+=minPower;
 //	setEngine(ENGINEFRONT,outPower,ENGINEFRONT,rightOut);
+	if(moveStatus==PEND)
+	{
+		DisableEngineOutput();
+		return;
+	}
 	outPower=outPower>0.16?0.16:outPower;
 	rightOut=outPower*0.8;
 	outPower+=minPower;
 	rightOut+=minPower;
-	setEngine(ENGINEFRONT,outPower,ENGINEFRONT,rightOut);
+	if(GetDiffAngleAbs(nowAngle,targetAngle)<PI/2)
+	{
+		direction=FRONT;
+		setEngine(ENGINEFRONT,outPower,ENGINEFRONT,rightOut);
+	}
+	else
+	{
+		direction=BACK;
+		setEngine(ENGINEBACK,outPower,ENGINEBACK,rightOut);
+	}
 }
 
 void DisableEngineOutput()
 {
 	setEngine(ENGINESTOP,0,ENGINESTOP,0);
+	direction=STOP;
+}
+
+void SeekNextTarget()
+{
+	if(moveStatus==PEND)
+	{
+		targetIterator++;
+		targetX=allTargetX[targetIterator];
+		targetY=allTargetY[targetIterator];
+		moveStatus=SEEK;
+		if(targetIterator>3)
+		{
+			targetIterator-=3;
+		}
+	}
+}
+
+void StartWaitPoint()
+{
+	waitingTime=0;
+	moveStatus=WAITPOINT;
+	DisableEngineOutput();
+}
+
+Uint16 HasObstacle()
+{
+	return 0;
 }
 

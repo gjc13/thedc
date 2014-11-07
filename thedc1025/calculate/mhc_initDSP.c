@@ -250,6 +250,8 @@ void initGlobalVariables()
 	//MPU_6050提供的姿态信息
 	isMPUavailable=1;
 
+	direction=STOP;
+
 	angleDiffIntergration=0;
 	angleP=0.65;
 	angleI=0;
@@ -262,6 +264,13 @@ void initGlobalVariables()
 	angleOutPut=0;
 
 	lastUpdatePostureTime=0;
+
+	direction=STOP;
+
+	moveStatus=PEND;
+	targetIterator=0;
+
+	waitTimeLimit=2000;
 }
 
 void sensor_calibrate(void)

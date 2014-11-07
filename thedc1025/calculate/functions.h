@@ -110,4 +110,15 @@ float32 GetDiffAngle(float32 fromAngle,float32 toAngle);
 int16 IsCounterClockWise(float32 fromAngle,float32 toAngle);
 float32 GetSecondTimespan(Uint16 cpuTimeFrom,Uint16 cpuTimeTo);
 
+//迭代到下一个坐标
+void SeekNextTarget();
+
+//开始等待得分
+void StartWaitPoint();
+
+//TODO 将是否前方有坑从HasObstacle返回
+//移动情况在direction枚举中找
+//TURN的情况建议返回FALSE
+Uint16 HasObstacle();
+
 #endif

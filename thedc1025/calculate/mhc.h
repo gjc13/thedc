@@ -259,6 +259,23 @@ typedef struct
 	volatile Uint16 is_running;
 } PlayerData;
 
+//策略状态机
+//SEEK:前往现在的目标点
+//WAITPOINT：等待得分
+//PEND:挂起，这一状态下电机不会驱动
+//注意每次新的SEEK都由把状态设置到PEND触发主循环中的SeekNextTarget()，不要试图直接改变目标
+enum MoveStatus
+{
+	SEEK,WAITPOINT,PEND
+};
+
+
+//电机驱动状态
+enum MoveDirection
+{
+	TURN,FRONT,BACK,STOP
+};
+
 #define PLAYERDATALENGTH 26
 
 #define ENGINEBACK 2

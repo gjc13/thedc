@@ -23,7 +23,18 @@ __interrupt void cpu_timer0_isr(void)
 
 
 //	if(cpuTime%100==0)
-		UpdatePosture();
+
+	if(moveStatus==WAITPOINT)
+	{
+		waitingTime++;
+	}
+	if(waitingTime>waitTimeLimit)
+	{
+		moveStatus=PEND;
+		waitingTime=0;
+	}
+
+	UpdatePosture();
 
 	if(cpuTime%80==0)
 		doSCI=1;
