@@ -187,10 +187,16 @@ extern float32 nowDataAngle;
 extern volatile enum MoveDirection direction;
 
 //目标位置+迭代器，
-//TODO 搞到坑的位置在initDsp中初始化目标
-extern Uint16 allTargetX[4];
-extern Uint16 allTargetY[4];
+//TODO 搞到坑的位置在initDsp中初始化目标以及路线
+extern Uint16 allTargetX[10];
+extern Uint16 allTargetY[10];
 extern volatile Uint16 targetIterator;
+extern Uint16 numTargets;
+
+//所有坑的XY中心坐标
+//TODO 在initDsp中初始化所有坑的位置
+extern Uint16 pointedLocX[4];
+extern Uint16 pointedLocY[4];
 
 //策略状态机
 extern volatile enum MoveStatus moveStatus;

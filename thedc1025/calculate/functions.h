@@ -102,6 +102,7 @@ void DisableEngineOutput();
 void TurnEngine(float32 targetAngle);
 void RunToTarget();
 Uint16 UpdatePosture();
+Uint16 IsPointedLoc(float32 locx,float32 locy);
 
 float32 GetDistance(int32 fromx,int32 fromy,int32 tox,int32 toy);
 float32 GetAngle(int32 fromx,int32 fromy,int32 tox,int32 toy);
@@ -109,6 +110,8 @@ float32 GetDiffAngleAbs(float32 fromAngle,float32 toAngle);
 float32 GetDiffAngle(float32 fromAngle,float32 toAngle);
 int16 IsCounterClockWise(float32 fromAngle,float32 toAngle);
 float32 GetSecondTimespan(Uint16 cpuTimeFrom,Uint16 cpuTimeTo);
+Uint16 ShouldReverseTurn(float32 fromAngle,float32 toAngle);
+
 
 //迭代到下一个坐标
 void SeekNextTarget();

@@ -155,7 +155,14 @@ void SetEngineOutput()
 	if(nowDistance<distanceMinBound)
 	{
 		DisableEngineOutput();
-		StartWaitPoint();
+		if(IsPointedLoc(nowX,nowY))
+		{
+			StartWaitPoint();
+		}
+		else
+		{
+			moveStatus=PEND;
+		}
 		return;
 	}
 	targetAngle=GetAngle(nowX,nowY,targetX,targetY);
@@ -163,7 +170,16 @@ void SetEngineOutput()
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
 	if(diffAngle>angleTolerance && abs(diffAngle-PI)>angleTolerance)
 	{
-		TurnEngine(targetAngle);
+		if(ShouldReverseTurn(nowAngle,targetAngle)
+		{
+			targetAngle=targetAngle+PI;
+			targetAngle=targetAngle>2*PI?targetAngle-2*PI:targetAngle;
+			TurnEngine(targetAngle);
+		}
+		else
+		{
+			TurnEngine(targetAngle);
+		}
 	}
 	else if(HasObstacle())
 	{
@@ -280,13 +296,13 @@ void SeekNextTarget()
 {
 	if(moveStatus==PEND)
 	{
-		targetIterator++;
 		targetX=allTargetX[targetIterator];
 		targetY=allTargetY[targetIterator];
 		moveStatus=SEEK;
-		if(targetIterator>3)
+		targetIterator++;
+		if(targetIterator>=numTargets)
 		{
-			targetIterator-=3;
+			targetIterator-=numTargets;
 		}
 	}
 }
@@ -298,8 +314,23 @@ void StartWaitPoint()
 	DisableEngineOutput();
 }
 
+
+//TODO 在这里用超声判断是否有坑
 Uint16 HasObstacle()
 {
 	return 0;
 }
 
+
+Uint16 IsPointedLoc(float32 locx,float32 locy)
+{
+	int i;
+	for(i=0; i<4; i++)
+	{
+		if(GetDistance(locx,locy,pointedLocX[i],pointedLocY[i]<5))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}

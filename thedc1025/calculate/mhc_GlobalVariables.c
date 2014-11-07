@@ -204,11 +204,15 @@ float32 nowDataAngle;
 
 volatile enum MoveDirection direction;
 
-Uint16 allTargetX[4];
-Uint16 allTargetY[4];
-volatile Uint16 targetIterator;
-
 volatile enum MoveStatus moveStatus;
+
+Uint16 allTargetX[10];
+Uint16 allTargetY[10];
+volatile Uint16 targetIterator;
+Uint16 numTargets;
+
+Uint16 pointedLocX[4];
+Uint16 pointedLocY[4];
 
 volatile Uint32 waitingTime;
 Uint32 waitTimeLimit;

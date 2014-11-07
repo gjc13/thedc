@@ -266,11 +266,19 @@ void initGlobalVariables()
 	lastUpdatePostureTime=0;
 
 	direction=STOP;
-
 	moveStatus=PEND;
-	targetIterator=0;
 
 	waitTimeLimit=2000;
+
+	//TODO 在这里设置路线信息
+	numTargets=2;
+	targetIterator=0;
+	allTargetX[0]=180;allTargetX[1]=60;
+	allTargetY[0]=100;allTargetY[1]=100;
+
+	//TODO 在这里设置所有坑的坐标
+
+	//END_of_TODO
 }
 
 void sensor_calibrate(void)

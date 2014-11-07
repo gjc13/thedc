@@ -27,6 +27,7 @@ float32 GetDiffAngleAbs(float32 fromAngle,float32 toAngle)
 {
 	float32 diffAngle=toAngle-fromAngle;
 	diffAngle=diffAngle<0?diffAngle+2*PI:diffAngle;
+	diffAngle=diffAngle>2*PI?diffAngle-2*PI:diffAngle;
 	diffAngle=(2*PI-diffAngle < diffAngle)?2*PI-diffAngle:diffAngle;
 	return diffAngle;
 }
@@ -53,4 +54,9 @@ float32 GetSecondTimespan(Uint16 cpuTimeFrom,Uint16 cpuTimeTo)
 	int32 timeTo=cpuTimeTo;
 	int32 cpuSpan=timeFrom<=timeTo?timeTo-timeFrom:timeTo+60000-timeFrom;
 	return (float32)cpuSpan*2.5/1000;
+}
+
+Uint16 ShouldReverseTurn(float32 fromAngle,float32 toAngle)
+{
+	return GetDiffAngleAbs(fromAngle,toAngle)>PI/2;
 }
