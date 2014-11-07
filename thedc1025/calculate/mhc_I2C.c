@@ -10,7 +10,7 @@ void init_I2C_devices()
     while( iicWriteByte(MPU6050ADDR,PWR_MGMT_1	, 0x01) != I2C_SUCCESS);
     while( iicWriteByte(MPU6050ADDR,SMPLRT_DIV	, 0x00) != I2C_SUCCESS);
     while( iicWriteByte(MPU6050ADDR,CONFIG 			, 0x00) != I2C_SUCCESS);
-    while( iicWriteByte(MPU6050ADDR,GYRO_CONFIG, 0x18) != I2C_SUCCESS);
+    while( iicWriteByte(MPU6050ADDR,GYRO_CONFIG, 0x16) != I2C_SUCCESS);
     while( iicWriteByte(MPU6050ADDR,ACCEL_CONFIG, 0x01) != I2C_SUCCESS);
 
 		// ≥ı ºªØHMC5883

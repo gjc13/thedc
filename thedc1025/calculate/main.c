@@ -20,12 +20,10 @@ void main(void)
 
 //   sensor_calibrate();
 
-//   fly_enable=2;
 
    InitializeEngine();
    for(;;)
    {
-//	   fly_enable=0;
 	   if(doCalulate)
 	   {
 		 dataConverse();
@@ -48,7 +46,7 @@ void main(void)
 	   }
 	   else
 	   {
-		   nowAngle=0;
+//		   nowAngle=0;
 		   gameFirstStart=1;
 		   DisableEngineOutput();
 	   }

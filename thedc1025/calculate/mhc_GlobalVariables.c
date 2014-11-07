@@ -200,4 +200,6 @@ float32 Iadjust;
 float32 Dadjust;
 float32 angleDiffIntergration;
 
+float32 nowDataAngle;
+
 

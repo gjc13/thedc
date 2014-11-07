@@ -181,4 +181,6 @@ extern float32 Iadjust;
 extern float32 Dadjust;
 extern float32 angleDiffIntergration;
 
+extern float32 nowDataAngle;
+
 #endif
