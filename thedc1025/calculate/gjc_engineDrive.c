@@ -320,8 +320,8 @@ Uint16 HasObstacle()
 {
 	//将是否前方有坑从HasObstacle返回
 	//移动情况在direction枚举中找
-	//有坑返回FALSE
-	return (1/*TODO 小车在向前移动)*/) ? (eCapData[0]>ULTRA_THRESHOLD) : (eCapData[1]>ULTRA_THRESHOLD);
+	//有坑返回TRUE
+	return (direction==FRONT) ? (eCapData[0]>ULTRA_THRESHOLD) : (eCapData[1]>ULTRA_THRESHOLD);
 }
 
 
