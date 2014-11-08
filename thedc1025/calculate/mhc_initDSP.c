@@ -14,7 +14,7 @@ void initDSP()
 	// Step 2. Initalize GPIO:  This example function is found in the F2806x_Gpio.c file and
 	   InitI2CGpio();
 	   InitECap1Gpio();
-//	   InitECap2Gpio();
+	   InitECap2Gpio();
 //	   InitECap3Gpio();
 	   InitSciaGpio();
 	   InitScibGpio();
@@ -26,9 +26,12 @@ void initDSP()
 	   l298n_GPIO_init();
 
 	   EALLOW;
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //ÅäÖÃGPIO34ÎªGPout
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //ÅäÖÃGPIO30ÎªGPout
 	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 1;
 	   GpioDataRegs.GPADAT.bit.GPIO30= 1;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO31= 0; //ÅäÖÃGPIO31ÎªGPout
+	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 1;
+	   GpioDataRegs.GPADAT.bit.GPIO31= 1;
 	   EDIS;
 
 
@@ -61,7 +64,7 @@ void initDSP()
 	   PieVectTable.SCIRXINTB = &scibRxFifoIsr;
 	   PieVectTable.SCITXINTB = &scibTxFifoIsr;
 	   PieVectTable.ECAP1_INT = &ecap1_isr;
-//	   PieVectTable.ECAP2_INT = &ecap2_isr;
+	   PieVectTable.ECAP2_INT = &ecap2_isr;
 //	   PieVectTable.ECAP3_INT = &ecap3_isr;
 	   PieVectTable.I2CINT1A = &i2c_int1a_isr;
 	   PieVectTable.TINT0 = &cpu_timer0_isr;
@@ -99,7 +102,7 @@ void initDSP()
 	   PieCtrlRegs.PIEIER9.bit.INTx3=1;//SCIB
 	   PieCtrlRegs.PIEIER9.bit.INTx4=1;
 	   PieCtrlRegs.PIEIER4.bit.INTx1 = 1;//ecap1
-//	   PieCtrlRegs.PIEIER4.bit.INTx2 = 1;//ecap2
+	   PieCtrlRegs.PIEIER4.bit.INTx2 = 1;//ecap2
 //	   PieCtrlRegs.PIEIER4.bit.INTx3 = 1;//ecap3
 	   PieCtrlRegs.PIEIER8.bit.INTx1 = 1;//I2C
 	   PieCtrlRegs.PIEIER1.bit.INTx7 = 1;//CPUtimer0

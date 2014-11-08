@@ -28,27 +28,27 @@ void InitECapture()
    ECap1Regs.ECCTL1.bit.CAPLDEN = 1;          // Enable CAP1-CAP4 register loads
    ECap1Regs.ECEINT.bit.CEVT2 = 1;            // 2 events = interrupt
 
-//
-//   //ECAP2
-//   ECap2Regs.ECEINT.all = 0x0000;
-//   ECap2Regs.ECCLR.all = 0xFFFF;
-//   ECap2Regs.ECCTL1.bit.CAPLDEN = 0;
-//   ECap2Regs.ECCTL2.bit.TSCTRSTOP = 0;
-//
-//   ECap2Regs.ECCTL2.bit.CONT_ONESHT = 1;
-//   ECap2Regs.ECCTL2.bit.STOP_WRAP = 3;
-//   ECap2Regs.ECCTL1.bit.CAP1POL = 1;
-//   ECap2Regs.ECCTL1.bit.CAP2POL = 0;
-//   ECap2Regs.ECCTL1.bit.CTRRST1 = 1;
-//   ECap2Regs.ECCTL1.bit.CTRRST2 = 1;
-//   ECap2Regs.ECCTL2.bit.SYNCI_EN = 1;
-//   ECap2Regs.ECCTL2.bit.SYNCO_SEL = 0;
-//   ECap2Regs.ECCTL1.bit.CAPLDEN = 1;
-//
-//   ECap2Regs.ECCTL2.bit.TSCTRSTOP = 1;
-//   ECap2Regs.ECCTL2.bit.REARM = 1;
-//   ECap2Regs.ECCTL1.bit.CAPLDEN = 1;
-//   ECap2Regs.ECEINT.bit.CEVT2 = 1;
+
+   //ECAP2
+   ECap2Regs.ECEINT.all = 0x0000;
+   ECap2Regs.ECCLR.all = 0xFFFF;
+   ECap2Regs.ECCTL1.bit.CAPLDEN = 0;
+   ECap2Regs.ECCTL2.bit.TSCTRSTOP = 0;
+
+   ECap2Regs.ECCTL2.bit.CONT_ONESHT = 1;
+   ECap2Regs.ECCTL2.bit.STOP_WRAP = 3;
+   ECap2Regs.ECCTL1.bit.CAP1POL = 0;
+   ECap2Regs.ECCTL1.bit.CAP2POL = 1;
+   ECap2Regs.ECCTL1.bit.CTRRST1 = 1;
+   ECap2Regs.ECCTL1.bit.CTRRST2 = 1;
+   ECap2Regs.ECCTL2.bit.SYNCI_EN = 1;
+   ECap2Regs.ECCTL2.bit.SYNCO_SEL = 0;
+   ECap2Regs.ECCTL1.bit.CAPLDEN = 1;
+
+   ECap2Regs.ECCTL2.bit.TSCTRSTOP = 1;
+   ECap2Regs.ECCTL2.bit.REARM = 1;
+   ECap2Regs.ECCTL1.bit.CAPLDEN = 1;
+   ECap2Regs.ECEINT.bit.CEVT2 = 1;
 //
 //
 //   //ECAP3
@@ -93,8 +93,11 @@ __interrupt void ecap1_isr(void)//”Õ√≈
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP4;
 }
 
-//__interrupt void ecap2_isr(void)//∫·πˆ
-//{
+__interrupt void ecap2_isr(void)
+{
+	float32  t = ECap2Regs.CAP2/1000;
+		eCapData[1]=t ;
+
 //	Uint32 t = ECap2Regs.CAP1;
 //		if( t < 72500 )
 //			ecapData[1] = -100 ;
@@ -109,11 +112,11 @@ __interrupt void ecap1_isr(void)//”Õ√≈
 //			ecapData[1] =1999.9-0.011026938811517 * t  ;
 //
 //		}
-//	ECap2Regs.ECCLR.bit.CEVT2 = 1;
-//	ECap2Regs.ECCLR.bit.INT = 1;
-//	ECap2Regs.ECCTL2.bit.REARM = 1;
-//	PieCtrlRegs.PIEACK.all = PIEACK_GROUP4;
-//}
+	ECap2Regs.ECCLR.bit.CEVT2 = 1;
+	ECap2Regs.ECCLR.bit.INT = 1;
+	ECap2Regs.ECCTL2.bit.REARM = 1;
+	PieCtrlRegs.PIEACK.all = PIEACK_GROUP4;
+}
 //
 //__interrupt void ecap3_isr(void)//∏©—ˆ
 //{

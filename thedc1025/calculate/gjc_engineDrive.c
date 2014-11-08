@@ -170,7 +170,7 @@ void SetEngineOutput()
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
 	if(diffAngle>angleTolerance && abs(diffAngle-PI)>angleTolerance)
 	{
-		if(ShouldReverseTurn(nowAngle,targetAngle)
+		if(ShouldReverseTurn(nowAngle,targetAngle))
 		{
 			targetAngle=targetAngle+PI;
 			targetAngle=targetAngle>2*PI?targetAngle-2*PI:targetAngle;
@@ -315,10 +315,13 @@ void StartWaitPoint()
 }
 
 
-//TODO 在这里用超声判断是否有坑
+//在这里用超声判断是否有坑
 Uint16 HasObstacle()
 {
-	return 0;
+	//将是否前方有坑从HasObstacle返回
+	//移动情况在direction枚举中找
+	//有坑返回FALSE
+	return (1/*TODO 小车在向前移动)*/) ? (eCapData[0]>ULTRA_THRESHOLD) : (eCapData[1]>ULTRA_THRESHOLD);
 }
 
 

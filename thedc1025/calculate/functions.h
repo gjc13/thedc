@@ -35,7 +35,7 @@ void sbusDecode();
 
 
 __interrupt void ecap1_isr(void);
-//__interrupt void ecap2_isr(void);
+__interrupt void ecap2_isr(void);
 //__interrupt void ecap3_isr(void);
 void InitECapture(void);
 

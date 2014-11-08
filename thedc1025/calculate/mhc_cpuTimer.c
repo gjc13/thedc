@@ -43,8 +43,12 @@ __interrupt void cpu_timer0_isr(void)
 		doUltra=1;
 
 	GpioDataRegs.GPACLEAR.bit.GPIO30 = 1;
+	GpioDataRegs.GPACLEAR.bit.GPIO31 = 1;
 	if(cpuTime%12==0)
+	{
 		GpioDataRegs.GPASET.bit.GPIO30 = 1;//给超声波打个脉冲
+		GpioDataRegs.GPASET.bit.GPIO31= 1;//给超声波打个脉冲
+	}
 
 	if(sciBReadAByte==0 && sBusReadDataCopied==0)//读完一帧
 	{
