@@ -31,8 +31,11 @@ __interrupt void cpu_timer0_isr(void)
 	if(waitingTime>waitTimeLimit)
 	{
 		moveStatus=PEND;
+		SeekNextTarget();
 		waitingTime=0;
 	}
+	lockTurnTime--;
+	lockTurnTime=lockTurnTime<0?0:lockTurnTime;
 
 	UpdatePosture();
 

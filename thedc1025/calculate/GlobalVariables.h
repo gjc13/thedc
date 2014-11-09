@@ -208,5 +208,11 @@ extern volatile Uint32 waitingTime;
 //TODO ±ê¶¨waitTimeLimit
 extern Uint32 waitTimeLimit;
 
+extern float32 nowDistance;
+
+extern Uint16 newDataReceive;
+
+extern Uint16 nowDirection;
+extern int16 lockTurnTime;
 
 #endif

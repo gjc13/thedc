@@ -216,3 +216,11 @@ Uint16 pointedLocY[4];
 
 volatile Uint32 waitingTime;
 Uint32 waitTimeLimit;
+
+float32 nowDistance;
+
+Uint16 newDataReceive;
+
+Uint16 nowDirection;
+int16 lockTurnTime;
+

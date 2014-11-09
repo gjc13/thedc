@@ -248,8 +248,9 @@ void initGlobalVariables()
 
 	canMove=0;
 	gameFirstStart=1;
-	isPlayerDataAvailable=0;
+	isPlayerDataAvailable=1;
 
+	gameFirstStart=1;
 	//MPU_6050提供的姿态信息
 	isMPUavailable=1;
 
@@ -271,13 +272,30 @@ void initGlobalVariables()
 	direction=STOP;
 	moveStatus=PEND;
 
-	waitTimeLimit=2000;
+	waitTimeLimit=3500;
 
 	//TODO 在这里设置路线信息
-	numTargets=2;
+	numTargets=6;
 	targetIterator=0;
-	allTargetX[0]=180;allTargetX[1]=60;
-	allTargetY[0]=100;allTargetY[1]=100;
+	allTargetX[0]=57;allTargetY[0]=57;
+	allTargetX[1]=57;allTargetY[1]=192;
+	allTargetX[2]=57;allTargetY[2]=125;
+	allTargetX[3]=192;allTargetY[3]=125;
+	allTargetX[4]=192;allTargetY[4]=60  ;
+	allTargetX[5]=192;allTargetY[5]=192;
+
+	pointedLocX[0]=57;pointedLocY[0]=57;
+	pointedLocX[1]=57;pointedLocY[1]=192;
+	pointedLocX[2]=192;pointedLocY[2]=60;
+	pointedLocX[3]=192;pointedLocY[3]=192;
+
+	nowDirection=STOP;
+	lockTurnTime=0;
+
+
+	//207 82
+	//61 222
+	//206 222
 
 	//TODO 在这里设置所有坑的坐标
 

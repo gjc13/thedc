@@ -43,7 +43,7 @@ int16 IsCounterClockWise(float32 fromAngle,float32 toAngle)
 	float32 fromX=cos(fromAngle);
 	float32 fromY=sin(fromAngle);
 	float32 toX=cos(toAngle);
-	float32 toY=cos(toAngle);
+	float32 toY=sin(toAngle);
 	return toY*fromX-toX*fromY>0;
 }
 
@@ -58,5 +58,9 @@ float32 GetSecondTimespan(Uint16 cpuTimeFrom,Uint16 cpuTimeTo)
 
 Uint16 ShouldReverseTurn(float32 fromAngle,float32 toAngle)
 {
-	return GetDiffAngleAbs(fromAngle,toAngle)>PI/2;
+	float32 fromX=cos(fromAngle);
+	float32 fromY=sin(fromAngle);
+	float32 toX=cos(toAngle);
+	float32 toY=sin(toAngle);
+	return fromX*toX+fromY*toY<0;
 }

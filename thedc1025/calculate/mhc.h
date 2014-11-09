@@ -282,6 +282,7 @@ enum MoveDirection
 #define ENGINEFRONT 1
 #define ENGINESTOP 0
 
-#define ULTRA_THRESHOLD  80
+#define ULTRA_FRONT_THRESHOLD  38
+#define ULTRA_BACK_THRESHOLD 34
 
 #endif

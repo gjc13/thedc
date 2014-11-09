@@ -7,6 +7,7 @@ void main(void)
 //	Uint16 i;
 	initDSP();
 //	while(1)
+
 //	{
 //		setEngine(1,0.2,1,0.2);
 //	}
@@ -24,6 +25,10 @@ void main(void)
    InitializeEngine();
    for(;;)
    {
+	   if(gameFirstStart)
+	   {
+		   DisableEngineOutput();
+	   }
 	   if(doCalulate)
 	   {
 		 dataConverse();
@@ -40,18 +45,16 @@ void main(void)
 		   sciASendBufferPointer=0;
 	   }
 
-	   if(canMove && (isMPUavailable||isPlayerDataAvailable))
+	   if(canMove && (isPlayerDataAvailable || isMPUavailable))
 	   {
-		   if(moveStatus==PEND)
-		   {
-			   SeekNextTarget();
-		   }
 		   SetEngineOutput();
 	   }
 	   else
 	   {
 //		   nowAngle=0;
 		   gameFirstStart=1;
+		   moveStatus=PEND;
+		   targetIterator=0;
 		   DisableEngineOutput();
 	   }
 

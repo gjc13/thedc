@@ -75,18 +75,48 @@ void sciASendData()
 	for(i=0;i<128;i++)
 		sciASendBuffer[i]=0;
 
-	strcat((char*)sciASendBuffer,"An:");
-	double_to_string(nowAngle*180/PI , (char*)sciASendBuffer);
-	strcat((char*)sciASendBuffer,"gy:");
-	double_to_string(gGyro.z*180/PI,(char*)sciASendBuffer);
-	strcat((char*)sciASendBuffer,"DAn:");
-	double_to_string(nowDataAngle*180/PI,(char*)sciASendBuffer);
-	strcat((char*)sciASendBuffer,"TarAn:");
-	double_to_string(targetAngle*180/PI,(char*)sciASendBuffer);
-	strcat((char*)sciASendBuffer,"PD:");
-	double_to_string(Padjust,(char*)sciASendBuffer);
-	double_to_string(Dadjust,(char*)sciASendBuffer);
+//	strcat((char*)sciASendBuffer,"An:");
+//	double_to_string(nowAngle*180/PI , (char*)sciASendBuffer);
+//	strcat((char*)sciASendBuffer,"gy:");
+//	double_to_string(gGyro.z*180/PI,(char*)sciASendBuffer);
+//	strcat((char*)sciASendBuffer,"DAn:");
+//	double_to_string(nowDataAngle*180/PI,(char*)sciASendBuffer);
+//	strcat((char*)sciASendBuffer,"TarAn:");
+//	double_to_string(targetAngle*180/PI,(char*)sciASendBuffer);
+//	strcat((char*)sciASendBuffer,"PD:");
+//	double_to_string(Padjust,(char*)sciASendBuffer);
+//	double_to_string(Dadjust,(char*)sciASendBuffer);
 
+//	strcat((char*)sciASendBuffer,"direction:");
+//	double_to_string((double)direction,(char*)sciASendBuffer);
+//
+
+	strcat((char*)sciASendBuffer,"eCap");
+	double_to_string((double)eCapData[0],(char*)sciASendBuffer);
+	double_to_string((double)eCapData[1],(char*)sciASendBuffer);
+
+	strcat((char*)sciASendBuffer,"sta");
+	double_to_string((double)moveStatus,(char*)sciASendBuffer);
+
+	strcat((char*)sciASendBuffer,"dir");
+	double_to_string((double)direction,(char*)sciASendBuffer);
+
+	strcat((char*)sciASendBuffer,"loc");
+	double_to_string((double)nowX,(char*)sciASendBuffer);
+	double_to_string((double)nowY,(char*)sciASendBuffer);
+
+	strcat((char*)sciASendBuffer,"tag");
+	double_to_string((double)targetX,(char*)sciASendBuffer);
+	double_to_string((double)targetY,(char*)sciASendBuffer);
+//
+//	strcat((char*)sciASendBuffer,"dis");
+//	double_to_string(nowDistance,(char*)sciASendBuffer);
+//
+//	strcat((char*)sciASendBuffer,"Ang");
+//	double_to_string(nowAngle,(char*)sciASendBuffer);
+//
+//	strcat((char*)sciASendBuffer,"taAng");
+//	double_to_string(targetAngle,(char*)sciASendBuffer);
 //		   double_to_string(pitch_Gy*180/PI , (char*)sciASendBuffer);
 //		   double_to_string(roll_Gx*180/PI , (char*)sciASendBuffer);
 //

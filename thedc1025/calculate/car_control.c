@@ -19,9 +19,27 @@ void l298n_GPIO_init()//配置电机方向输出IO
 	   EDIS;
 }
 
-void setEngine(int16 leftDrection,float32 leftPower,int16 rightDrection,float32 rightPower)
+void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float32 rightPower)
 {
-	switch(leftDrection)
+	leftPower*=3;
+	rightPower*=3;
+	if(leftDirection==ENGINEBACK)
+	{
+		leftPower=leftPower<1?leftPower:0.7;
+	}
+	else if(leftDirection==ENGINEFRONT)
+	{
+		leftPower=leftPower<0.3?leftPower:0.3;
+	}
+	if(rightDirection==ENGINEBACK)
+	{
+		rightPower=rightPower<0.7?rightPower:0.7;
+	}
+	else if(rightDirection==ENGINEFRONT)
+	{
+		rightPower=rightPower<0.3?rightPower:0.3;
+	}
+	switch(leftDirection)
 	{
 	case 0://刹车
 		   GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
@@ -40,7 +58,7 @@ void setEngine(int16 leftDrection,float32 leftPower,int16 rightDrection,float32 
 		   break;
 	}
 
-	switch(rightDrection)
+	switch(rightDirection)
 	{
 	case 0://刹车
 		   GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;
