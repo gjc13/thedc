@@ -102,7 +102,7 @@ void DisableEngineOutput();
 void TurnEngine(float32 targetAngle);
 void RunToTarget();
 Uint16 UpdatePosture();
-Uint16 IsPointedLoc(float32 locx,float32 locy);
+Uint16 IsPointedLoc(Uint16 locx,Uint16 locy);
 
 float32 GetDistance(int32 fromx,int32 fromy,int32 tox,int32 toy);
 float32 GetAngle(int32 fromx,int32 fromy,int32 tox,int32 toy);

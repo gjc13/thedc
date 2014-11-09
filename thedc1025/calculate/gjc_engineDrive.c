@@ -164,13 +164,15 @@ void SetEngineOutput()
 	if(nowDistance<distanceMinBound && moveStatus==SEEK)
 	{
 		DisableEngineOutput();
-		if(IsPointedLoc(nowX,nowY))
+		if((nowX<170&&nowX>100)||(nowY<170&&nowY>100))
 		{
-			StartWaitPoint();
+			DisableEngineOutput();
+			moveStatus=PEND;
 		}
 		else
 		{
-			moveStatus=PEND;
+			StartWaitPoint();
+			return;
 		}
 		return;
 	}
@@ -320,7 +322,7 @@ void SeekNextTarget()
 	targetX=allTargetX[targetIterator];
 	targetY=allTargetY[targetIterator];
 	moveStatus=SEEK;
-	lockTurnTime=250;
+	lockTurnTime=500;
 	targetIterator++;
 	if(targetIterator>=numTargets)
 	{
@@ -343,11 +345,15 @@ Uint16 HasObstacle()
 	//将是否前方有坑从HasObstacle返回
 	//移动情况在direction枚举中找
 	//有坑返回TRUE
-	return (nowDirection==FRONT) ? (eCapData[0]>ULTRA_FRONT_THRESHOLD) : (eCapData[1]>ULTRA_BACK_THRESHOLD);
+	if(lockTurnTime>0)
+	{
+		return 0;
+	}
+	return (direction==FRONT) ? (eCapData[0]>ULTRA_FRONT_THRESHOLD) : (eCapData[1]>ULTRA_BACK_THRESHOLD);
 }
 
 
-Uint16 IsPointedLoc(float32 locx,float32 locy)
+Uint16 IsPointedLoc(Uint16 locx,Uint16 locy)
 {
 	int i;
 	for(i=0; i<4; i++)
