@@ -53,7 +53,7 @@ volatile Uint16 i2cStatus=0;
 
 
 
-volatile Uint8 doCalulate=0 , doSCI=0 , doSBusDecode=0,doUltra=0; //应该计算  应该发串口  S.Bus收完一帧且已复制,应该计算 应该采集超声波数据
+volatile Uint8 doCalulate=0 , doSCIA=0 ,doSCIB=0, doSBusDecode=0,doUltra=0; //应该计算  应该发串口  S.Bus收完一帧且已复制,应该计算 应该采集超声波数据
 
 volatile Uint8 fly_enable=0;
 //0 没有准备好，不能起飞

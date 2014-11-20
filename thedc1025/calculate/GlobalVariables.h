@@ -35,7 +35,7 @@ extern Uint16 i2c_Reg_Addr;
 
 extern volatile Uint16 i2cStatus;
 
-extern volatile Uint8 doCalulate , doSCI , doSBusDecode , doUltra;
+extern volatile Uint8 doCalulate , doSCIA ,doSCIB, doSBusDecode , doUltra;
 extern volatile Uint8 fly_enable;
 //0 没有准备好，不能起飞
 //1 保护开关关闭，不能起飞

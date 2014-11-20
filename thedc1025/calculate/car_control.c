@@ -21,8 +21,8 @@ void l298n_GPIO_init()//配置电机方向输出IO
 
 void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float32 rightPower)
 {
-	leftPower*=3;
-	rightPower*=3;
+	leftPower*=2;
+	rightPower*=2;
 	if(leftPower<0)
 	{
 		if(leftDirection==ENGINEBACK)
@@ -45,6 +45,7 @@ void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float3
 			rightDirection=ENGINEBACK;
 		}
 	}
+
 	if(leftDirection==ENGINEBACK)
 	{
 		leftPower=leftPower<0.7?leftPower:0.7;
@@ -61,6 +62,7 @@ void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float3
 	{
 		rightPower=rightPower<0.3?rightPower:0.3;
 	}
+
 	switch(leftDirection)
 	{
 	case 0://刹车

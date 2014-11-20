@@ -29,6 +29,7 @@ __interrupt void scibTxFifoIsr(void);
 __interrupt void scibRxFifoIsr(void);
 
 void sciASendData();
+void sciBSendData();
 void uint16strcpy(Uint16* dst,Uint16* rsc);
 
 void sbusDecode();

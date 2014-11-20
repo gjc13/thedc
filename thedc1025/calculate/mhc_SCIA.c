@@ -50,8 +50,9 @@ void scia_mhc_init()
    SciaRegs.SCICTL1.all =0x0003;  // enable TX, RX, internal SCICLK, // Disable RX ERR, SLEEP, TXWAKE
    SciaRegs.SCICTL2.bit.TXINTENA =1;
    SciaRegs.SCICTL2.bit.RXBKINTENA =0;
-   SciaRegs.SCIHBAUD = 0x0001;//115200 baud @LSPCLK = 22.5MHz (90 MHz SYSCLK).
+   SciaRegs.SCIHBAUD = 0x0001;//9600 baud @LSPCLK = 22.5MHz (90 MHz SYSCLK).
    SciaRegs.SCILBAUD = 0x0025;
+
    SciaRegs.SCICCR.bit.LOOPBKENA =0; // Disnable loop back
    SciaRegs.SCIFFTX.all=0xC000;
    SciaRegs.SCIFFRX.all=0x0021;//0x0198;

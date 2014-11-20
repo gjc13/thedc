@@ -3,34 +3,34 @@
 
 __interrupt void scibTxFifoIsr(void)
 {
-//	Uint16 i=0;
-//    for(i=0; i< 4; i++)
-//    {
-//    	if(sciBSendBuffer[sciBSendBufferPointer]  &&  sciBSendBufferPointer<128 )//Buffer中有数据
-//    	{
-//    		ScibRegs.SCITXBUF = sciBSendBuffer[sciBSendBufferPointer];//发送一个字
-//    		sciBSendBufferPointer++;
-//    	}
-//    	else
-//    	{
+	Uint16 i=0;
+    for(i=0; i< 4; i++)
+    {
+    	if(sciBSendBuffer[sciBSendBufferPointer]  &&  sciBSendBufferPointer<128 )//Buffer中有数据
+    	{
+    		ScibRegs.SCITXBUF = sciBSendBuffer[sciBSendBufferPointer];//发送一个字
+    		sciBSendBufferPointer++;
+    	}
+    	else
+    	{
     		ScibRegs.SCIFFTX.bit.TXFFIENA=0;//关中断
-//    		break;
-//    	}
-//    }
+    		break;
+    	}
+    }
     ScibRegs.SCIFFTX.bit.TXFFINTCLR=1;  // Clear SCI Interrupt flag
     PieCtrlRegs.PIEACK.all|=0x100;      // Issue PIE ACK
 }
 
 __interrupt void scibRxFifoIsr(void)
 {
-	if(sciBReadBufferPointer<128)
-	{
-		sciBReadBuffer[sciBReadBufferPointer]=ScibRegs.SCIRXBUF.all;
-		sciBReadBufferPointer++;
-	}
+//	if(sciBReadBufferPointer<128)
+//	{
+//		sciBReadBuffer[sciBReadBufferPointer]=ScibRegs.SCIRXBUF.all;
+//		sciBReadBufferPointer++;
+//	}
 
-	sciBReadAByte=1;
-	sBusReadDataCopied=0;
+//	sciBReadAByte=1;
+//	sBusReadDataCopied=0;
 
 	ScibRegs.SCIFFRX.bit.RXFFOVRCLR=1;   // Clear Overflow flag
 	ScibRegs.SCIFFRX.bit.RXFFINTCLR=1;   // Clear Interrupt flag
@@ -40,8 +40,8 @@ __interrupt void scibRxFifoIsr(void)
 void scib_mhc_init()
 {
 //	ESTOP0;
-//   ScibRegs.SCICCR.all =0x0007;   // 1 stop bit,  No loopback, No parity,8 char bits, async mode, idle-line protocol
-   ScibRegs.SCICCR.all =0x00E7;   // 2 stop bit,  No loopback, EVEN parity,8 char bits, async mode, idle-line protocol
+   ScibRegs.SCICCR.all =0x0007;   // 1 stop bit,  No loopback, No parity,8 char bits, async mode, idle-line protocol
+//   ScibRegs.SCICCR.all =0x00E7;   // 2 stop bit,  No loopback, EVEN parity,8 char bits, async mode, idle-line protocol
 
    ScibRegs.SCICTL1.all =0x0003;  // enable TX, RX, internal SCICLK,
                                   // Disable RX ERR, SLEEP, TXWAKE
@@ -49,7 +49,7 @@ void scib_mhc_init()
    ScibRegs.SCICTL2.bit.RXBKINTENA =0;
 
    ScibRegs.SCIHBAUD = 0x0000;//100000 baud @LSPCLK = 22.5MHz (90 MHz SYSCLK).
-   ScibRegs.SCILBAUD = 0x001B;
+   ScibRegs.SCILBAUD = 0x0017;
 
    ScibRegs.SCICCR.bit.LOOPBKENA =0; // Enable loop back
    ScibRegs.SCIFFTX.all=0xC000;
@@ -71,50 +71,80 @@ void scib_mhc_init()
 */
 void sbusDecode()
 {
-	Uint8 *p_origin=sBusReadData;
-	Uint16 *p_result=channelsData2048;
-	int16 countOrigin=0,countResult=0,i;
-	Uint8 filter=0x01;
-	(*p_result)=0;	//p_result置零
-	p_result--;		//p_result从int[0]开始，p_origin从char[1]开始
-	for(i=0; i<176; i++)
-	{
-		countOrigin--;countResult--;
-		if(countOrigin<0)
-		{
-			countOrigin=7;	//Origin每8位指针移动
-			p_origin++;
-		}
-		if(countResult<0)
-		{
-			countResult=10;					//Result每11位指针移动
-			(*p_result)=(*p_result)<<1;		//撤销最后一次移位
-			p_result++;
-			(*p_result)=0;
-		}
-		(*p_result)|=(((*p_origin)&(filter))<<10);
-		(*p_result)=(*p_result)>>1;
-		(*p_origin)=(*p_origin)>>1;
-	}
+//	Uint8 *p_origin=sBusReadData;
+//	Uint16 *p_result=channelsData2048;
+//	int16 countOrigin=0,countResult=0,i;
+//	Uint8 filter=0x01;
+//	(*p_result)=0;	//p_result置零
+//	p_result--;		//p_result从int[0]开始，p_origin从char[1]开始
+//	for(i=0; i<176; i++)
+//	{
+//		countOrigin--;countResult--;
+//		if(countOrigin<0)
+//		{
+//			countOrigin=7;	//Origin每8位指针移动
+//			p_origin++;
+//		}
+//		if(countResult<0)
+//		{
+//			countResult=10;					//Result每11位指针移动
+//			(*p_result)=(*p_result)<<1;		//撤销最后一次移位
+//			p_result++;
+//			(*p_result)=0;
+//		}
+//		(*p_result)|=(((*p_origin)&(filter))<<10);
+//		(*p_result)=(*p_result)>>1;
+//		(*p_origin)=(*p_origin)>>1;
+//	}
+//
+//	p_origin++;
+//	wireLessLost=(*p_origin)&0x04;
+//	digitalChannel2=(*p_origin)&0x02;
+//	digitalChannel1=(*p_origin)&0x01;
+//
+//	for(countResult=0;countResult<16;countResult++)
+//	{
+//		channelsData1000[countResult]=channelsData2048[countResult]/2048.*1000;
+//		if(channelsData2048[countResult]<360)
+//			channelsData4[countResult]=0;
+//		else 	if(channelsData2048[countResult]<1016)
+//			channelsData4[countResult]=1;
+//		else 	if(channelsData2048[countResult]<1032)
+//			channelsData4[countResult]=2;
+//		else 	if(channelsData2048[countResult]<1688)
+//			channelsData4[countResult]=3;
+//		else
+//			channelsData4[countResult]=4;
+//	}
 
-	p_origin++;
-	wireLessLost=(*p_origin)&0x04;
-	digitalChannel2=(*p_origin)&0x02;
-	digitalChannel1=(*p_origin)&0x01;
+}
 
-	for(countResult=0;countResult<16;countResult++)
-	{
-		channelsData1000[countResult]=channelsData2048[countResult]/2048.*1000;
-		if(channelsData2048[countResult]<360)
-			channelsData4[countResult]=0;
-		else 	if(channelsData2048[countResult]<1016)
-			channelsData4[countResult]=1;
-		else 	if(channelsData2048[countResult]<1032)
-			channelsData4[countResult]=2;
-		else 	if(channelsData2048[countResult]<1688)
-			channelsData4[countResult]=3;
-		else
-			channelsData4[countResult]=4;
-	}
 
+void sciBSendData()
+{
+	Uint16 i;
+	for(i=0;i<128;i++)
+		sciBSendBuffer[i]=0;
+
+
+	strcat((char*)sciBSendBuffer,"sta");
+	double_to_string((double)moveStatus,(char*)sciBSendBuffer);
+
+	strcat((char*)sciBSendBuffer,"dir");
+	double_to_string((double)direction,(char*)sciBSendBuffer);
+
+	strcat((char*)sciBSendBuffer,"loc");
+	double_to_string((double)nowX,(char*)sciBSendBuffer);
+	double_to_string((double)nowY,(char*)sciBSendBuffer);
+
+	strcat((char*)sciBSendBuffer,"tag");
+	double_to_string((double)targetX,(char*)sciBSendBuffer);
+	double_to_string((double)targetY,(char*)sciBSendBuffer);
+
+//		   strcat((char*)sciBSendBuffer,"\t");
+
+	strcat((char*)sciBSendBuffer,"\r\n");
+
+	sciBSendBufferPointer=0;
+	ScibRegs.SCIFFTX.bit.TXFFIENA=1;
 }

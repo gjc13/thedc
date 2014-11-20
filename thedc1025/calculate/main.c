@@ -18,6 +18,9 @@ void main(void)
    uint16strcpy(sciASendBuffer,(Uint16*)"*****串口A正常*****");
    sciASendBufferPointer=0;
    SciaRegs.SCIFFTX.bit.TXFFIENA=1;
+   uint16strcpy(sciBSendBuffer,(Uint16*)"*****串口B正常*****");
+   sciBSendBufferPointer=0;
+   ScibRegs.SCIFFTX.bit.TXFFIENA=1;
 
 //   sensor_calibrate();
 
@@ -39,11 +42,18 @@ void main(void)
 //		 doCalulate=0;
 	   }
 //
-	   if( doSCI && SciaRegs.SCIFFTX.bit.TXFFIENA==0)
+	   if( doSCIA && SciaRegs.SCIFFTX.bit.TXFFIENA==0)
 	   {
 		   sciASendData();
-		   doSCI =0;
+		   doSCIA =0;
 		   sciASendBufferPointer=0;
+	   }
+
+	   if( doSCIB && ScibRegs.SCIFFTX.bit.TXFFIENA==0)
+	   {
+		   sciBSendData();
+		   doSCIB =0;
+		   sciBSendBufferPointer=0;
 	   }
 
 	   if(canMove && (isPlayerDataAvailable || isMPUavailable))

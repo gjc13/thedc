@@ -3,7 +3,7 @@
 
 __interrupt void cpu_timer0_isr(void)
 {
-	Uint16 i;
+//	Uint16 i;
 
 	//更新光电门输入
 	if(GpioDataRegs.GPADAT.bit.GPIO31)
@@ -61,35 +61,39 @@ __interrupt void cpu_timer0_isr(void)
 	UpdatePosture();
 
 	if(cpuTime%80==0)
-		doSCI=1;
+		doSCIA=1;
 
-	if(cpuTime%10==0)
-		doUltra=1;
+	if(cpuTime%50==0)
+		doSCIB=1;
 
-	GpioDataRegs.GPACLEAR.bit.GPIO30 = 1;
-	GpioDataRegs.GPACLEAR.bit.GPIO31 = 1;
-	if(cpuTime%12==0)
-	{
-		GpioDataRegs.GPASET.bit.GPIO30 = 1;//给超声波打个脉冲
-		GpioDataRegs.GPASET.bit.GPIO31= 1;//给超声波打个脉冲
-	}
 
-	if(sciBReadAByte==0 && sBusReadDataCopied==0)//读完一帧
-	{
-		{
-			for(i=0;i<24;i++)
-				sBusReadData[i]=sciBReadBuffer[i];//复制24字节到sBusReadData
+//	if(cpuTime%10==0)
+//		doUltra=1;
 
-			for(i=0;i<25;i++)
-				sciBReadBuffer[i]=0;//清零
-			sciBReadBufferPointer=0;//接收下一帧
+//	GpioDataRegs.GPACLEAR.bit.GPIO30 = 1;
+//	GpioDataRegs.GPACLEAR.bit.GPIO31 = 1;
+//	if(cpuTime%12==0)
+//	{
+//		GpioDataRegs.GPASET.bit.GPIO30 = 1;//给超声波打个脉冲
+//		GpioDataRegs.GPASET.bit.GPIO31= 1;//给超声波打个脉冲
+//	}
 
-			sBusReadDataCopied=1;
-			doSBusDecode=1;
-		}
-	}
-	else
-		sciBReadAByte=0;
+//	if(sciBReadAByte==0 && sBusReadDataCopied==0)//读完一帧
+//	{
+//		{
+//			for(i=0;i<24;i++)
+//				sBusReadData[i]=sciBReadBuffer[i];//复制24字节到sBusReadData
+//
+//			for(i=0;i<25;i++)
+//				sciBReadBuffer[i]=0;//清零
+//			sciBReadBufferPointer=0;//接收下一帧
+//
+//			sBusReadDataCopied=1;
+//			doSBusDecode=1;
+//		}
+//	}
+//	else
+//		sciBReadAByte=0;
 
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }

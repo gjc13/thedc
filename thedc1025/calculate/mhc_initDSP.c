@@ -191,7 +191,8 @@ void initGlobalVariables()
 
 
 	doCalulate=0 ;//应该计算  应该发串口  S.Bus收完一帧且已复制,应该计算
-	doSCI=0;
+	doSCIA=0;
+	doSCIB=0;
 	doSBusDecode=0;
 
 	fly_enable=0; //3可以起飞
