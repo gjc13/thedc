@@ -101,6 +101,7 @@ void SetEngineOutput();
 void DisableEngineOutput();
 void TurnEngine(float32 targetAngle);
 void RunToTarget();
+void RunAndTurn();
 Uint16 UpdatePosture();
 Uint16 IsPointedLoc(Uint16 locx,Uint16 locy);
 
@@ -123,5 +124,8 @@ void StartWaitPoint();
 //移动情况在direction枚举中找
 //TURN的情况建议返回FALSE
 Uint16 HasObstacle();
+Uint16 HasFrontObstacle();
+Uint16 HasBackObstacle();
+
 
 #endif

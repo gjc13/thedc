@@ -23,6 +23,7 @@ void main(void)
 
 
    InitializeEngine();
+
    for(;;)
    {
 	   if(gameFirstStart)

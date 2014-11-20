@@ -190,7 +190,8 @@ Uint16 lastUpdatePostureTime;
 
 //½Ç¶ÈPID
 float32 angleOutPut;
-float32 targetAngle;
+float32 targetRunAngle;
+float32 targetHeadAngle;
 
 float32 angleP;
 float32 angleI;
@@ -202,12 +203,19 @@ float32 angleDiffIntergration;
 
 float32 nowDataAngle;
 
+volatile Uint16 foundHeadObstacleTime;
+
+volatile Uint16 foundTailObstacleTime;
+
 volatile enum MoveDirection direction;
 
 volatile enum MoveStatus moveStatus;
 
-Uint16 allTargetX[10];
-Uint16 allTargetY[10];
+Uint16 allTargetX[2][2];
+Uint16 allTargetY[2][2];
+Uint16 lowerXLimit;
+Uint16 lowerYLimit;
+
 volatile Uint16 targetIterator;
 Uint16 numTargets;
 

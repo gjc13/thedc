@@ -13,8 +13,8 @@ void initDSP()
 
 	// Step 2. Initalize GPIO:  This example function is found in the F2806x_Gpio.c file and
 	   InitI2CGpio();
-	   InitECap1Gpio();
-	   InitECap2Gpio();
+	   //InitECap1Gpio();
+	   //InitECap2Gpio();
 //	   InitECap3Gpio();
 	   InitSciaGpio();
 	   InitScibGpio();
@@ -26,12 +26,10 @@ void initDSP()
 	   l298n_GPIO_init();
 
 	   EALLOW;
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //配置GPIO30为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO30= 1;
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO31= 0; //配置GPIO31为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO31= 1;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //配置GPIO30为GPin
+	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 0;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO31= 0; //配置GPIO31为GPin
+	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 0;
 	   EDIS;
 
 
@@ -63,8 +61,8 @@ void initDSP()
 	   PieVectTable.SCITXINTA = &sciaTxFifoIsr;
 	   PieVectTable.SCIRXINTB = &scibRxFifoIsr;
 	   PieVectTable.SCITXINTB = &scibTxFifoIsr;
-	   PieVectTable.ECAP1_INT = &ecap1_isr;
-	   PieVectTable.ECAP2_INT = &ecap2_isr;
+//	   PieVectTable.ECAP1_INT = &ecap1_isr;
+//	   PieVectTable.ECAP2_INT = &ecap2_isr;
 //	   PieVectTable.ECAP3_INT = &ecap3_isr;
 	   PieVectTable.I2CINT1A = &i2c_int1a_isr;
 	   PieVectTable.TINT0 = &cpu_timer0_isr;
@@ -81,7 +79,7 @@ void initDSP()
 	   I2CA_Init();
 	   scia_mhc_init();
 	   scib_mhc_init();
-	   InitECapture();
+//	   InitECapture();
 	   InitEPwm1Example();
 	   InitEPwm2Example();
 	   InitEPwm3Example();
@@ -101,8 +99,8 @@ void initDSP()
 	   PieCtrlRegs.PIEIER9.bit.INTx2=1;     // PIE Group 9, INT2
 	   PieCtrlRegs.PIEIER9.bit.INTx3=1;//SCIB
 	   PieCtrlRegs.PIEIER9.bit.INTx4=1;
-	   PieCtrlRegs.PIEIER4.bit.INTx1 = 1;//ecap1
-	   PieCtrlRegs.PIEIER4.bit.INTx2 = 1;//ecap2
+//	   PieCtrlRegs.PIEIER4.bit.INTx1 = 1;//ecap1
+//	   PieCtrlRegs.PIEIER4.bit.INTx2 = 1;//ecap2
 //	   PieCtrlRegs.PIEIER4.bit.INTx3 = 1;//ecap3
 	   PieCtrlRegs.PIEIER8.bit.INTx1 = 1;//I2C
 	   PieCtrlRegs.PIEIER1.bit.INTx7 = 1;//CPUtimer0
@@ -264,7 +262,8 @@ void initGlobalVariables()
 	Iadjust=0;
 	Dadjust=0;
 
-	targetAngle=0;
+	targetHeadAngle=0;
+	targetRunAngle=0;
 	angleOutPut=0;
 
 	lastUpdatePostureTime=0;
@@ -277,21 +276,31 @@ void initGlobalVariables()
 	//TODO 在这里设置路线信息
 	numTargets=6;
 	targetIterator=0;
-	allTargetX[0]=57;allTargetY[0]=57;
-	allTargetX[1]=57;allTargetY[1]=192;
-	allTargetX[2]=57;allTargetY[2]=125;
-	allTargetX[3]=192;allTargetY[3]=125;
-	allTargetX[4]=192;allTargetY[4]=60  ;
-	allTargetX[5]=192;allTargetY[5]=192;
+//	allTargetX[0]=57;allTargetY[0]=57;
+//	allTargetX[1]=57;allTargetY[1]=192;
+//	allTargetX[2]=57;allTargetY[2]=125;
+//	allTargetX[3]=192;allTargetY[3]=125;
+//	allTargetX[4]=192;allTargetY[4]=60  ;
+//	allTargetX[5]=192;allTargetY[5]=192;
+//
+//	pointedLocX[0]=57;pointedLocY[0]=57;
+//	pointedLocX[1]=57;pointedLocY[1]=192;
+//	pointedLocX[2]=192;pointedLocY[2]=60;
+//	pointedLocX[3]=192;pointedLocY[3]=192;
 
-	pointedLocX[0]=57;pointedLocY[0]=57;
-	pointedLocX[1]=57;pointedLocY[1]=192;
-	pointedLocX[2]=192;pointedLocY[2]=60;
-	pointedLocX[3]=192;pointedLocY[3]=192;
+	allTargetX[0][0]=57;  allTargetY[0][0]=192;
+	allTargetX[0][1]=192; allTargetY[0][1]=57;
+	allTargetX[1][0]=192; allTargetY[1][0]=192;
+	allTargetX[1][1]=57;  allTargetY[1][1]=57;
+
+	lowerXLimit=140;
+	lowerYLimit=140;
 
 	nowDirection=STOP;
 	lockTurnTime=0;
 
+	foundHeadObstacleTime=0;
+	foundTailObstacleTime=0;
 
 	//207 82
 	//61 222

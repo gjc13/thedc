@@ -5,6 +5,27 @@ __interrupt void cpu_timer0_isr(void)
 {
 	Uint16 i;
 
+	//更新光电门输入
+	if(GpioDataRegs.GPADAT.bit.GPIO31)
+	{
+		foundHeadObstacleTime++;
+		foundHeadObstacleTime=foundHeadObstacleTime>5?5:foundHeadObstacleTime;
+	}
+	else
+	{
+		foundHeadObstacleTime=0;
+	}
+	if(GpioDataRegs.GPADAT.bit.GPIO30)
+	{
+		foundTailObstacleTime++;
+		foundTailObstacleTime=foundTailObstacleTime>5?5:foundTailObstacleTime;
+	}
+	else
+	{
+		foundTailObstacleTime=0;
+	}
+
+
 	if(cpuTime++>60000)
 		cpuTime=0;
 

@@ -140,6 +140,10 @@ extern _3Axisf_t	gAccel;
 ************************************************* */
 extern volatile float32 eCapData[3];
 
+//光电门输入
+extern volatile Uint16 foundHeadObstacleTime;
+
+extern volatile Uint16 foundTailObstacleTime;
 
 
 //坐标信息
@@ -172,7 +176,8 @@ extern Uint16 lastUpdatePostureTime;
 
 //角度PID
 extern float32 angleOutPut;
-extern float32 targetAngle;
+extern float32 targetHeadAngle;
+extern float32 targetRunAngle;
 
 extern float32 angleP;
 extern float32 angleI;
@@ -188,8 +193,10 @@ extern volatile enum MoveDirection direction;
 
 //目标位置+迭代器，
 //TODO 搞到坑的位置在initDsp中初始化目标以及路线
-extern Uint16 allTargetX[10];
-extern Uint16 allTargetY[10];
+extern Uint16 allTargetX[2][2];
+extern Uint16 allTargetY[2][2];
+extern Uint16 lowerXLimit;
+extern Uint16 lowerYLimit;
 extern volatile Uint16 targetIterator;
 extern Uint16 numTargets;
 

@@ -155,7 +155,7 @@ void SetEngineOutput()
 		DisableEngineOutput();
 		SeekNextTarget();
 	}
-	else if(moveStatus==WAITPOINT || playerData.time>118)
+	else if(moveStatus==WAITPOINT || playerData.time>239)
 	{
 		DisableEngineOutput();
 		return;
@@ -164,30 +164,33 @@ void SetEngineOutput()
 	if(nowDistance<distanceMinBound && moveStatus==SEEK)
 	{
 		DisableEngineOutput();
-		if((nowX<170&&nowX>100)||(nowY<170&&nowY>100))
-		{
-			DisableEngineOutput();
-			moveStatus=PEND;
-		}
-		else
+		if(IsPointedLoc(nowX,nowY))
 		{
 			StartWaitPoint();
 			return;
 		}
+		else
+		{
+			DisableEngineOutput();
+			moveStatus=PEND;
+		}
 		return;
 	}
-	targetAngle=GetAngle(nowX,nowY,targetX,targetY);
-	if(ShouldReverseTurn(nowAngle,targetAngle))
+	targetRunAngle=GetAngle(nowX,nowY,targetX,targetY);
+	if(ShouldReverseTurn(nowAngle,targetRunAngle))
 	{
-		targetAngle=targetAngle+PI;
-		targetAngle=targetAngle>2*PI?targetAngle-2*PI:targetAngle;
-		TurnEngine(targetAngle);
+		targetHeadAngle=targetRunAngle+PI;
+		targetHeadAngle=targetHeadAngle>2*PI?targetHeadAngle-2*PI:targetHeadAngle;
 	}
-	diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
+	else
+	{
+		targetHeadAngle=targetRunAngle;
+	}
+	diffAngle=GetDiffAngleAbs(nowAngle,targetHeadAngle);
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
 	if(diffAngle>angleTolerance && abs(PI-diffAngle)>angleTolerance)
 	{
-		TurnEngine(targetAngle);
+		TurnEngine(targetHeadAngle);
 	}
 	else if(HasObstacle())
 	{
@@ -197,7 +200,14 @@ void SetEngineOutput()
 	}
 	else
 	{
-		targetAngle=GetAngle(nowX,nowY,targetX,targetY);
+//		if(diffAngle>angleTolerance && abs(PI-diffAngle)>angleTolerance)
+//		{
+//			RunAndTurn();
+//		}
+//		else
+//		{
+//			RunToTarget();
+//		}
 		RunToTarget();
 	}
 }
@@ -227,6 +237,7 @@ void TurnEngine(float32 targetAngle)
 	else
 	{
 		//Better to be conservative when MPU fails
+		DisableEngineOutput();
 		return;
 		//Padjust=(rateP*diffAngle)/2;
 	}
@@ -242,22 +253,67 @@ void TurnEngine(float32 targetAngle)
 	{
 		if(IsCounterClockWise(nowAngle,targetAngle))
 		{
-			setEngine(ENGINEFRONT,angleOutPut*1.2,ENGINEBACK,angleOutPut*1.2);
+			if(HasBackObstacle())
+			{
+				setEngine(ENGINEFRONT,angleOutPut*1.2,ENGINEBACK,0);
+			}
+			if(HasFrontObstacle())
+			{
+				setEngine(ENGINEFRONT,0,ENGINEBACK,angleOutPut*1.2);
+			}
+			else
+			{
+				setEngine(ENGINEFRONT,angleOutPut*1.2,ENGINEBACK,angleOutPut*1.2);
+			}
 		}
 		else
 		{
-			setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,angleOutPut*1.2);
+			if(HasBackObstacle())
+			{
+				setEngine(ENGINEBACK,0,ENGINEFRONT,angleOutPut*1.2);
+			}
+			else if(HasFrontObstacle())
+			{
+				setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,0);
+			}
+			else
+			{
+				setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,angleOutPut*1.2);
+			}
 		}
 	}
 	else
 	{
+		angleOutPut=-angleOutPut;
 		if(IsCounterClockWise(nowAngle,targetAngle))
 		{
-			setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,angleOutPut*1.2);
+			if(HasBackObstacle())
+			{
+				setEngine(ENGINEBACK,0,ENGINEFRONT,angleOutPut*1.2);
+			}
+			else if(HasFrontObstacle())
+			{
+				setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,0);
+			}
+			else
+			{
+				setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,angleOutPut*1.2);
+			}
 		}
 		else
 		{
-			setEngine(ENGINEFRONT,angleOutPut*1.2,ENGINEBACK,angleOutPut*1.2);
+			if(HasBackObstacle())
+			{
+				setEngine(ENGINEBACK,0,ENGINEFRONT,angleOutPut*1.2);
+			}
+			else if(HasFrontObstacle())
+			{
+				setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,0);
+			}
+			else
+			{
+				setEngine(ENGINEBACK,angleOutPut*1.2,ENGINEFRONT,angleOutPut*1.2);
+			}
 		}
 	}
 }
@@ -283,7 +339,7 @@ void RunToTarget()
 	rightOut=outPower;
 	outPower+=minPower;
 	rightOut+=minPower;
-	if(GetDiffAngleAbs(nowAngle,targetAngle)<PI/2)
+	if(GetDiffAngleAbs(nowAngle,targetRunAngle)<PI/2)
 	{
 		direction=FRONT;
 		if(direction!=nowDirection)
@@ -307,6 +363,65 @@ void RunToTarget()
 	}
 }
 
+void RunAndTurn()
+{
+	float32 rateAngleP=angleP;
+	float32 diffAngle=GetDiffAngleAbs(nowAngle,targetHeadAngle);
+	float32 rateDistanceP=0.1;
+	float32 minPower=0.03;
+	float32 distance=GetDistance(nowX,nowY,targetX,targetY);
+	float32 outPower=0;
+	Padjust=0;
+	if(moveStatus==PEND)
+	{
+		DisableEngineOutput();
+		return;
+	}
+	if(isMPUavailable && (gGyro.z>-10 && gGyro.z<10))
+	{
+		Padjust=rateAngleP*diffAngle;
+	}
+	else
+	{
+		//Better to be conservative when MPU fails
+		DisableEngineOutput();
+		return;
+		//Padjust=(rateP*diffAngle)/2;
+	}
+	Padjust=Padjust<0.3?Padjust:0.3;
+	angleOutPut=Padjust;
+	angleOutPut=angleOutPut>0.05?0.05:angleOutPut;
+	angleOutPut=angleOutPut<0.01?0.01:angleOutPut;
+
+	outPower=distance*rateDistanceP;
+	outPower=outPower>0.16?0.16:outPower;
+	outPower+=minPower;
+	if(GetDiffAngleAbs(nowAngle,targetRunAngle)<PI/2)
+	{
+		direction=FRONT;
+		if(IsCounterClockWise(nowAngle,targetHeadAngle))
+		{
+			setEngine(ENGINEFRONT,outPower-angleOutPut,ENGINEFRONT,outPower+angleOutPut);
+		}
+		else
+		{
+			setEngine(ENGINEFRONT,outPower+angleOutPut,ENGINEFRONT,outPower-angleOutPut);
+		}
+	}
+	else
+	{
+		direction=BACK;
+		if(IsCounterClockWise(nowAngle,targetHeadAngle))
+		{
+			setEngine(ENGINEBACK,outPower+angleOutPut,ENGINEBACK,outPower-angleOutPut);
+		}
+		else
+		{
+			setEngine(ENGINEBACK,outPower-angleOutPut,ENGINEBACK,outPower+angleOutPut);
+		}
+	}
+}
+
 void DisableEngineOutput()
 {
 	setEngine(ENGINESTOP,0,ENGINESTOP,0);
@@ -315,19 +430,16 @@ void DisableEngineOutput()
 
 void SeekNextTarget()
 {
+	Uint16 xIndex=nowX<lowerXLimit?0:1;
+	Uint16 yIndex=nowY<lowerYLimit?0:1;
 	if(lockTurnTime>0)
 	{
 		return;
 	}
-	targetX=allTargetX[targetIterator];
-	targetY=allTargetY[targetIterator];
+	targetX=allTargetX[xIndex][yIndex];
+	targetY=allTargetY[xIndex][yIndex];
 	moveStatus=SEEK;
 	lockTurnTime=500;
-	targetIterator++;
-	if(targetIterator>=numTargets)
-	{
-		targetIterator-=numTargets;
-	}
 }
 
 void StartWaitPoint()
@@ -349,19 +461,21 @@ Uint16 HasObstacle()
 	{
 		return 0;
 	}
-	return (direction==FRONT) ? (eCapData[0]>ULTRA_FRONT_THRESHOLD) : (eCapData[1]>ULTRA_BACK_THRESHOLD);
+	return (direction==FRONT) ? (foundHeadObstacleTime>3) : (foundTailObstacleTime>3);
+}
+
+Uint16 HasFrontObstacle()
+{
+	return foundHeadObstacleTime>3;
+}
+
+Uint16 HasBackObstacle()
+{
+	return foundTailObstacleTime>3;
 }
 
 
 Uint16 IsPointedLoc(Uint16 locx,Uint16 locy)
 {
-	int i;
-	for(i=0; i<4; i++)
-	{
-		if(GetDistance(locx,locy,pointedLocX[i],pointedLocY[i]<5))
-		{
-			return 1;
-		}
-	}
-	return 0;
+	return GetDistance(locx,locy,targetX,targetY)<5;
 }

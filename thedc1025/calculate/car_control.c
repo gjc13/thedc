@@ -23,9 +23,31 @@ void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float3
 {
 	leftPower*=3;
 	rightPower*=3;
+	if(leftPower<0)
+	{
+		if(leftDirection==ENGINEBACK)
+		{
+			leftDirection=ENGINEFRONT;
+		}
+		else if(leftDirection==ENGINEFRONT)
+		{
+			rightDirection=ENGINEBACK;
+		}
+	}
+	if(rightPower<0)
+	{
+		if(rightDirection==ENGINEBACK)
+		{
+			rightDirection=ENGINEFRONT;
+		}
+		else if(rightDirection==ENGINEFRONT)
+		{
+			rightDirection=ENGINEBACK;
+		}
+	}
 	if(leftDirection==ENGINEBACK)
 	{
-		leftPower=leftPower<1?leftPower:0.7;
+		leftPower=leftPower<0.7?leftPower:0.7;
 	}
 	else if(leftDirection==ENGINEFRONT)
 	{
