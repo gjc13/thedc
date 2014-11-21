@@ -64,3 +64,10 @@ Uint16 ShouldReverseTurn(float32 fromAngle,float32 toAngle)
 	float32 toY=sin(toAngle);
 	return fromX*toX+fromY*toY<0;
 }
+
+float32 Shadow(int16 vecX,int16 vecY,int16 shadowX,int16 shadowY)
+{
+	//返回(vecX,vecY)到(shadowX,shadowY)上的投影
+	return (shadowX*vecX+shadowY*vecY)/sqrt(shadowX*shadowX+shadowY*shadowY);
+}
+

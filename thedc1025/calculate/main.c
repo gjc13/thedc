@@ -5,6 +5,8 @@
 void main(void)
 {
 //	Uint16 i;
+
+
 	initDSP();
 //	while(1)
 
@@ -26,6 +28,7 @@ void main(void)
 
 
    InitializeEngine();
+
 
    for(;;)
    {

@@ -114,6 +114,8 @@ int16 IsCounterClockWise(float32 fromAngle,float32 toAngle);
 float32 GetSecondTimespan(Uint16 cpuTimeFrom,Uint16 cpuTimeTo);
 Uint16 ShouldReverseTurn(float32 fromAngle,float32 toAngle);
 
+//返回(vecX,vecY)到(shadowX,shadowY)上的投影
+float32 Shadow(int16 vecX,int16 vecY,int16 shadowX,int16 shadowY);
 
 //迭代到下一个坐标
 void SeekNextTarget();

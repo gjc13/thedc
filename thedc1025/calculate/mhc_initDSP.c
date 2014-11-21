@@ -289,10 +289,10 @@ void initGlobalVariables()
 //	pointedLocX[2]=192;pointedLocY[2]=60;
 //	pointedLocX[3]=192;pointedLocY[3]=192;
 
-	allTargetX[0][0]=57;  allTargetY[0][0]=192;
-	allTargetX[0][1]=192; allTargetY[0][1]=57;
+	allTargetX[0][0]=52;  allTargetY[0][0]=199;
+	allTargetX[0][1]=188; allTargetY[0][1]=60;
 	allTargetX[1][0]=192; allTargetY[1][0]=192;
-	allTargetX[1][1]=57;  allTargetY[1][1]=57;
+	allTargetX[1][1]=47;  allTargetY[1][1]=56;
 
 	lowerXLimit=140;
 	lowerYLimit=140;
