@@ -29,7 +29,7 @@ void DecodePlayerData()
 	{
 		if(i==playerID /*&& (abs(*iterBuffer-playerData_headx)<10||gameFirstStart) */)
 		{
-			if(abs(playerData_headx-*iterBuffer)>50 && !gameFirstStart)
+			if(abs(playerData_headx-*iterBuffer)>100 && !gameFirstStart)
 			{
 				isPlayerDataAvailable=0;
 			}
@@ -42,7 +42,7 @@ void DecodePlayerData()
 				isPlayerDataAvailable=1;
 				newDataReceive=1;
 			}
-			if(nowScore!=*(iterBuffer+4))
+			if(nowScore==((*(iterBuffer+4))+1))
 			{
 				getNewPoint=1;
 			}
@@ -72,7 +72,7 @@ void DecodePlayerData()
 	{
 		sciAReadBuffer[i]=0;
 	}
-	isPlayerDataAvailable=!(GetDistance(playerData_rearx,playerData_reary,playerData_headx,playerData_heady)<1);
+	//isPlayerDataAvailable=!(GetDistance(playerData_rearx,playerData_reary,playerData_headx,playerData_heady)<1);
 	canMove=playerData.is_running && playerData.time>1;
 	if(playerData.time<=1)
 	{

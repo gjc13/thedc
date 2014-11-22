@@ -26,7 +26,7 @@ __interrupt void sciaTxFifoIsr(void)
 
 __interrupt void sciaRxFifoIsr(void)
 {
-	if(cpuTime > lastReciveTime+5 )
+	if(cpuTime > lastReciveTime+2 )
 		sciAReadBufferPointer = 0;
 	lastReciveTime=cpuTime;
 

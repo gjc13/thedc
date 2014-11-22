@@ -272,7 +272,7 @@ void initGlobalVariables()
 	direction=STOP;
 	moveStatus=PEND;
 
-	waitTimeLimit=2800;
+	waitTimeLimit=3200;
 
 	//TODO 在这里设置路线信息
 	numTargets=6;
@@ -294,10 +294,10 @@ void initGlobalVariables()
 //	allTargetX[1][0]=192; allTargetY[1][0]=192;
 //	allTargetX[1][1]=47;  allTargetY[1][1]=56;
 
-	allTargetX[0][0]=50;  allTargetY[0][0]=203;
-	allTargetX[0][1]=196; allTargetY[0][1]=196;
-	allTargetX[1][0]=43; allTargetY[1][0]=52;
-	allTargetX[1][1]=192;  allTargetY[1][1]=56;
+	allTargetX[0][0]=54;  allTargetY[0][0]=199;
+	allTargetX[0][1]=199; allTargetY[0][1]=199;
+	allTargetX[1][0]=54; allTargetY[1][0]=54;
+	allTargetX[1][1]=199;  allTargetY[1][1]=54;
 
 	lowerXLimit=140;
 	lowerYLimit=140;

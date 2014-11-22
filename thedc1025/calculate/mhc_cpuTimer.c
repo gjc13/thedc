@@ -49,8 +49,9 @@ __interrupt void cpu_timer0_isr(void)
 	{
 		waitingTime++;
 	}
-	if(waitingTime>waitTimeLimit /*|| getNewPoint*/)
+	if(waitingTime>waitTimeLimit)
 	{
+		DisableEngineOutput();
 		moveStatus=PEND;
 		SeekNextTarget();
 		waitingTime=0;

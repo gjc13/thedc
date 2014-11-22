@@ -30,20 +30,20 @@ void main(void)
    InitializeEngine();
 
 
-   while(1)
-   {
-	   if(foundHeadObstacleTime>10 || foundTailObstacleTime>10)
-	   {
-			for(i=0; i<0x20FE; i++)
-			{
-				setEngine(ENGINEFRONT,0.25,ENGINEFRONT,0.25);
-			}
-	   }
-	   else
-	   {
-		   setEngine(ENGINEBACK,0.1,ENGINEBACK,0.1);
-	   }
-   }
+//   while(1)
+//   {
+//	   if(foundHeadObstacleTime>10 || foundTailObstacleTime>10)
+//	   {
+//			for(i=0; i<0x20FE; i++)
+//			{
+//				setEngine(ENGINEFRONT,0.25,ENGINEFRONT,0.25);
+//			}
+//	   }
+//	   else
+//	   {
+//		   setEngine(ENGINEBACK,0.1,ENGINEBACK,0.1);
+//	   }
+//   }
 
    for(;;)
    {
