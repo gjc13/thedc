@@ -42,6 +42,10 @@ void DecodePlayerData()
 				isPlayerDataAvailable=1;
 				newDataReceive=1;
 			}
+			if(nowScore!=*(iterBuffer+4))
+			{
+				getNewPoint=1;
+			}
 			nowScore=*(iterBuffer+4);
 			gameFirstStart=0;
 		}

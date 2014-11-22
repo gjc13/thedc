@@ -222,4 +222,6 @@ extern Uint16 newDataReceive;
 extern Uint16 nowDirection;
 extern int16 lockTurnTime;
 
+extern volatile Uint16 getNewPoint;
+
 #endif

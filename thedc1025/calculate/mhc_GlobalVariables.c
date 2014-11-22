@@ -232,3 +232,5 @@ Uint16 newDataReceive;
 Uint16 nowDirection;
 int16 lockTurnTime;
 
+volatile Uint16 getNewPoint;
+

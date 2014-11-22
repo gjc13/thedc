@@ -9,7 +9,7 @@ __interrupt void cpu_timer0_isr(void)
 	if(GpioDataRegs.GPADAT.bit.GPIO31)
 	{
 		foundHeadObstacleTime++;
-		foundHeadObstacleTime=foundHeadObstacleTime>5?5:foundHeadObstacleTime;
+		foundHeadObstacleTime=foundHeadObstacleTime>400?400:foundHeadObstacleTime;
 	}
 	else
 	{
@@ -18,7 +18,7 @@ __interrupt void cpu_timer0_isr(void)
 	if(GpioDataRegs.GPADAT.bit.GPIO30)
 	{
 		foundTailObstacleTime++;
-		foundTailObstacleTime=foundTailObstacleTime>5?5:foundTailObstacleTime;
+		foundTailObstacleTime=foundTailObstacleTime>400?400:foundTailObstacleTime;
 	}
 	else
 	{
@@ -49,11 +49,12 @@ __interrupt void cpu_timer0_isr(void)
 	{
 		waitingTime++;
 	}
-	if(waitingTime>waitTimeLimit)
+	if(waitingTime>waitTimeLimit /*|| getNewPoint*/)
 	{
 		moveStatus=PEND;
 		SeekNextTarget();
 		waitingTime=0;
+		getNewPoint=0;
 	}
 	lockTurnTime--;
 	lockTurnTime=lockTurnTime<0?0:lockTurnTime;
