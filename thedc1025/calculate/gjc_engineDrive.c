@@ -96,12 +96,12 @@ Uint16 UpdatePosture()
 	}
 	if(newDataReceive)
 	{
-		nowX=(playerData_headx+playerData_rearx)/2;
-		nowY=(playerData_heady+playerData_reary)/2;
 		headX=playerData_headx;
 		headY=playerData_heady;
 		rearX=playerData_rearx;
 		rearY=playerData_reary;
+		nowX=(playerData_headx+playerData_rearx)/2;
+		nowY=(playerData_heady+playerData_reary)/2;
 	}
 	nowDataAngle=GetAngle(playerData_rearx,playerData_reary,playerData_headx,playerData_heady);
 	dataDiffAngle=nowDataAngle-nowAngle;
@@ -147,11 +147,13 @@ Uint16 UpdatePosture()
 
 void SetEngineOutput()
 {
-	float32 distanceMinBound=3;
+	volatile float32 distanceMinBound=3;
 	float32 diffAngle=0;
 	float32 angleTolerance=PI/12;
 	Uint16 i=0;
 	float32 stopDetectBound=10;
+	float32 dis=abs(nowX-targetX)+abs(nowY-targetY);
+	distanceMinBound=3;
 	if(moveStatus==WAITPOINT || playerData.time>239)
 	{
 		DisableEngineOutput();
@@ -163,7 +165,7 @@ void SetEngineOutput()
 		SeekNextTarget();
 	}
 	nowDistance=GetDistance(nowX,nowY,targetX,targetY);
-	if(nowDistance<distanceMinBound && moveStatus==SEEK)
+	if(dis<=5 && moveStatus==SEEK)
 	{
 //		for(i=0; i<0xFFFE; i++)
 //		{
@@ -199,7 +201,7 @@ void SetEngineOutput()
 	{
 		TurnEngine(targetHeadAngle);
 	}
-	else if(HasObstacle() && nowDistance>stopDetectBound)
+	else if(HasObstacle() && nowDistance>30 && nowDistance<50)
 	{
 		if(HasFrontObstacle())
 		{
@@ -344,9 +346,9 @@ void TurnEngine(float32 targetAngle)
 
 void RunToTarget()
 {
-	float32 rateP=0.01;
+	float32 rateP=0.02;
 
-	float32 minPower=0.05;
+	float32 minPower=0.02;
 	float32 distance=GetDistance(nowX,nowY,targetX,targetY);
 	float32 outPower=distance*rateP;
 	float32 rightOut=0;
@@ -363,8 +365,8 @@ void RunToTarget()
 	rightOut=outPower;
 	if(distance<40)
 	{
-		outPower=outPower>0.1?0.1:outPower;
-		rightOut=rightOut>0.1?0.1:outPower;
+		outPower=outPower>0.05?0.05:outPower;
+		rightOut=rightOut>0.05?0.05:outPower;
 	}
 	if(GetDiffAngleAbs(nowAngle,targetRunAngle)<PI/2)
 	{

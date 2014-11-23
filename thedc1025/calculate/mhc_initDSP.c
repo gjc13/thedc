@@ -272,7 +272,7 @@ void initGlobalVariables()
 	direction=STOP;
 	moveStatus=PEND;
 
-	waitTimeLimit=3200;
+	waitTimeLimit=3000;
 
 	//TODO 在这里设置路线信息
 	numTargets=6;
