@@ -7,7 +7,7 @@
 #include "F2806x_Examples.h"       // F2806x Examples Headerfile
 #include "F2806x_EPwm_defines.h" 	 // useful defines for initialization
 #include "string.h"
-
+#include "F2806x_GlobalPrototypes.h"
 #include "functions.h"
 #include "math.h"
 
@@ -284,5 +284,7 @@ enum MoveDirection
 
 #define ULTRA_FRONT_THRESHOLD  38
 #define ULTRA_BACK_THRESHOLD 34
+
+#define EQEP_POS_PRELOAD (0x7FFFFFFF)
 
 #endif

@@ -4,6 +4,7 @@
 #include "F2806x_Device.h"         // F2806x Headerfile
 #include "F2806x_Examples.h"       // F2806x Examples Headerfile
 #include "F2806x_EPwm_defines.h" 	 // useful defines for initialization
+#include "F2806x_GlobalPrototypes.h"
 #include "mhc.h"
 
 extern Uint16 sciASendBuffer[32];
@@ -223,5 +224,9 @@ extern Uint16 nowDirection;
 extern int16 lockTurnTime;
 
 extern volatile Uint16 getNewPoint;
+
+//正交编码器捕获数据
+extern volatile int32 eQEP1PositionDifference;
+extern volatile int32 eQEP2PositionDifference;
 
 #endif

@@ -23,13 +23,19 @@ void initDSP()
 	   InitEPwm3Gpio();
 	   InitEPwm4Gpio();
 	   InitEPwm5Gpio();
+	   InitEQep1Gpio();
+	   InitEQep2Gpio();
 	   l298n_GPIO_init();
-
 	   EALLOW;
 	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //配置GPIO30为GPin
 	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 0;
 	   GpioCtrlRegs.GPAMUX2.bit.GPIO31= 0; //配置GPIO31为GPin
 	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 0;
+
+	   //关掉蜂鸣器
+	   GpioCtrlRegs.GPBMUX2.bit.GPIO58 = 0;
+	   GpioCtrlRegs.GPBDIR.bit.GPIO58 = 1;
+	   GpioDataRegs.GPBCLEAR.bit.GPIO58 = 1;
 	   EDIS;
 
 
@@ -66,6 +72,7 @@ void initDSP()
 //	   PieVectTable.ECAP3_INT = &ecap3_isr;
 	   PieVectTable.I2CINT1A = &i2c_int1a_isr;
 	   PieVectTable.TINT0 = &cpu_timer0_isr;
+
 	//   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
 	   EDIS;    // This is needed to disable write to EALLOW protected registers
 
@@ -86,7 +93,8 @@ void initDSP()
 	   InitEPwm4Example();
 	   InitEPwm5Example();
 
-
+	   eQEP1Initialize();
+	   eQEP2Initialize();
 
 	   EALLOW;
 	   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;
@@ -310,13 +318,8 @@ void initGlobalVariables()
 
 	getNewPoint=0;
 
-	//207 82
-	//61 222
-	//206 222
-
-	//TODO 在这里设置所有坑的坐标
-
-	//END_of_TODO
+	eQEP1PositionDifference=0;
+	eQEP2PositionDifference=0;
 }
 
 void sensor_calibrate(void)

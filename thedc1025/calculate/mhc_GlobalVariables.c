@@ -234,3 +234,6 @@ int16 lockTurnTime;
 
 volatile Uint16 getNewPoint;
 
+//正交编码器捕获数据
+volatile int32 eQEP1PositionDifference;
+volatile int32 eQEP2PositionDifference;

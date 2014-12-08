@@ -4,15 +4,13 @@
 
 void main(void)
 {
-	Uint16 i;
 
 	initDSP();
-//	while(1)
-
-//	{
-//		setEngine(1,0.2,1,0.2);
-//	}
-	init_I2C_devices();
+	while(1)
+	{
+		setEngine(1,0.2,1,0.2);
+	}
+	//init_I2C_devices();
 
 
 
@@ -46,6 +44,7 @@ void main(void)
 
    for(;;)
    {
+	   setEngine(ENGINEFRONT,0.1,ENGINEFRONT,0.1);
 	   if(gameFirstStart)
 	   {
 		   DisableEngineOutput();

@@ -25,6 +25,10 @@ __interrupt void cpu_timer0_isr(void)
 		foundTailObstacleTime=0;
 	}
 
+	//更新正交编码器
+	eQEP1TickCalculate();
+	eQEP2TickCalculate();
+
 
 	if(cpuTime++>60000)
 		cpuTime=0;

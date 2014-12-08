@@ -12,6 +12,7 @@ C_SRCS += \
 ../TiLibrary/F2806x_DefaultIsr.c \
 ../TiLibrary/F2806x_ECap.c \
 ../TiLibrary/F2806x_EPwm.c \
+../TiLibrary/F2806x_EQep.c \
 ../TiLibrary/F2806x_GlobalVariableDefs.c \
 ../TiLibrary/F2806x_Gpio.c \
 ../TiLibrary/F2806x_HRCap.c \
@@ -27,6 +28,7 @@ OBJS += \
 ./TiLibrary/F2806x_DefaultIsr.obj \
 ./TiLibrary/F2806x_ECap.obj \
 ./TiLibrary/F2806x_EPwm.obj \
+./TiLibrary/F2806x_EQep.obj \
 ./TiLibrary/F2806x_GlobalVariableDefs.obj \
 ./TiLibrary/F2806x_Gpio.obj \
 ./TiLibrary/F2806x_HRCap.obj \
@@ -46,6 +48,7 @@ C_DEPS += \
 ./TiLibrary/F2806x_DefaultIsr.pp \
 ./TiLibrary/F2806x_ECap.pp \
 ./TiLibrary/F2806x_EPwm.pp \
+./TiLibrary/F2806x_EQep.pp \
 ./TiLibrary/F2806x_GlobalVariableDefs.pp \
 ./TiLibrary/F2806x_Gpio.pp \
 ./TiLibrary/F2806x_HRCap.pp \
@@ -60,6 +63,7 @@ C_DEPS__QUOTED += \
 "TiLibrary\F2806x_DefaultIsr.pp" \
 "TiLibrary\F2806x_ECap.pp" \
 "TiLibrary\F2806x_EPwm.pp" \
+"TiLibrary\F2806x_EQep.pp" \
 "TiLibrary\F2806x_GlobalVariableDefs.pp" \
 "TiLibrary\F2806x_Gpio.pp" \
 "TiLibrary\F2806x_HRCap.pp" \
@@ -75,6 +79,7 @@ OBJS__QUOTED += \
 "TiLibrary\F2806x_DefaultIsr.obj" \
 "TiLibrary\F2806x_ECap.obj" \
 "TiLibrary\F2806x_EPwm.obj" \
+"TiLibrary\F2806x_EQep.obj" \
 "TiLibrary\F2806x_GlobalVariableDefs.obj" \
 "TiLibrary\F2806x_Gpio.obj" \
 "TiLibrary\F2806x_HRCap.obj" \
@@ -98,6 +103,7 @@ C_SRCS__QUOTED += \
 "../TiLibrary/F2806x_DefaultIsr.c" \
 "../TiLibrary/F2806x_ECap.c" \
 "../TiLibrary/F2806x_EPwm.c" \
+"../TiLibrary/F2806x_EQep.c" \
 "../TiLibrary/F2806x_GlobalVariableDefs.c" \
 "../TiLibrary/F2806x_Gpio.c" \
 "../TiLibrary/F2806x_HRCap.c" \
