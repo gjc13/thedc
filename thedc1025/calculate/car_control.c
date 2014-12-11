@@ -4,18 +4,44 @@
 void l298n_GPIO_init()//配置电机方向输出IO
 {
 	   EALLOW;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO12= 0; //配置GPIO12为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO12 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO12 = 0;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO13 = 0; //配置GPIO13为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO13= 1;
-	   GpioDataRegs.GPADAT.bit.GPIO13= 0;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO14 = 0; //配置GPIO14为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO14 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO14 = 0;
-	   GpioCtrlRegs.GPAMUX1.bit.GPIO15= 0; //配置GPIO15为GPout
-	   GpioCtrlRegs.GPADIR.bit.GPIO15 = 1;
-	   GpioDataRegs.GPADAT.bit.GPIO15= 0;
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO41= 0; //配置GPIO12为GPout
+	   GpioCtrlRegs.GPBDIR.bit.GPIO41 = 1;
+	   GpioDataRegs.GPBDAT.bit.GPIO41 = 0;
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO42 = 0; //配置GPIO13为GPout
+	   GpioCtrlRegs.GPBDIR.bit.GPIO42= 1;
+	   GpioDataRegs.GPBDAT.bit.GPIO42= 0;
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO43 = 0; //配置GPIO14为GPout
+	   GpioCtrlRegs.GPBDIR.bit.GPIO43 = 1;
+	   GpioDataRegs.GPBDAT.bit.GPIO43 = 0;
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO44= 0; //配置GPIO15为GPout
+	   GpioCtrlRegs.GPBDIR.bit.GPIO44 = 1;
+	   GpioDataRegs.GPBDAT.bit.GPIO44= 0;
+	   EDIS;
+}
+
+
+void aux_GPIO_init()//配置电机方向输出IO
+{
+	   EALLOW;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO20= 0; //配置GPIO20为GPout
+	   GpioCtrlRegs.GPADIR.bit.GPIO20 = 1;
+	   GpioDataRegs.GPADAT.bit.GPIO20 = 0;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO21 = 0; //配置GPIO21为GPout
+	   GpioCtrlRegs.GPADIR.bit.GPIO21= 1;
+	   GpioDataRegs.GPADAT.bit.GPIO21= 0;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO30 = 0; //配置GPIO30为GPout
+	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 1;
+	   GpioDataRegs.GPADAT.bit.GPIO30 = 0;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO31= 0; //配置GPIO31为GPout
+	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 1;
+	   GpioDataRegs.GPADAT.bit.GPIO31= 0;
+	   GpioCtrlRegs.GPBMUX2.bit.GPIO58= 0; //配置GPIO58为GPout,蜂鸣器
+	   GpioCtrlRegs.GPBDIR.bit.GPIO58 = 1;
+	   GpioDataRegs.GPBDAT.bit.GPIO58= 0;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //配置GPIO30为GPin
+	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 0;
+	   GpioCtrlRegs.GPAMUX2.bit.GPIO31= 0; //配置GPIO31为GPin
+	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 0;
 	   EDIS;
 }
 
@@ -66,18 +92,18 @@ void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float3
 	switch(leftDirection)
 	{
 	case 0://刹车
-		   GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
-		   GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO41 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO42 = 1;
 		   setPwm(2,1);
 		   break;
 	case 1://前进
-		   GpioDataRegs.GPASET.bit.GPIO14 = 1;
-		   GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+		   GpioDataRegs.GPBSET.bit.GPIO41 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO42 = 1;
 		   setPwm(2,leftPower);
 		   break;
 	case 2://后退
-		   GpioDataRegs.GPACLEAR.bit.GPIO14 = 1;
-		   GpioDataRegs.GPASET.bit.GPIO15 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO41 = 1;
+		   GpioDataRegs.GPBSET.bit.GPIO42 = 1;
 		   setPwm(2,leftPower);
 		   break;
 	}
@@ -85,18 +111,18 @@ void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float3
 	switch(rightDirection)
 	{
 	case 0://刹车
-		   GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;
-		   GpioDataRegs.GPACLEAR.bit.GPIO13 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO43 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO44 = 1;
 		   setPwm(1,1);
 		   break;
 	case 1://前进
-		   GpioDataRegs.GPASET.bit.GPIO12 = 1;
-		   GpioDataRegs.GPACLEAR.bit.GPIO13 = 1;
+		   GpioDataRegs.GPBSET.bit.GPIO43 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO44 = 1;
 		   setPwm(1,rightPower);
 		   break;
 	case 2://后退
-		   GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;
-		   GpioDataRegs.GPASET.bit.GPIO13 = 1;
+		   GpioDataRegs.GPBCLEAR.bit.GPIO43 = 1;
+		   GpioDataRegs.GPBSET.bit.GPIO44 = 1;
 		   setPwm(1,rightPower);
 		   break;
 	}

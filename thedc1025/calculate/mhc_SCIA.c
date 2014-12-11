@@ -26,7 +26,7 @@ __interrupt void sciaTxFifoIsr(void)
 
 __interrupt void sciaRxFifoIsr(void)
 {
-	if(cpuTime > lastReciveTime+2 )
+	if(cpuTime > lastReciveTime+5 )
 		sciAReadBufferPointer = 0;
 	lastReciveTime=cpuTime;
 
@@ -92,23 +92,23 @@ void sciASendData()
 //	double_to_string((double)direction,(char*)sciASendBuffer);
 //
 
-	strcat((char*)sciASendBuffer,"eCap");
-	double_to_string((double)eCapData[0],(char*)sciASendBuffer);
-	double_to_string((double)eCapData[1],(char*)sciASendBuffer);
-
-	strcat((char*)sciASendBuffer,"sta");
-	double_to_string((double)moveStatus,(char*)sciASendBuffer);
-
-	strcat((char*)sciASendBuffer,"dir");
-	double_to_string((double)direction,(char*)sciASendBuffer);
-
-	strcat((char*)sciASendBuffer,"loc");
-	double_to_string((double)nowX,(char*)sciASendBuffer);
-	double_to_string((double)nowY,(char*)sciASendBuffer);
-
-	strcat((char*)sciASendBuffer,"tag");
-	double_to_string((double)targetX,(char*)sciASendBuffer);
-	double_to_string((double)targetY,(char*)sciASendBuffer);
+//	strcat((char*)sciASendBuffer,"eCap");
+//	double_to_string((double)eCapData[0],(char*)sciASendBuffer);
+//	double_to_string((double)eCapData[1],(char*)sciASendBuffer);
+//
+//	strcat((char*)sciASendBuffer,"sta");
+//	double_to_string((double)moveStatus,(char*)sciASendBuffer);
+//
+//	strcat((char*)sciASendBuffer,"dir");
+//	double_to_string((double)direction,(char*)sciASendBuffer);
+//
+//	strcat((char*)sciASendBuffer,"loc");
+//	double_to_string((double)nowX,(char*)sciASendBuffer);
+//	double_to_string((double)nowY,(char*)sciASendBuffer);
+//
+//	strcat((char*)sciASendBuffer,"tag");
+//	double_to_string((double)targetX,(char*)sciASendBuffer);
+//	double_to_string((double)targetY,(char*)sciASendBuffer);
 //
 //	strcat((char*)sciASendBuffer,"dis");
 //	double_to_string(nowDistance,(char*)sciASendBuffer);
@@ -133,6 +133,8 @@ void sciASendData()
 
 //	double_to_string(  throttle_real , (char*)sciASendBuffer);
 //	double_to_string(  throttle_ref , (char*)sciASendBuffer);
+
+	double_to_string((double)spi_zGyro,(char*)sciASendBuffer);
 
 	strcat((char*)sciASendBuffer,"\r\n");
 

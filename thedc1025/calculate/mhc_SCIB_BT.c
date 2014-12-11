@@ -125,30 +125,25 @@ void sciBSendData()
 	Uint16 i;
 	for(i=0;i<128;i++)
 		sciBSendBuffer[i]=0;
-
-
-	strcat((char*)sciBSendBuffer,"sta");
-	int16_to_string((int16)moveStatus,(char*)sciBSendBuffer);
-
-	strcat((char*)sciBSendBuffer,"dir");
-	int16_to_string((int16)direction,(char*)sciBSendBuffer);
-
-	strcat((char*)sciBSendBuffer,"loc");
-	int16_to_string((int16)nowX,(char*)sciBSendBuffer);
-	int16_to_string((int16)nowY,(char*)sciBSendBuffer);
-
-	strcat((char*)sciBSendBuffer,"tag");
-	int16_to_string((int16)targetX,(char*)sciBSendBuffer);
-	int16_to_string((int16)targetY,(char*)sciBSendBuffer);
-
-	strcat((char*)sciBSendBuffer,"nP");
-	int16_to_string((int16)getNewPoint,(char*)sciBSendBuffer);
-	strcat((char*)sciBSendBuffer,"pT");
-	int16_to_string((int16)waitingTime,(char*)sciBSendBuffer);
-
+//
+//
+//	strcat((char*)sciBSendBuffer,"sta");
+//	double_to_string((double)moveStatus,(char*)sciBSendBuffer);
+//
+//	strcat((char*)sciBSendBuffer,"dir");
+//	double_to_string((double)direction,(char*)sciBSendBuffer);
+//
+//	strcat((char*)sciBSendBuffer,"loc");
+//	double_to_string((double)nowX,(char*)sciBSendBuffer);
+//	double_to_string((double)nowY,(char*)sciBSendBuffer);
+//
+//	strcat((char*)sciBSendBuffer,"tag");
+//	double_to_string((double)targetX,(char*)sciBSendBuffer);
+//	double_to_string((double)targetY,(char*)sciBSendBuffer);
 
 //		   strcat((char*)sciBSendBuffer,"\t");
-
+	strcat((char*)sciBSendBuffer,"        ");
+	double_to_string((double)spi_zGyro,(char*)sciBSendBuffer);
 	strcat((char*)sciBSendBuffer,"\r\n");
 
 	sciBSendBufferPointer=0;

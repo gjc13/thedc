@@ -3,8 +3,8 @@
 
 float32 GetDistance(int32 fromx,int32 fromy,int32 tox,int32 toy)
 {
-	float32 deltaX=fromx-tox;
-	float32 deltaY=fromy-toy;
+	int32 deltaX=fromx-tox;
+	int32 deltaY=fromy-toy;
 	return sqrt(deltaX*deltaX+deltaY*deltaY);
 }
 

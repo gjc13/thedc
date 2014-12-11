@@ -5,8 +5,6 @@
 #include "F2806x_Device.h"         // F2806x Headerfile
 #include "F2806x_Examples.h"       // F2806x Examples Headerfile
 #include "F2806x_EPwm_defines.h" 	 // useful defines for initialization
-#include "F2806x_EQep.h"
-#include "F2806x_GlobalPrototypes.h"
 #include "string.h"
 #include "math.h"
 
@@ -71,6 +69,7 @@ void setMotor();
 
 
 void l298n_GPIO_init(void);
+void aux_GPIO_init();
 void setEngine(int16 leftDrection,float32 leftPower,int16 rightDrection,float32 rightPower);
 
 
@@ -94,15 +93,6 @@ float32 invSqrt(float32 x);
 
 
 int16 iirLPFilterSingle(volatile int32 in,volatile int32 attenuation, volatile int32* filt);
-
-//正交编码器初始化
-void eQEP1Initialize(void);
-void eQEP2Initialize(void);
-
-//正交编码器解析
-void eQEP1TickCalculate(void);
-void eQEP2TickCalculate(void);
-
 
 
 Uint16 ShouldDecodePlayerData();
@@ -140,6 +130,14 @@ void StartWaitPoint();
 Uint16 HasObstacle();
 Uint16 HasFrontObstacle();
 Uint16 HasBackObstacle();
+
+
+
+
+//SPI
+//__interrupt void spiaTxIsr(void);
+__interrupt void spiaRxIsr(void);//不使用FIFO时接收数据，发送完成，接收溢出共用此中断
+void initSPI();
 
 
 #endif

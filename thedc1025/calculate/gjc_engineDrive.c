@@ -96,12 +96,12 @@ Uint16 UpdatePosture()
 	}
 	if(newDataReceive)
 	{
+		nowX=(playerData_headx+playerData_rearx)/2;
+		nowY=(playerData_heady+playerData_reary)/2;
 		headX=playerData_headx;
 		headY=playerData_heady;
 		rearX=playerData_rearx;
 		rearY=playerData_reary;
-		nowX=(playerData_headx+playerData_rearx)/2;
-		nowY=(playerData_heady+playerData_reary)/2;
 	}
 	nowDataAngle=GetAngle(playerData_rearx,playerData_reary,playerData_headx,playerData_heady);
 	dataDiffAngle=nowDataAngle-nowAngle;
@@ -147,13 +147,10 @@ Uint16 UpdatePosture()
 
 void SetEngineOutput()
 {
-	volatile float32 distanceMinBound=3;
+	float32 distanceMinBound=10;
 	float32 diffAngle=0;
 	float32 angleTolerance=PI/12;
 	Uint16 i=0;
-	float32 stopDetectBound=10;
-	float32 dis=abs(nowX-targetX)+abs(nowY-targetY);
-	distanceMinBound=3;
 	if(moveStatus==WAITPOINT || playerData.time>239)
 	{
 		DisableEngineOutput();
@@ -165,12 +162,12 @@ void SetEngineOutput()
 		SeekNextTarget();
 	}
 	nowDistance=GetDistance(nowX,nowY,targetX,targetY);
-	if(dis<=5 && moveStatus==SEEK)
+	if(nowDistance<distanceMinBound && moveStatus==SEEK)
 	{
-//		for(i=0; i<0xFFFE; i++)
-//		{
-//			DisableEngineOutput();
-//		}
+		for(i=0; i<0xFFFE; i++)
+		{
+			DisableEngineOutput();
+		}
 		StartWaitPoint();
 		return;
 //		if(IsPointedLoc(nowX,nowY))
@@ -201,7 +198,7 @@ void SetEngineOutput()
 	{
 		TurnEngine(targetHeadAngle);
 	}
-	else if(HasObstacle() && nowDistance>30 && nowDistance<50)
+	else if(HasObstacle() && nowDistance>distanceMinBound)
 	{
 		if(HasFrontObstacle())
 		{
@@ -243,7 +240,7 @@ void TurnEngine(float32 targetAngle)
 	float32 rateP=angleP;
 	float32 rateD=IsCounterClockWise(nowAngle,targetAngle)?-angleD:angleD;
 	float32 rateI=angleI;
-	float32 minPower=0.005;
+	float32 minPower=0.05;
 	float32 maxPower=0.18;
 	float32 diffAngle=GetDiffAngleAbs(nowAngle,targetAngle);
 	if(moveStatus==PEND)
@@ -346,9 +343,9 @@ void TurnEngine(float32 targetAngle)
 
 void RunToTarget()
 {
-	float32 rateP=0.02;
+	float32 rateP=0.002;
 
-	float32 minPower=0.02;
+	float32 minPower=0.005;
 	float32 distance=GetDistance(nowX,nowY,targetX,targetY);
 	float32 outPower=distance*rateP;
 	float32 rightOut=0;
@@ -365,8 +362,8 @@ void RunToTarget()
 	rightOut=outPower;
 	if(distance<40)
 	{
-		outPower=outPower>0.05?0.05:outPower;
-		rightOut=rightOut>0.05?0.05:outPower;
+		outPower=outPower>0.1?0.1:outPower;
+		rightOut=rightOut>0.1?0.1:outPower;
 	}
 	if(GetDiffAngleAbs(nowAngle,targetRunAngle)<PI/2)
 	{
@@ -375,8 +372,8 @@ void RunToTarget()
 		{
 			nowDirection=direction;
 		}
-		outPower=outPower>0.1?0.1:outPower;
-		rightOut=rightOut>0.1?0.1:rightOut;
+		outPower=outPower>0.2?0.2:outPower;
+		rightOut=rightOut>0.2?0.2:rightOut;
 		outPower=outPower<minPower?minPower:outPower;
 		rightOut=rightOut<minPower?minPower:rightOut;
 		setEngine(ENGINEFRONT,outPower,ENGINEFRONT,rightOut);
@@ -388,8 +385,8 @@ void RunToTarget()
 		{
 			nowDirection=direction;
 		}
-		outPower=outPower>0.1?0.1:outPower;
-		rightOut=rightOut>0.1?0.1:rightOut;
+		outPower=outPower>0.06?0.06:outPower;
+		rightOut=rightOut>0.06?0.06:rightOut;
 		outPower=outPower<minPower?minPower:outPower;
 		rightOut=rightOut<minPower?minPower:rightOut;
 		setEngine(ENGINEBACK,outPower,ENGINEBACK,rightOut);
@@ -490,10 +487,10 @@ Uint16 HasObstacle()
 	//将是否前方有坑从HasObstacle返回
 	//移动情况在direction枚举中找
 	//有坑返回TRUE
-//	if(nowDistance>40 || nowDistance<5)
-//	{
-//		return 0;
-//	}
+	if(nowDistance>40 || nowDistance<5)
+	{
+		return 0;
+	}
 	return (direction==FRONT) ? (foundHeadObstacleTime>10) : (foundTailObstacleTime>10);
 }
 
@@ -522,8 +519,7 @@ Uint16 HasFrontObstacle()
 //		}
 //	}
 //	return 0;
-//	return foundHeadObstacleTime>30 && nowDistance<40;
-	return foundHeadObstacleTime>10;
+	return foundHeadObstacleTime>30 && nowDistance<40;
 }
 
 Uint16 HasBackObstacle()
@@ -551,8 +547,7 @@ Uint16 HasBackObstacle()
 //		}
 //	}
 //	return 0;
-//	return foundTailObstacleTime>30 && nowDistance<40;
-	return foundTailObstacleTime>10;
+	return foundTailObstacleTime>30 && nowDistance<40;
 }
 
 

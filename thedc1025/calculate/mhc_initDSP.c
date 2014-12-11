@@ -12,10 +12,16 @@ void initDSP()
 	   initGlobalVariables();
 
 	// Step 2. Initalize GPIO:  This example function is found in the F2806x_Gpio.c file and
-	   InitI2CGpio();
+//	   InitI2CGpio();
 	   //InitECap1Gpio();
 	   //InitECap2Gpio();
 //	   InitECap3Gpio();
+	   InitSpiaGpio();
+	   EALLOW;
+	   GpioCtrlRegs.GPBMUX1.bit.GPIO34 = 0; //配置GPIO34为GPout (SPI惯导片选端)
+	   GpioCtrlRegs.GPBDIR.bit.GPIO34 = 1;
+	   GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
+	   EDIS;
 	   InitSciaGpio();
 	   InitScibGpio();
 	   InitEPwm1Gpio();
@@ -23,20 +29,8 @@ void initDSP()
 	   InitEPwm3Gpio();
 	   InitEPwm4Gpio();
 	   InitEPwm5Gpio();
-	   InitEQep1Gpio();
-	   InitEQep2Gpio();
 	   l298n_GPIO_init();
-	   EALLOW;
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO30= 0; //配置GPIO30为GPin
-	   GpioCtrlRegs.GPADIR.bit.GPIO30 = 0;
-	   GpioCtrlRegs.GPAMUX2.bit.GPIO31= 0; //配置GPIO31为GPin
-	   GpioCtrlRegs.GPADIR.bit.GPIO31 = 0;
-
-	   //关掉蜂鸣器
-	   GpioCtrlRegs.GPBMUX2.bit.GPIO58 = 0;
-	   GpioCtrlRegs.GPBDIR.bit.GPIO58 = 1;
-	   GpioDataRegs.GPBCLEAR.bit.GPIO58 = 1;
-	   EDIS;
+	   aux_GPIO_init();
 
 
 	// Step 3. Clear all interrupts and initialize PIE vector table:
@@ -72,7 +66,7 @@ void initDSP()
 //	   PieVectTable.ECAP3_INT = &ecap3_isr;
 	   PieVectTable.I2CINT1A = &i2c_int1a_isr;
 	   PieVectTable.TINT0 = &cpu_timer0_isr;
-
+	   PieVectTable.SPIRXINTA = &spiaRxIsr;  //不适用FIFO时接收数据，发送完成，接收溢出共用此中断
 	//   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
 	   EDIS;    // This is needed to disable write to EALLOW protected registers
 
@@ -83,7 +77,7 @@ void initDSP()
 	   ConfigCpuTimer(&CpuTimer0, 90, 2500);
 	   CpuTimer0Regs.TCR.all = 0x4000;
 
-	   I2CA_Init();
+//	   I2CA_Init();
 	   scia_mhc_init();
 	   scib_mhc_init();
 //	   InitECapture();
@@ -92,9 +86,8 @@ void initDSP()
 	   InitEPwm3Example();
 	   InitEPwm4Example();
 	   InitEPwm5Example();
+	   initSPI();
 
-	   eQEP1Initialize();
-	   eQEP2Initialize();
 
 	   EALLOW;
 	   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;
@@ -110,12 +103,14 @@ void initDSP()
 //	   PieCtrlRegs.PIEIER4.bit.INTx1 = 1;//ecap1
 //	   PieCtrlRegs.PIEIER4.bit.INTx2 = 1;//ecap2
 //	   PieCtrlRegs.PIEIER4.bit.INTx3 = 1;//ecap3
-	   PieCtrlRegs.PIEIER8.bit.INTx1 = 1;//I2C
+//	   PieCtrlRegs.PIEIER8.bit.INTx1 = 1;//I2C
 	   PieCtrlRegs.PIEIER1.bit.INTx7 = 1;//CPUtimer0
-
+	   PieCtrlRegs.PIEIER6.bit.INTx1=1;     // Enable PIE Group 6, INT 1 , SPI
+//	   PieCtrlRegs.PIEIER6.bit.INTx2=1;     // Enable PIE Group 6, INT 2 , SPI
 
 	   IER = 0x100; // Enable CPU INT 可能是SCI的
-	   IER |= M_INT8;		//I2C
+	   IER |= M_INT6;        //SPI
+//	   IER |= M_INT8;		//I2C
 	   IER |= M_INT4;    // Enable CPU INT4,  ecap1 2 3
 	   IER |= M_INT1;				//CPUtimer0
 	   EINT;   // Enable Global interrupt INTM
@@ -147,8 +142,8 @@ void initGlobalVariables()
 {
 	Uint16 i;
 
-	vz_ultra=0;
-	vz=0;
+//	vz_ultra=0;
+//	vz=0;
 
 	for(i=0;i<128;i++)
 	{
@@ -173,9 +168,9 @@ void initGlobalVariables()
 	}
 	for(i=0;i<24;i++)
 		sBusReadData[i]=0;
-
-	i2c_Send_Complete=0;
-	i2cDataPointer=0;
+//
+//	i2c_Send_Complete=0;
+//	i2cDataPointer=0;
 //	int16 i2cData[32]={0,0,0,0,0,0,0,0,	0,0,0,0,0,0,0,0,	0,0,0,0,0,0,0,0,	0,0,0,0,0,0,0,0};//懒得改了 要改！！！
 //	Uint16 i2cSlaves[32]={0x68,0x68,0x68,0x68,	0x68,0x68,0x68,0x68,	0x68,0x68,0x68,0x68, 	0x68,0x68,0x68,0x68,
 //									0x68,0x68,0x68,0x68, 	0x68,0x68,0x68,0x68, 	0x68,0x68,0x68,0x68, 	0x68,0x68,0x68,0x68};
@@ -183,11 +178,11 @@ void initGlobalVariables()
 //										GYRO_XOUT_H , GYRO_XOUT_L , GYRO_YOUT_H , GYRO_YOUT_L , GYRO_ZOUT_H , GYRO_ZOUT_L,0,0,0,0,0,0,0,0,0,0,
 //										0,0,0,0,0,0,0,0};
 //	float32 MPU6050Data[7];
-	i2c_Send_Data=0;
-	i2c_Slave_Addr=0;
-	i2c_Reg_Addr=0;
+//	i2c_Send_Data=0;
+//	i2c_Slave_Addr=0;
+//	i2c_Reg_Addr=0;
 
-	i2cStatus=0;
+//	i2cStatus=0;
 	// 0 什么都不做
 	// 12 I2C正在发送地址，之后要接收一个数据
 	// 13 I2C发完了Reg地址，正在接收一个数据
@@ -215,7 +210,7 @@ void initGlobalVariables()
 	AcceZK = ((float32)200.0)/(16580l+17200l)*1.018/100;
 	gyroXDrift=-24.6623;//陀螺仪零点偏移
 	gyroYDrift=-13.71428571;
-	gyroZDrift=0;
+	gyroZDrift=23.3151;
 	Gkx=930.0;//陀螺仪系数
 	Gky=930.0;
 	Gkz=930.0;
@@ -280,7 +275,7 @@ void initGlobalVariables()
 	direction=STOP;
 	moveStatus=PEND;
 
-	waitTimeLimit=3000;
+	waitTimeLimit=2800;
 
 	//TODO 在这里设置路线信息
 	numTargets=6;
@@ -302,10 +297,10 @@ void initGlobalVariables()
 //	allTargetX[1][0]=192; allTargetY[1][0]=192;
 //	allTargetX[1][1]=47;  allTargetY[1][1]=56;
 
-	allTargetX[0][0]=54;  allTargetY[0][0]=199;
-	allTargetX[0][1]=199; allTargetY[0][1]=199;
-	allTargetX[1][0]=54; allTargetY[1][0]=54;
-	allTargetX[1][1]=199;  allTargetY[1][1]=54;
+	allTargetX[0][0]=50;  allTargetY[0][0]=203;
+	allTargetX[0][1]=196; allTargetY[0][1]=196;
+	allTargetX[1][0]=43; allTargetY[1][0]=52;
+	allTargetX[1][1]=192;  allTargetY[1][1]=56;
 
 	lowerXLimit=140;
 	lowerYLimit=140;
@@ -318,25 +313,30 @@ void initGlobalVariables()
 
 	getNewPoint=0;
 
-	eQEP1PositionDifference=0;
-	eQEP2PositionDifference=0;
+	//207 82
+	//61 222
+	//206 222
+
+	//TODO 在这里设置所有坑的坐标
+
+	//END_of_TODO
 }
 
 void sensor_calibrate(void)
 {
-	volatile  int16 count=0;
-	volatile  float32 gAcce_z_avr=0;
-	count=0;
-	gAcce_z_avr=0;
-	for(delay=0;delay<2000000;delay++);
-
-	for(count=0;count<40;count++)
-	{
-		for(delay=0;delay<20000;delay++);
-		gAcce_z_avr+=gAccel.z;
-	}
-
-	az_scale = g_local/(gAcce_z_avr/40);
+//	volatile  int16 count=0;
+//	volatile  float32 gAcce_z_avr=0;
+//	count=0;
+//	gAcce_z_avr=0;
+//	for(delay=0;delay<2000000;delay++);
+//
+//	for(count=0;count<40;count++)
+//	{
+//		for(delay=0;delay<20000;delay++);
+//		gAcce_z_avr+=gAccel.z;
+//	}
+//
+//	az_scale = g_local/(gAcce_z_avr/40);
 
 }
 

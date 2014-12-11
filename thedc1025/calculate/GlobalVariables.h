@@ -4,7 +4,6 @@
 #include "F2806x_Device.h"         // F2806x Headerfile
 #include "F2806x_Examples.h"       // F2806x Examples Headerfile
 #include "F2806x_EPwm_defines.h" 	 // useful defines for initialization
-#include "F2806x_GlobalPrototypes.h"
 #include "mhc.h"
 
 extern Uint16 sciASendBuffer[32];
@@ -23,18 +22,26 @@ extern Uint16 channelsData2048[16];
 extern float32 channelsData1000[16];
 extern Uint8 channelsData4[16];
 
-extern volatile Uint16 i2c_Send_Complete;
-extern volatile Uint16 i2cDataPointer;
-extern int16 i2cData[24];
-extern Uint16 i2cSlaves[24];
-extern Uint16 i2cRegAddr[24];
-//extern float32 MPU6050Data[6];
 
-extern Uint16 i2c_Send_Data;
-extern Uint16 i2c_Slave_Addr;
-extern Uint16 i2c_Reg_Addr;
 
-extern volatile Uint16 i2cStatus;
+
+
+//extern volatile Uint16 i2c_Send_Complete;
+//extern volatile Uint16 i2cDataPointer;
+//extern int16 i2cData[24];
+//extern Uint16 i2cSlaves[24];
+//extern Uint16 i2cRegAddr[24];
+////extern float32 MPU6050Data[6];
+//
+//extern Uint16 i2c_Send_Data;
+//extern Uint16 i2c_Slave_Addr;
+//extern Uint16 i2c_Reg_Addr;
+//
+//extern volatile Uint16 i2cStatus;
+
+
+
+
 
 extern volatile Uint8 doCalulate , doSCIA ,doSCIB, doSBusDecode , doUltra;
 extern volatile Uint8 fly_enable;
@@ -92,19 +99,19 @@ extern volatile int16 throttle_mode;//0手动 1自动
 
 
 /*******************************高度融合数据开始***************************/
-extern volatile float32 ultrasonic_height_data_m[30];
-extern volatile int16 ultrasonic_height_data_pointer;
-extern float32 g_local;
-extern volatile float32 az;
-extern volatile float32 az_scale,ax_scale,ay_scale;
-extern volatile float32 vz_ultra,vz ;
-extern float32 G_height,vz_ultrasonic_T;
+//extern volatile float32 ultrasonic_height_data_m[30];
+//extern volatile int16 ultrasonic_height_data_pointer;
+//extern float32 g_local;
+//extern volatile float32 az;
+//extern volatile float32 az_scale,ax_scale,ay_scale;
+//extern volatile float32 vz_ultra,vz ;
+//extern float32 G_height,vz_ultrasonic_T;
 /*******************************高度融合数据结束***************************/
 
 /*******************************定高数据开始***************************/
-extern volatile float32 height_ref;
-extern volatile float32 throttle_ref,throttle_real;
-extern float32 throttle_Kp,throttle_Kd;
+//extern volatile float32 height_ref;
+//extern volatile float32 throttle_ref,throttle_real;
+//extern float32 throttle_Kp,throttle_Kd;
 /*******************************定高数据结束***************************/
 
 
@@ -116,8 +123,8 @@ extern volatile float32 MOTOR1_PULSE,MOTOR2_PULSE,MOTOR3_PULSE,MOTOR4_PULSE;
 /**************************************************
  * AHRS开始
 ************************************************* */
-extern volatile float32 beta ;								// 2 * proportional gain (Kp)
-extern volatile float32 q0 , q1 , q2 , q3;	// quaternion of sensor frame relative to auxiliary frame
+//extern volatile float32 beta ;								// 2 * proportional gain (Kp)
+//extern volatile float32 q0 , q1 , q2 , q3;	// quaternion of sensor frame relative to auxiliary frame
 
 extern volatile Uint32 gAHRSCounter ;
 
@@ -128,13 +135,13 @@ extern _3Axis32i_t gMPU6050RawGyroStoredFilterValues;
 extern _3Axis16i_t gMPU6050BiasGyro;
 extern _3Axisf_t	gGyro;
 extern _3Axisf_t	gGyroTmp;
-extern _3Axisf_t	gAccelTmp;
+//extern _3Axisf_t	gAccelTmp;
 
-extern _3Axis16i_t gMPU6050RawAccel;
-extern _3Axis32i_t gMPU6050RawAccelStoredFilterValues ;
-extern _3Axis16i_t gMPU6050LPFAccel;
-extern _3Axis16i_t gMPU6050BiasAccel ;
-extern _3Axisf_t	gAccel;
+//extern _3Axis16i_t gMPU6050RawAccel;
+//extern _3Axis32i_t gMPU6050RawAccelStoredFilterValues ;
+//extern _3Axis16i_t gMPU6050LPFAccel;
+//extern _3Axis16i_t gMPU6050BiasAccel ;
+//extern _3Axisf_t	gAccel;
 
 /**************************************************
  * AHRS结束
@@ -225,8 +232,18 @@ extern int16 lockTurnTime;
 
 extern volatile Uint16 getNewPoint;
 
-//正交编码器捕获数据
-extern volatile int32 eQEP1PositionDifference;
-extern volatile int32 eQEP2PositionDifference;
 
+
+
+
+
+
+/******************spi开始****************/
+extern Uint16 spiPointer;
+extern Uint16 spiASendData[64];
+extern Uint16 spiAReadData[64];
+extern Uint16 spiAStop[64];
+
+extern volatile int16 spi_zGyro;
+/******************spi结束***********************/
 #endif

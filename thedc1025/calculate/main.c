@@ -4,15 +4,13 @@
 
 void main(void)
 {
+	Uint16 i;
 
 	initDSP();
-	while(1)
-	{
-		setEngine(1,0.2,1,0.2);
-	}
-	//init_I2C_devices();
-
-
+	GpioDataRegs.GPBDAT.bit.GPIO34 = 0;
+	spiPointer=0;
+	SpiaRegs.SPITXBUF=spiASendData[spiPointer];
+//	init_I2C_devices();
 
    uint16strcpy(sciASendBuffer,(Uint16*)"*****´®¿ÚAÕý³£*****");
    sciASendBufferPointer=0;
@@ -21,11 +19,17 @@ void main(void)
    sciBSendBufferPointer=0;
    ScibRegs.SCIFFTX.bit.TXFFIENA=1;
 
-//   sensor_calibrate();
+
+//	while(1)
+//	{
+//		setEngine(1,0.1,1,0.1);
+//	}
+
+
+
 
 
    InitializeEngine();
-
 
 //   while(1)
 //   {
@@ -44,7 +48,6 @@ void main(void)
 
    for(;;)
    {
-	   setEngine(ENGINEFRONT,0.1,ENGINEFRONT,0.1);
 	   if(gameFirstStart)
 	   {
 		   DisableEngineOutput();
@@ -107,13 +110,6 @@ void main(void)
 //		   setEngine(1,0.25,1,0.245);
 //	   else
 //		   setEngine(0,0,0,0);
-
-
-
-//	   GpioDataRegs.GPBDAT.bit.GPIO33 = 1;
-//	   for(delay=0;delay<40;delay++);
-//	   GpioDataRegs.GPBDAT.bit.GPIO33 = 0;
-//	   for(delay=0;delay<70000;delay++);
 
 
 

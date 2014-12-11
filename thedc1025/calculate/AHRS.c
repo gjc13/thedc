@@ -7,9 +7,9 @@
 
 void AHRS_AccelIIRLPFilter(void)
 {
-	gMPU6050LPFAccel.x = iirLPFilterSingle(gMPU6050RawAccel.x, IMU_ACC_IIR_LPF_ATT_FACTOR, &(gMPU6050RawAccelStoredFilterValues.x));
-	gMPU6050LPFAccel.y = iirLPFilterSingle(gMPU6050RawAccel.y, IMU_ACC_IIR_LPF_ATT_FACTOR, &(gMPU6050RawAccelStoredFilterValues.y));
-	gMPU6050LPFAccel.z = iirLPFilterSingle(gMPU6050RawAccel.z, IMU_ACC_IIR_LPF_ATT_FACTOR, &(gMPU6050RawAccelStoredFilterValues.z));
+//	gMPU6050LPFAccel.x = iirLPFilterSingle(gMPU6050RawAccel.x, IMU_ACC_IIR_LPF_ATT_FACTOR, &(gMPU6050RawAccelStoredFilterValues.x));
+//	gMPU6050LPFAccel.y = iirLPFilterSingle(gMPU6050RawAccel.y, IMU_ACC_IIR_LPF_ATT_FACTOR, &(gMPU6050RawAccelStoredFilterValues.y));
+//	gMPU6050LPFAccel.z = iirLPFilterSingle(gMPU6050RawAccel.z, IMU_ACC_IIR_LPF_ATT_FACTOR, &(gMPU6050RawAccelStoredFilterValues.z));
 }
 
 //void AHRS_GyroIIRLPFilter(void)
@@ -29,10 +29,10 @@ void AHRS_Normalize(void)
 {
 //	gGyroTmp.x = (gMPU6050RawGyro.x - gMPU6050BiasGyro.x) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
 //	gGyroTmp.y = (gMPU6050RawGyro.y - gMPU6050BiasGyro.y) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
-	gGyro.z = (gMPU6050RawGyro.z - gyroZDrift) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
-	gAccelTmp.x = (gMPU6050LPFAccel.x /*- gMPU6050BiasAccel.x*/) * MPU6050_G_PER_LSB_8 * 1.0f;
-	gAccelTmp.y = (gMPU6050LPFAccel.y/* - gMPU6050BiasAccel.y*/) * MPU6050_G_PER_LSB_8 * 1.0f;
-	gAccel.z = (gMPU6050LPFAccel.z/* - gMPU6050BiasAccel.z*/) * MPU6050_G_PER_LSB_8 * 1.0f;
+	gGyro.z = (spi_zGyro - gyroZDrift) * IMU_DEG_PER_LSB_CFG * M_PI / 180;
+//	gAccelTmp.x = (gMPU6050LPFAccel.x /*- gMPU6050BiasAccel.x*/) * MPU6050_G_PER_LSB_8 * 1.0f;
+//	gAccelTmp.y = (gMPU6050LPFAccel.y/* - gMPU6050BiasAccel.y*/) * MPU6050_G_PER_LSB_8 * 1.0f;
+//	gAccel.z = (gMPU6050LPFAccel.z/* - gMPU6050BiasAccel.z*/) * MPU6050_G_PER_LSB_8 * 1.0f;
 
 //	gGyro.x =-gGyroTmp.y -0.014033417;
 //	gGyro.y = gGyroTmp.x +0.025224293;
@@ -61,28 +61,29 @@ void AHRS_GetEulerRPY(void)
 
 int16 iirLPFilterSingle(volatile int32 in,volatile int32 attenuation, volatile int32* filt)
 {
-  int32 inScaled;
-  int32 filttmp = *filt;
-  int16 out;
+//  int32 inScaled;
+//  int32 filttmp = *filt;
+//  int16 out;
+//
+//  if (attenuation > (1<<IIR_SHIFT))
+//  {
+//    attenuation = (1<<IIR_SHIFT);
+//  }
+//  else if (attenuation < 1)
+//  {
+//    attenuation = 1;
+//  }
+//
+//  // Shift to keep accuracy
+//  inScaled = in << IIR_SHIFT;
+//  // Calculate IIR filter
+//  filttmp = filttmp + (((inScaled-filttmp) >> IIR_SHIFT) * attenuation);
+//  // Scale and round
+//  out = (filttmp >> 8) + ((filttmp & (1 << (IIR_SHIFT - 1))) >> (IIR_SHIFT - 1));
+//  *filt = filttmp;
 
-  if (attenuation > (1<<IIR_SHIFT))
-  {
-    attenuation = (1<<IIR_SHIFT);
-  }
-  else if (attenuation < 1)
-  {
-    attenuation = 1;
-  }
-
-  // Shift to keep accuracy
-  inScaled = in << IIR_SHIFT;
-  // Calculate IIR filter
-  filttmp = filttmp + (((inScaled-filttmp) >> IIR_SHIFT) * attenuation);
-  // Scale and round
-  out = (filttmp >> 8) + ((filttmp & (1 << (IIR_SHIFT - 1))) >> (IIR_SHIFT - 1));
-  *filt = filttmp;
-
-  return out;
+//  return out;
+	return 1;
 }
 
 

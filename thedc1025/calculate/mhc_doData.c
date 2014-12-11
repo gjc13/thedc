@@ -12,13 +12,14 @@ void dataConverse()//i2c数据转为-1~1
 //
 
 
-	gMPU6050RawAccel.x=(int16)((i2cData[0]<<8) | i2cData[1] );
-	gMPU6050RawAccel.y=(int16)((i2cData[2]<<8) | i2cData[3] );
-	gMPU6050RawAccel.z=(int16)((i2cData[4]<<8) | i2cData[5] );
-
-	gMPU6050RawGyro.x=(int16)((i2cData[6]<<8) | i2cData[7] );
-	gMPU6050RawGyro.y=(int16)((i2cData[8]<<8) | i2cData[9] );
-	gMPU6050RawGyro.z=(int16)((i2cData[10]<<8) | i2cData[11] );
+//	gMPU6050RawAccel.x=(int16)((i2cData[0]<<8) | i2cData[1] );
+//	gMPU6050RawAccel.y=(int16)((i2cData[2]<<8) | i2cData[3] );
+//	gMPU6050RawAccel.z=(int16)((i2cData[4]<<8) | i2cData[5] );
+//
+//	gMPU6050RawGyro.x=(int16)((i2cData[6]<<8) | i2cData[7] );
+//	gMPU6050RawGyro.y=(int16)((i2cData[8]<<8) | i2cData[9] );
+//	gMPU6050RawGyro.z=(int16)((i2cData[10]<<8) | i2cData[11] );
+	spi_zGyro=spiAReadData[61]<<8|spiAReadData[63];
 }
 
 
@@ -42,7 +43,7 @@ void low_pass(float32 *lp_data,float32 source_data,float32 G,float32 T)
 
 void Posture_calculate(void)
 {
-	AHRS_AccelIIRLPFilter();//加速度低通滤波
+//	AHRS_AccelIIRLPFilter();//加速度低通滤波
 	AHRS_Normalize();//数据归一化
 //	MadgwickAHRSupdateIMU(gGyro.x,gGyro.y,gGyro.z,gAccel.x,gAccel.y,gAccel.z);//更新四元数
 //	AHRS_GetEulerRPY();//转换为欧拉角
@@ -108,16 +109,16 @@ void limit_float32(float32 *num , float32 min , float32 max)
 ****************************************************************************************/
 void vz_ultrasonic_calculate(void)
 {
-	int16 old_pointer ;
-	if(++ultrasonic_height_data_pointer>29)
-		ultrasonic_height_data_pointer=0;
-	ultrasonic_height_data_m[ultrasonic_height_data_pointer] = height_ultrasonic/100;//统一单位m
-
-	old_pointer = ultrasonic_height_data_pointer-20;//0.5s前的高度，修改时要改vz_ultrasonic_T
-	if(old_pointer<0)
-		old_pointer+=30;
-
-	vz_ultra=( ultrasonic_height_data_m[ultrasonic_height_data_pointer] - ultrasonic_height_data_m[old_pointer] ) / vz_ultrasonic_T ;
+//	int16 old_pointer ;
+//	if(++ultrasonic_height_data_pointer>29)
+//		ultrasonic_height_data_pointer=0;
+//	ultrasonic_height_data_m[ultrasonic_height_data_pointer] = height_ultrasonic/100;//统一单位m
+//
+//	old_pointer = ultrasonic_height_data_pointer-20;//0.5s前的高度，修改时要改vz_ultrasonic_T
+//	if(old_pointer<0)
+//		old_pointer+=30;
+//
+//	vz_ultra=( ultrasonic_height_data_m[ultrasonic_height_data_pointer] - ultrasonic_height_data_m[old_pointer] ) / vz_ultrasonic_T ;
 }
 
 /***************************************************************************************
@@ -127,13 +128,13 @@ void vz_ultrasonic_calculate(void)
 void vz_calculate(void)
 {
 //	az = gAccel.z * az_scale  ;
-	az=(gAccel.y*ay_scale*sin(posture_now.pitch)-gAccel.x*ax_scale*sin(posture_now.roll)*cos(posture_now.pitch)+gAccel.z*az_scale*cos(posture_now.roll)*cos(posture_now.pitch));//可能有问题
-	vz = (vz+(az-g_local)*dt+G_height*vz_ultra*dt)/(1+dt*G_height); //高度互补滤波
-
-	if(vz>20)
-		vz=20;
-	if(vz<-20)
-		vz=-20;
+//	az=(gAccel.y*ay_scale*sin(posture_now.pitch)-gAccel.x*ax_scale*sin(posture_now.roll)*cos(posture_now.pitch)+gAccel.z*az_scale*cos(posture_now.roll)*cos(posture_now.pitch));//可能有问题
+//	vz = (vz+(az-g_local)*dt+G_height*vz_ultra*dt)/(1+dt*G_height); //高度互补滤波
+//
+//	if(vz>20)
+//		vz=20;
+//	if(vz<-20)
+//		vz=-20;
 
 }
 
