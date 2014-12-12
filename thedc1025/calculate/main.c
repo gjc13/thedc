@@ -8,7 +8,7 @@ void main(void)
 	initDSP();
 	while(1)
 	{
-		setEngine(1,0.2,1,0.2);
+		setEngine(ENGINEFRONT,0.2,ENGINEFRONT,0.2);
 	}
 	//init_I2C_devices();
 

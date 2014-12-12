@@ -591,7 +591,7 @@ void SpeedControlIntergration()
 void SetEngineRunSpeed(float32 leftSpeed,float32 rightSpeed)
 {
 	RegisterLeftTargetSpeed(leftSpeed);
-	RegisterRightTargerSpeed(rightSpeed);
+	RegisterRightTargetSpeed(rightSpeed);
 	leftSpeedPOutput=(targetLeftSpeed-nowLeftSpeed)*speedP;
 	rightSpeedPOutput=(targetRightSpeed-nowRightSpeed)*speedP;
 	setEngine(ENGINEFRONT,leftSpeedPOutput+leftSpeedIOutput,ENGINEFRONT,rightSpeedIOutput+rightSpeedPOutput);
