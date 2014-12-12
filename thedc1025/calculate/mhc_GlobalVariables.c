@@ -81,7 +81,7 @@ float32 Gkx=930.0 , Gky=930.0 , Gkz=930.0 ;//陀螺仪系数
 //float32 tmpf;
 //int16 tmpi;
 
-volatile Uint16 cpuTime=0;
+volatile Uint32 cpuTime=0;
 
 Uint32 delay;//大约10000000=7s
 
@@ -186,7 +186,7 @@ volatile Uint16 isPlayerDataAvailable=1;
 //MPU_6050提供的姿态信息
 volatile Uint16 isMPUavailable=0;
 
-Uint16 lastUpdatePostureTime;
+Uint32 lastUpdatePostureTime;
 
 //角度PID
 float32 angleOutPut;
@@ -229,6 +229,7 @@ float32 nowDistance;
 
 Uint16 newDataReceive;
 
+//nowDirection在转向过程中不会变化，用于记录整体方向
 Uint16 nowDirection;
 int16 lockTurnTime;
 
@@ -237,3 +238,20 @@ volatile Uint16 getNewPoint;
 //正交编码器捕获数据
 volatile int32 eQEP1PositionDifference;
 volatile int32 eQEP2PositionDifference;
+
+//速度PID
+float32 speedTolerance;
+float32 speedP;
+float32 speedI;
+float32 speedIDecay;
+Uint32 startLeftSpeedControlTime;
+Uint32 startRightSpeedControlTime;
+volatile float32 nowLeftSpeed;
+volatile float32 nowRightSpeed;
+volatile float32 targetLeftSpeed;
+volatile float32 targetRightSpeed;
+volatile float32 leftSpeedPOutput;
+volatile float32 rightSpeedPOutput;
+volatile float32 leftSpeedIOutput;
+volatile float32 rightSpeedIOutput;
+

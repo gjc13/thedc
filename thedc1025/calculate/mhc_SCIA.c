@@ -1,7 +1,7 @@
 #include "mhc.h"
 #include "GlobalVariables.h"
 
-volatile Uint16 lastReciveTime = 0;
+volatile Uint32 lastReciveTime = 0;
 
 __interrupt void sciaTxFifoIsr(void)
 {

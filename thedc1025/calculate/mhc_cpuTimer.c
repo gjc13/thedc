@@ -30,7 +30,7 @@ __interrupt void cpu_timer0_isr(void)
 	eQEP2TickCalculate();
 
 
-	if(cpuTime++>60000)
+	if(cpuTime++>0xFFFFFFF0)
 		cpuTime=0;
 
 	if(SciaRegs.SCIRXST.bit.RXERROR || SciaRegs.SCIFFRX.bit.RXFFOVF)//如果串口接收出错就重新初始化串口
@@ -66,6 +66,11 @@ __interrupt void cpu_timer0_isr(void)
 
 	UpdatePosture();
 
+	if(cpuTime%10==0)
+	{
+		SpeedControlIntergration();
+	}
+
 	if(cpuTime%80==0)
 		doSCIA=1;
 
@@ -100,6 +105,5 @@ __interrupt void cpu_timer0_isr(void)
 //	}
 //	else
 //		sciBReadAByte=0;
-
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }

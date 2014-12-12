@@ -62,7 +62,7 @@ extern float32 gyroZDrift;
 //extern float32 tmpf;
 //extern int16 tmpi;
 
-extern volatile Uint16 cpuTime;
+extern volatile Uint32 cpuTime;
 
 extern Uint32 delay;//大约10000000=7s
 
@@ -173,7 +173,7 @@ extern volatile Uint16 isPlayerDataAvailable;
 //MPU_6050提供的姿态信息
 extern volatile Uint16 isMPUavailable;
 
-extern Uint16 lastUpdatePostureTime;
+extern Uint32 lastUpdatePostureTime;
 
 //角度PID
 extern float32 angleOutPut;
@@ -228,5 +228,21 @@ extern volatile Uint16 getNewPoint;
 //正交编码器捕获数据
 extern volatile int32 eQEP1PositionDifference;
 extern volatile int32 eQEP2PositionDifference;
+
+//速度PID
+extern float32 speedTolerance;
+extern float32 speedP;
+extern float32 speedI;
+extern float32 speedIDecay;
+extern Uint32 startLeftSpeedControlTime;
+extern Uint32 startRightSpeedControlTime;
+extern volatile float32 nowLeftSpeed;
+extern volatile float32 nowRightSpeed;
+extern volatile float32 targetLeftSpeed;
+extern volatile float32 targetRightSpeed;
+extern volatile float32 leftSpeedPOutput;
+extern volatile float32 rightSpeedPOutput;
+extern volatile float32 leftSpeedIOutput;
+extern volatile float32 rightSpeedIOutput;
 
 #endif

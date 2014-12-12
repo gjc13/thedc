@@ -111,9 +111,16 @@ void DecodePlayerData();
 void InitializeEngine();
 void SetEngineOutput();
 void DisableEngineOutput();
-void TurnEngine(float32 targetAngle);
+void TurnCar(float32 targetAngle);
 void RunToTarget();
 void RunAndTurn();
+
+void ResetSpeedControl();
+void SpeedControlIntergration();
+void SetEngineRunSpeed(float32 leftSpeed,float32 rightSpeed);
+void RegisterLeftTargetSpeed(float32 leftSpeed);
+void RegisterRightTargetSpeed(float32 rightSpeed);
+
 Uint16 UpdatePosture();
 Uint16 IsPointedLoc(Uint16 locx,Uint16 locy);
 

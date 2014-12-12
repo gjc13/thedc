@@ -199,7 +199,7 @@ void SetEngineOutput()
 	angleTolerance=nowDistance>distanceMinBound?angleTolerance:angleTolerance*2;
 	if(diffAngle>angleTolerance && abs(PI-diffAngle)>angleTolerance)
 	{
-		TurnEngine(targetHeadAngle);
+		TurnCar(targetHeadAngle);
 	}
 	else if(HasObstacle() && nowDistance>30 && nowDistance<50)
 	{
@@ -238,7 +238,7 @@ void SetEngineOutput()
 	}
 }
 
-void TurnEngine(float32 targetAngle)
+void TurnCar(float32 targetAngle)
 {
 	float32 rateP=angleP;
 	float32 rateD=IsCounterClockWise(nowAngle,targetAngle)?-angleD:angleD;
@@ -459,6 +459,7 @@ void DisableEngineOutput()
 {
 	setEngine(ENGINESTOP,0,ENGINESTOP,0);
 	direction=STOP;
+	ResetSpeedControl();
 }
 
 void SeekNextTarget()
@@ -479,6 +480,7 @@ void StartWaitPoint()
 {
 	waitingTime=0;
 	moveStatus=WAITPOINT;
+	direction=STOP;
 	nowDirection=STOP;
 	DisableEngineOutput();
 }
@@ -559,4 +561,60 @@ Uint16 HasBackObstacle()
 Uint16 IsPointedLoc(Uint16 locx,Uint16 locy)
 {
 	return GetDistance(locx,locy,targetX,targetY)<10;
+}
+
+void ResetSpeedControl()
+{
+	targetLeftSpeed=0;
+	targetRightSpeed=0;
+	leftSpeedPOutput=0;
+	rightSpeedPOutput=0;
+	leftSpeedIOutput=0;
+	rightSpeedIOutput=0;
+	startLeftSpeedControlTime=cpuTime;
+	startRightSpeedControlTime=cpuTime;
+}
+
+void SpeedControlIntergration()
+{
+	if(direction==STOP)
+	{
+		ResetSpeedControl();
+		return;
+	}
+	leftSpeedIOutput*=speedIDecay;
+	rightSpeedIOutput*=speedIDecay;
+	leftSpeedIOutput=(targetLeftSpeed-nowLeftSpeed)*speedI;
+	rightSpeedIOutput=(targetRightSpeed-nowRightSpeed)*speedI;
+}
+
+void SetEngineRunSpeed(float32 leftSpeed,float32 rightSpeed)
+{
+	RegisterLeftTargetSpeed(leftSpeed);
+	RegisterRightTargerSpeed(rightSpeed);
+	leftSpeedPOutput=(targetLeftSpeed-nowLeftSpeed)*speedP;
+	rightSpeedPOutput=(targetRightSpeed-nowRightSpeed)*speedP;
+	setEngine(ENGINEFRONT,leftSpeedPOutput+leftSpeedIOutput,ENGINEFRONT,rightSpeedIOutput+rightSpeedPOutput);
+}
+
+void RegisterLeftTargetSpeed(float32 leftSpeed)
+{
+	leftSpeedIOutput+=(leftSpeed-targetLeftSpeed)*(cpuTime-startLeftSpeedControlTime);
+	if(fabs(nowLeftSpeed-targetLeftSpeed)<speedTolerance && leftSpeed!=targetLeftSpeed)
+	{
+		leftSpeedIOutput=0;
+		startLeftSpeedControlTime=cpuTime;
+	}
+	targetLeftSpeed=leftSpeed;
+}
+
+void RegisterRightTargetSpeed(float32 rightSpeed)
+{
+	rightSpeedIOutput+=(rightSpeed-targetRightSpeed)*(cpuTime-startRightSpeedControlTime);
+	if(fabs(nowRightSpeed-targetRightSpeed)<speedTolerance && rightSpeed!=targetRightSpeed)
+	{
+		rightSpeedIOutput=0;
+		startRightSpeedControlTime=cpuTime;
+	}
+	targetRightSpeed=rightSpeed;
 }

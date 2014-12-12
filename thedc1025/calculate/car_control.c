@@ -21,8 +21,8 @@ void l298n_GPIO_init()//配置电机方向输出IO
 
 void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float32 rightPower)
 {
-	leftPower*=2;
-	rightPower*=2;
+//	leftPower*=2;
+//	rightPower*=2;
 	if(leftPower<0)
 	{
 		if(leftDirection==ENGINEBACK)
@@ -46,22 +46,30 @@ void setEngine(int16 leftDirection,float32 leftPower,int16 rightDirection,float3
 		}
 	}
 
-	if(leftDirection==ENGINEBACK)
-	{
-		leftPower=leftPower<0.7?leftPower:0.7;
-	}
-	else if(leftDirection==ENGINEFRONT)
-	{
-		leftPower=leftPower<0.3?leftPower:0.3;
-	}
-	if(rightDirection==ENGINEBACK)
-	{
-		rightPower=rightPower<0.7?rightPower:0.7;
-	}
-	else if(rightDirection==ENGINEFRONT)
-	{
-		rightPower=rightPower<0.3?rightPower:0.3;
-	}
+//	if(leftDirection==ENGINEBACK)
+//	{
+//		leftPower=leftPower<0.7?leftPower:0.7;
+//	}
+//	else if(leftDirection==ENGINEFRONT)
+//	{
+//		leftPower=leftPower<0.3?leftPower:0.3;
+//	}
+//	if(rightDirection==ENGINEBACK)
+//	{
+//		rightPower=rightPower<0.7?rightPower:0.7;
+//	}
+//	else if(rightDirection==ENGINEFRONT)
+//	{
+//		rightPower=rightPower<0.3?rightPower:0.3;
+//	}
+
+	leftPower=leftPower<0?0:leftPower;
+	leftPower=leftPower>1?1:leftPower;
+	rightPower=rightPower<0?0:rightPower;
+	rightPower=rightPower>1?1:rightPower;
+
+	leftPower=0.3+0.4*leftPower;
+	rightPower=0.3+0.4*rightPower;
 
 	switch(leftDirection)
 	{

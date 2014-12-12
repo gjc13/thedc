@@ -320,6 +320,14 @@ void initGlobalVariables()
 
 	eQEP1PositionDifference=0;
 	eQEP2PositionDifference=0;
+
+	speedTolerance=0.02;
+	speedP=1;
+	speedI=0;
+	speedIDecay=0.99;
+	nowLeftSpeed=0;
+	nowRightSpeed=0;
+	ResetSpeedControl();
 }
 
 void sensor_calibrate(void)
