@@ -88,3 +88,5 @@ thedc1025/FlyFlash/calculate/subdir_rules.mk
 thedc1025/FlyFlash/sources.mk
 thedc1025/FlyFlash/calculate/subdir_vars.mk
 *.mk
+thedc1025/FlyFlash/Example_2806xEPwmDeadBand_linkInfo.xml
+*.xml

@@ -20,6 +20,7 @@ C_SRCS += \
 ../TiLibrary/F2806x_PieCtrl.c \
 ../TiLibrary/F2806x_PieVect.c \
 ../TiLibrary/F2806x_Sci.c \
+../TiLibrary/F2806x_Spi.c \
 ../TiLibrary/F2806x_SysCtrl.c 
 
 OBJS += \
@@ -36,6 +37,7 @@ OBJS += \
 ./TiLibrary/F2806x_PieCtrl.obj \
 ./TiLibrary/F2806x_PieVect.obj \
 ./TiLibrary/F2806x_Sci.obj \
+./TiLibrary/F2806x_Spi.obj \
 ./TiLibrary/F2806x_SysCtrl.obj \
 ./TiLibrary/F2806x_usDelay.obj 
 
@@ -56,6 +58,7 @@ C_DEPS += \
 ./TiLibrary/F2806x_PieCtrl.pp \
 ./TiLibrary/F2806x_PieVect.pp \
 ./TiLibrary/F2806x_Sci.pp \
+./TiLibrary/F2806x_Spi.pp \
 ./TiLibrary/F2806x_SysCtrl.pp 
 
 C_DEPS__QUOTED += \
@@ -71,6 +74,7 @@ C_DEPS__QUOTED += \
 "TiLibrary\F2806x_PieCtrl.pp" \
 "TiLibrary\F2806x_PieVect.pp" \
 "TiLibrary\F2806x_Sci.pp" \
+"TiLibrary\F2806x_Spi.pp" \
 "TiLibrary\F2806x_SysCtrl.pp" 
 
 OBJS__QUOTED += \
@@ -87,6 +91,7 @@ OBJS__QUOTED += \
 "TiLibrary\F2806x_PieCtrl.obj" \
 "TiLibrary\F2806x_PieVect.obj" \
 "TiLibrary\F2806x_Sci.obj" \
+"TiLibrary\F2806x_Spi.obj" \
 "TiLibrary\F2806x_SysCtrl.obj" \
 "TiLibrary\F2806x_usDelay.obj" 
 
@@ -111,6 +116,7 @@ C_SRCS__QUOTED += \
 "../TiLibrary/F2806x_PieCtrl.c" \
 "../TiLibrary/F2806x_PieVect.c" \
 "../TiLibrary/F2806x_Sci.c" \
+"../TiLibrary/F2806x_Spi.c" \
 "../TiLibrary/F2806x_SysCtrl.c" 
 
 

@@ -14,6 +14,7 @@ C_SRCS += \
 ../calculate/mhc_I2C.c \
 ../calculate/mhc_SCIA.c \
 ../calculate/mhc_SCIB_BT.c \
+../calculate/mhc_SPI.c \
 ../calculate/mhc_control.c \
 ../calculate/mhc_cpuTimer.c \
 ../calculate/mhc_doData.c \
@@ -34,6 +35,7 @@ OBJS += \
 ./calculate/mhc_I2C.obj \
 ./calculate/mhc_SCIA.obj \
 ./calculate/mhc_SCIB_BT.obj \
+./calculate/mhc_SPI.obj \
 ./calculate/mhc_control.obj \
 ./calculate/mhc_cpuTimer.obj \
 ./calculate/mhc_doData.obj \
@@ -54,6 +56,7 @@ C_DEPS += \
 ./calculate/mhc_I2C.pp \
 ./calculate/mhc_SCIA.pp \
 ./calculate/mhc_SCIB_BT.pp \
+./calculate/mhc_SPI.pp \
 ./calculate/mhc_control.pp \
 ./calculate/mhc_cpuTimer.pp \
 ./calculate/mhc_doData.pp \
@@ -74,6 +77,7 @@ C_DEPS__QUOTED += \
 "calculate\mhc_I2C.pp" \
 "calculate\mhc_SCIA.pp" \
 "calculate\mhc_SCIB_BT.pp" \
+"calculate\mhc_SPI.pp" \
 "calculate\mhc_control.pp" \
 "calculate\mhc_cpuTimer.pp" \
 "calculate\mhc_doData.pp" \
@@ -94,6 +98,7 @@ OBJS__QUOTED += \
 "calculate\mhc_I2C.obj" \
 "calculate\mhc_SCIA.obj" \
 "calculate\mhc_SCIB_BT.obj" \
+"calculate\mhc_SPI.obj" \
 "calculate\mhc_control.obj" \
 "calculate\mhc_cpuTimer.obj" \
 "calculate\mhc_doData.obj" \
@@ -114,6 +119,7 @@ C_SRCS__QUOTED += \
 "../calculate/mhc_I2C.c" \
 "../calculate/mhc_SCIA.c" \
 "../calculate/mhc_SCIB_BT.c" \
+"../calculate/mhc_SPI.c" \
 "../calculate/mhc_control.c" \
 "../calculate/mhc_cpuTimer.c" \
 "../calculate/mhc_doData.c" \
